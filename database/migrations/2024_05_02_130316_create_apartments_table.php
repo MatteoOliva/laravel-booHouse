@@ -25,8 +25,8 @@ return new class extends Migration
             $table->tinyInteger('toilets')->unsigned();
             $table->float('mq', 7,3);
             $table->string('image');
-            $table->string('lat');
-            $table->string('lon');
+            $table->decimal('lat', 10,7);
+            $table->decimal('lon', 10,7);
             $table->string('address');
             $table->boolean('visible');
             
