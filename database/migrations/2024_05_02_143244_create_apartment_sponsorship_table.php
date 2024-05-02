@@ -24,7 +24,9 @@ return new class extends Migration
             ->constrained()
             ->cascadeOnDelete();
 
-            $table->timestamps();
+            $table->dateTime('payment_date');
+            $table->dateTime('end_date');
+
         });
     }
 
