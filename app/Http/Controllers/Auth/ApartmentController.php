@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 
 use App\Models\Apartment;
+use App\Models\Service;
 use Illuminate\Http\Request;
 
 class ApartmentController extends Controller
@@ -53,7 +54,11 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        //
+        // var_dump($apartment->services->pluck('id')->toArray());
+        $related_services = $apartment->services->pluck('id')->toArray();
+
+        $services = Service::whereIn('id', $related_services)->get();
+        return view('auth.apartments.show', compact('apartment', 'services'));
     }
 
     /**

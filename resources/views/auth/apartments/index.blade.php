@@ -8,7 +8,7 @@
         <div class="row g-3">
             @foreach ($apartments as $apartment)
             <div class="col">
-                <a href="">
+                <a href="{{ route('user.apartments.show', $apartment) }}">
                     <div class="card" style="width: 18rem;">
                         <img 
                         src="@if (substr($apartment->image,1,3) == 'img') {{ $apartment->image }} 
