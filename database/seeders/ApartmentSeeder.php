@@ -81,7 +81,6 @@ class ApartmentSeeder extends Seeder
                     }
                     // add the slug to the array and in the new apartment
                     array_push($slugs, $new_slug);
-                    // save the apartment in the db
                     $apartment->slug = $new_slug;
 
                     // save the apartment in the db
