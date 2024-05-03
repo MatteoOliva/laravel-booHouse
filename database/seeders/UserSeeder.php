@@ -26,8 +26,8 @@ class UserSeeder extends Seeder
             $user->surname = $faker->lastName();
             $user->birth_date = $faker->dateTimeBetween('-50 year', '-20 year');
             $user->email = $faker->email();
-            $password = $faker->password();
-            $user->password = Hash::make($password);
+            // $password = $faker->password();
+            $user->password = Hash::make('password');
             $user->save();
             // var_dump($user);
         }
