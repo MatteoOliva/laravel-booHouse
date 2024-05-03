@@ -2,11 +2,12 @@
 
 @section('content')
 
-    
+    {{-- <img src="/img/addams_family.png" alt=""> --}}
+    <img src="{{ '/' . $apartment->image }}" alt="">
 
     <div class="container mt-4">
       @foreach ($services as $service)
-        {{ $service->name }}
+        {{ asset($service->name)  }}
       @endforeach
     </div>
     
