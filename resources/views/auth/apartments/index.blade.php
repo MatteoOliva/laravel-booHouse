@@ -11,7 +11,7 @@
                 <a href="{{ route('user.apartments.show', $apartment) }}">
                     <div class="card" style="width: 18rem;">
                         <img 
-                        src="@if (substr($apartment->image,1,3) == 'img') {{ $apartment->image }} 
+                        src="@if (substr($apartment->image,0,3) == 'img') {{  '/' . $apartment->image }} 
                              @else {{ asset('storage/' . $apartment->image) }}          
                              @endif" 
                              class="img-fluid" alt="#">

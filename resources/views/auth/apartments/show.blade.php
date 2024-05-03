@@ -2,13 +2,30 @@
 
 @section('content')
 
-    {{-- <img src="/img/addams_family.png" alt=""> --}}
-    <img src="{{ '/' . $apartment->image }}" alt="">
+    <div class="container my-4 ">
 
-    <div class="container mt-4">
+      <h1>{{ $apartment->title }}</h1>
+      <p>{{ $apartment->description }}</p>
+      <p>Indirizzo: {{ $apartment->address }}</p>
+      <p>Camere: {{ $apartment->rooms }}</p>
+      <p>Letti: {{ $apartment->beds }}</p>
+      <p>Bagni: {{ $apartment->toilets }}</p>
+      <p>Metri quadri: {{ $apartment->mq }}</p>
+   
+      <h5>Servizi</h5>
       @foreach ($services as $service)
-        {{ asset($service->name)  }}
+      <div class="mb-3">
+        {{ $service->name }}
+        <img src="{{ '/' . $service->icon }}" alt="">
+      </div>
       @endforeach
+
+      <img 
+      src="@if (substr($apartment->image,0,3) == 'img') {{ '/' . $apartment->image }} 
+      @else {{ asset('storage/' . $apartment->image) }}          
+      @endif" 
+      class="img-fluid" alt="#">
+
     </div>
     
 
