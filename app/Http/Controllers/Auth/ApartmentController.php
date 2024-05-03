@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use App\Http\Controllers\Controller;
 
 use App\Models\Apartment;
 use Illuminate\Http\Request;

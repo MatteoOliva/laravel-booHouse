@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ApartmentController;
 use App\Http\Controllers\Guest\DashboardController as GuestDashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,14 @@ Route::middleware('auth')
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])
       ->name('dashboard');
 
+  });
+
+  // rotta protetta apartment
+Route::middleware('auth')
+  ->name('user.')
+  ->group(function(){
+    
+    Route::resource('apartments', ApartmentController::class);
   });
 
 require __DIR__ . '/auth.php';
