@@ -61,8 +61,7 @@ class ApartmentSeeder extends Seeder
                     $new_slug = Str::slug($apartment->title);
                     // if this slug is not in the array set before
                     if (in_array($new_slug, $slugs)) {
-                        // get all the slug except the last 2 characters
-                        $slug_text = substr($new_slug, 0, -2);
+
                         // get only the last 2 carachters of the slug then parse them into int
                         $last_digits = substr($new_slug, 2);
                         $last_num = (int) $last_digits;
@@ -72,12 +71,16 @@ class ApartmentSeeder extends Seeder
                             $new_num = $last_num + 1;
                             // then if the num is < 10 add a 0 before it
                             if ($new_num < 10) $new_num = '0' . $new_num;
+                            // get all the slug except the last 2 characters
+                            $slug_text = substr($new_slug, 0, -2);
                         } else {
                             // the new num to add will be 01
                             $new_num = '01';
+                            // the slug text will be = to the whole slug
+                            $slug_text = $new_slug;
                         }
                         // then add the number to the text of the slug
-                        $new_slug = $slug_text . $new_num;
+                        $new_slug = $slug_text . '-' . $new_num;
                     }
                     // add the slug to the array and in the new apartment
                     array_push($slugs, $new_slug);
