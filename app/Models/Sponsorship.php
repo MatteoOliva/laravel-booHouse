@@ -7,8 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sponsorship extends Model
 {
-    use HasFactory;
-    public function apartments() {
-        return $this->belongsToMany(Apartment::class);
-      }
+  use HasFactory;
+  public function apartments()
+  {
+    return $this->belongsToMany(Apartment::class);
+  }
+
+  protected $fillable = [
+    'name',
+    'price',
+    'duration',
+  ];
 }
