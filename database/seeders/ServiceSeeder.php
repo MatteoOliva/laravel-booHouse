@@ -18,47 +18,47 @@ class ServiceSeeder extends Seeder
         $data = [
             [
                 "name" => "aria condizionata",
-                "icon" => "/svg/icons/aria-incondizionata.svg",
+                "icon" => "svg/icons/aria-incondizionata.svg",
             ],
             [
                 "name" => "cimitero",
-                "icon" => "/svg/icons/cimitero.svg",
+                "icon" => "svg/icons/cimitero.svg",
             ],
             [
                 "name" => "colazione",
-                "icon" => "/svg/icons/colazione.svg",
+                "icon" => "svg/icons/colazione.svg",
             ],
             [
                 "name" => "fantasmi",
-                "icon" => "/svg/icons/fantasmi.svg",
+                "icon" => "svg/icons/fantasmi.svg",
             ],
             [
                 "name" => "lavatrice",
-                "icon" => "/svg/icons/lavatrice.svg",
+                "icon" => "svg/icons/lavatrice.svg",
             ],
             [
                 "name" => "parcheggio",
-                "icon" => "/svg/icons/parcheggio.svg",
+                "icon" => "svg/icons/parcheggio.svg",
             ],
             [
                 "name" => "pulizia",
-                "icon" => "/svg/icons/pulizia.svg",
+                "icon" => "svg/icons/pulizia.svg",
             ],
             [
                 "name" => "servizio-in-camera",
-                "icon" => "/svg/icons/servizio-in-camera.svg",
+                "icon" => "svg/icons/servizio-in-camera.svg",
             ],
             [
                 "name" => "sveglia",
-                "icon" => "/svg/icons/sveglia.svg",
+                "icon" => "svg/icons/sveglia.svg",
             ],
             [
                 "name" => "trappola",
-                "icon" => "/svg/icons/trappola.svg",
+                "icon" => "svg/icons/trappola.svg",
             ],
             [
                 "name" => "wifi",
-                "icon" => "/svg/icons/wifi.svg",
+                "icon" => "svg/icons/wifi.svg",
             ],
         ];
 
