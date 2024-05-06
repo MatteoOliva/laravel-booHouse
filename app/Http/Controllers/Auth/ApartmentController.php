@@ -8,6 +8,7 @@ use App\Models\Apartment;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Ramsey\Uuid\Type\Decimal;
 
 class ApartmentController extends Controller
 {
@@ -57,12 +58,15 @@ class ApartmentController extends Controller
         // set the visibility to false
         $apartment->visible = false;
 
+       
+
         // get all the slugs from the db
         $existing_slugs = Apartment::all()->pluck('slug')->toArray();
         // dd($existing_slugs);
 
         // add the slug to the apartment and save the apartment in the db
         $apartment->slug = $apartment->create_unique_slug($existing_slugs);
+        dd($apartment);
         $apartment->save();
 
         return redirect()->route('user.apartments.show', $apartment);
@@ -114,6 +118,7 @@ class ApartmentController extends Controller
         // fill the apartment with the data from the request
         $apartment->fill($data);
 
+       
         // get all the slugs from the db
         $existing_slugs = Apartment::all()->pluck('slug')->toArray();
         // add the slug to the apartment and save the apartment in the db
