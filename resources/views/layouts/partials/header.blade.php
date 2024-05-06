@@ -1,7 +1,9 @@
 <header>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #0A0F15 !important">
     <div class="container d-flex justify-content-between">
-      <a class="navbar-brand fw-semibold fs-3" href="#">Boo.House</a>
+     
+        <a class="navbar-brand fw-semibold fs-3" href="#"><img src="img/head-logo.png" style="max-height: 58px" alt=""></a>
+   
       <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
         class="navbar-toggler" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
         <span class="navbar-toggler-icon"></span>

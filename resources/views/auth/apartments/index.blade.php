@@ -13,14 +13,14 @@
             @foreach ($apartments as $apartment)
             <div class="col-3">
                 <a class="text-decoration-none" href="{{ route('user.apartments.show', $apartment) }}">
-                    <div class="card card-index" style="width: 18rem;">
+                    <div class="card card-index h-100" style="width: 18rem;">
                         <img 
                         src="@if (substr($apartment->image,0,3) == 'img') {{  '/' . $apartment->image }} 
                              @else {{ asset('storage/' . $apartment->image) }}          
                              @endif" 
-                             class="img-fluid" alt="#">
-                        <div class="card-body">
-                          <h5 class="card-title text-black">{{ $apartment->title }}</h5>
+                             class="img-fluid rounded-top" alt="#">
+                        <div class="card-body" style="background-color: ">
+                          <h5 class="card-title">{{ $apartment->title }}</h5>
                             <div class="d-md-flex justify-content-md-end">
                              <a href="#" class="btn text-white fw-semibold mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #1278c6"><i class="fa-solid fa-pen"></i></a>
                              <a href="#" class="btn text-white fw-semibold mx-1" data-bs-toggle="modal" data-bs-target="#delete-post-{{$apartment->id}}-modal" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #A33B3B"><i class="fa-solid fa-trash"></i></a>
