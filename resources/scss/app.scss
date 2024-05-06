@@ -11,4 +11,18 @@
     main {
         flex-grow: 1;
     }
+
+    .main-home {
+        background-image: url(../../public/img/background-home.jpg);
+        background-position: center;
+        background-size: cover;
+        height: calc(100vh - 156px);
+    }
+
+    .main-index {
+        background-image: url(../../public/img/background-index.jpg);
+        background-position: center;
+        background-size: cover;
+        height: calc(100vh - 156px);
+    }
 }
