@@ -5,27 +5,30 @@
     
 
     <div class="container mt-4">
-    <a href="{{route('user.apartments.create')}}" class="btn btn-primary my -4" > <i class="fa-solid fa-plus"></i>Aggiungi appartamento</a>
+      <div class="d-md-flex justify-content-md-end">
+        <a href="{{route('user.apartments.create')}}" class="btn btn-primary my-3" > <i class="fa-solid fa-plus"></i> Aggiungi appartamento</a>
+      </div>
 
-        <div class="row g-3">
+        <div class="row g-2">
             @foreach ($apartments as $apartment)
-            <div class="col">
-                <a href="{{ route('user.apartments.show', $apartment) }}">
-                    <div class="card" style="width: 18rem;">
+            <div class="col-3">
+                <a class="text-decoration-none" href="{{ route('user.apartments.show', $apartment) }}">
+                    <div class="card card-index" style="width: 18rem;">
                         <img 
                         src="@if (substr($apartment->image,0,3) == 'img') {{  '/' . $apartment->image }} 
                              @else {{ asset('storage/' . $apartment->image) }}          
                              @endif" 
                              class="img-fluid" alt="#">
                         <div class="card-body">
-                          <h5 class="card-title">{{ $apartment->title }}</h5>
-                          <a href="#" class="btn btn-primary"><i class="fa-solid fa-pen"></i></a>
-                          <a href="#" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
-
-                          <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" @if ($apartment->visible) checked                           
-                            @endif
-                            <label class="form-check-label" for="flexSwitchCheckChecked">Visibile</label>
+                          <h5 class="card-title text-black">{{ $apartment->title }}</h5>
+                            <div class="d-md-flex justify-content-md-end">
+                             <a href="#" class="btn text-white fw-semibold mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #1278c6"><i class="fa-solid fa-pen"></i></a>
+                             <a href="#" class="btn text-white fw-semibold mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #A33B3B"><i class="fa-solid fa-trash"></i></a>
+                            </div>
+                             <div class="form-check form-switch fs-5">
+                               <input class="form-check-input" style="background-color: #1278c6;" type="checkbox" role="switch" id="flexSwitchCheckChecked" @if ($apartment->visible) checked                           
+                               @endif>
+                               <label class="form-check-label fw-semibold" for="flexSwitchCheckChecked">Visibile</label>
                           </div>
                         </div>
                       </div>

@@ -1,18 +1,17 @@
 <header>
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container">
-      <a class="navbar-brand" href="#">Laravel project</a>
+    <div class="container d-flex justify-content-between">
+      <a class="navbar-brand fw-semibold fs-3" href="#">Boo.House</a>
       <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
         class="navbar-toggler" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <div class="collapse navbar-collapse flex-row-reverse " id="navbarSupportedContent">
+        <ul class="navbar-nav ">
           <li class="nav-item">
             <a @class(['nav-link', 'active' => Route::currentRouteName() == 'home']) aria-current="page" href="{{ route('home') }}">Home</a>
           </li>
-
-          @guest
+           @guest
             <li class="nav-item">
               <a class="nav-link" href="{{ route('login') }}">Login</a>
             </li>
@@ -21,6 +20,7 @@
                 <a class="nav-link" href="{{ route('register') }}">Register</a>
               </li>
             @endif
+         
           @else
           <li class="nav-item">
             <a class="nav-link" href="{{ route('user.apartments.index') }}">I miei appartamenti</a>
@@ -44,6 +44,7 @@
               </div>
             </li>
           @endguest
+          </ul>
       </div>
     </div>
   </nav>
