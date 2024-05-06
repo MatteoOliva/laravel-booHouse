@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-
+use PhpParser\Node\Expr\Cast\Array_;
 
 class Apartment extends Model
 {
@@ -27,12 +27,8 @@ class Apartment extends Model
     'visible'
   ];
 
-  public function create_unique_slug()
+  public function create_unique_slug(array $existing_slugs)
   {
-    // get all the slugs from the db
-    $existing_slugs = Apartment::all()->pluck('slug')->toArray();
-    // dd($existing_slugs);
-
     // create a slug from the title
     $new_slug = Str::slug($this->title);
 

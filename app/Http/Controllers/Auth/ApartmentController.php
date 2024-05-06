@@ -55,8 +55,12 @@ class ApartmentController extends Controller
         // set the visibility to false
         $apartment->visible = false;
 
+        // get all the slugs from the db
+        $existing_slugs = Apartment::all()->pluck('slug')->toArray();
+        // dd($existing_slugs);
+
         // add the slug to the apartment and save the apartment in the db
-        $apartment->slug = $apartment->create_unique_slug();
+        $apartment->slug = $apartment->create_unique_slug($existing_slugs);
         $apartment->save();
 
         return redirect()->route('user.apartments.show', $apartment);
@@ -98,7 +102,20 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, Apartment $apartment)
     {
-        dd($apartment);
+        // get all data from the request
+        $data = $request->all();
+
+        // fill the apartment with the data from the request
+        $apartment->fill($data);
+
+        // get all the slugs from the db
+        $existing_slugs = Apartment::all()->pluck('slug')->toArray();
+        // add the slug to the apartment and save the apartment in the db
+        $apartment->slug = $apartment->create_unique_slug($existing_slugs);
+        $apartment->save();
+
+        return redirect()->route('user.apartments.show', $apartment);
+        // dd($apartment);
     }
 
     /**

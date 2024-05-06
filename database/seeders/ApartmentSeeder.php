@@ -57,37 +57,8 @@ class ApartmentSeeder extends Seeder
                     $apartment->address = $data[10];
                     $apartment->visible = $data[11];
 
-                    // create a slug from the title
-                    $new_slug = Str::slug($apartment->title);
-                    // if this slug is not in the array set before
-                    // $i = 1;
-                    while (in_array($new_slug, $slugs)) {
-                        // var_dump('inizio while ' . $new_slug . ' ciclo n ' . $i);
-
-                        // get only the last 2 carachters of the slug then parse them into int
-                        $last_digits = substr($new_slug, strlen($new_slug) - 2);
-                        $last_num = (int) $last_digits;
-                        // var_dump('caratteri ' . $last_digits, 'intero ' . $last_num);
-                        // if they are a number 
-                        if ($last_num !=  0) {
-                            // add 1 
-                            $new_num = $last_num + 1;
-                            // then if the num is < 10 add a 0 before it
-                            if ($new_num < 10) $new_num = '0' . $new_num;
-                            // get all the slug except the last 2 characters
-                            $slug_text = substr($new_slug, 0, -3);
-                        } else {
-                            // the new num to add will be 01
-                            $new_num = '01';
-                            // the slug text will be = to the whole slug
-                            $slug_text = $new_slug;
-                        }
-                        // then add the number to the text of the slug
-                        $new_slug = $slug_text . '-' . $new_num;
-                        // var_dump($new_slug);
-                        // $i++;
-                    }
-
+                    // create a new slug using the specific function from the model
+                    $new_slug = $apartment->create_unique_slug($slugs);
                     // add the slug to the array and in the new apartment
                     array_push($slugs, $new_slug);
                     $apartment->slug = $new_slug;
