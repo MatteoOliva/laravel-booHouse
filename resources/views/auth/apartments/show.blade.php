@@ -2,53 +2,56 @@
 
 @section('content')
 
-    <div class="container my-4">
-
-      {{-- pulsante sponsorizzazione --}}
-      <div class="d-md-flex justify-content-md-between my-3">
-        <a href="{{route('user.apartments.index')}}" class="btn btn-primary my -4" > <i class="fa-solid fa-circle-left me-2"></i>Torna agli appartamenti</a>
-        <a href="#" class="btn fw-semibold text-white" style="background-color: #a33b3b"><i class="fa-regular fa-handshake"></i> Sponsorizza</a>
-      </div>
-
-      {{-- immagine --}}
-      <div class="text-center">
-
-        <img 
-        src="@if (substr($apartment->image,0,3) == 'img') {{ '/' . $apartment->image }} 
-        @else {{ asset('storage/' . $apartment->image) }}          
-        @endif" 
-        class="img-fluid rounded mt-2 text-center" alt="#">
-      </div>
 
 
-      {{-- appartamento --}}
-      <h1 class="mt-4 fw-bold">{{ $apartment->title }}</h1>
-      <p>{{ $apartment->description }}</p>
-      <h5 class="fw-bold fs-3">Informazioni Appartamento</h5>
-      <p> <strong>Indirizzo: </strong>{{ $apartment->address }}</p>
-      <p><strong>Camere: </strong>{{ $apartment->rooms }}</p>
-      <p><strong>Letti: </strong>{{ $apartment->beds }}</p>
-      <p><strong>Bagni: </strong>{{ $apartment->toilets }}</p>
-      <p><strong>Metri quadri: </strong>{{ $apartment->mq }}</p>
-   
-      {{-- servizi --}}
-      <h5 class="fw-bold fs-3">Servizi</h5>
-      @foreach ($services as $service)
-      <div class="mb-3">
+  
+  <div class="container my-4">
+    
+    {{-- pulsante sponsorizzazione --}}
+    <div class="d-md-flex justify-content-md-between my-3">
+      <a href="{{route('user.apartments.index')}}" class="btn btn-primary my -4" > <i class="fa-solid fa-circle-left me-2"></i>Torna agli appartamenti</a>
+      <a href="#" class="btn fw-semibold text-white" style="background-color: #a33b3b"><i class="fa-regular fa-handshake"></i> Sponsorizza</a>
+    </div>
+    
+    {{-- immagine --}}
+    <div class="text-center">
+      
+      <img 
+      src="@if (substr($apartment->image,0,3) == 'img') {{ '/' . $apartment->image }} 
+      @else {{ asset('storage/' . $apartment->image) }}          
+      @endif" 
+      class="img-fluid rounded mt-2 text-center" alt="#">
+    </div>
+    
+    
+    {{-- appartamento --}}
+    <h1 class="mt-4 fw-bold">{{ $apartment->title }}</h1>
+    <p>{{ $apartment->description }}</p>
+    <h5 class="fw-bold fs-3">Informazioni Appartamento</h5>
+    <p> <strong>Indirizzo: </strong>{{ $apartment->address }}</p>
+    <p><strong>Camere: </strong>{{ $apartment->rooms }}</p>
+    <p><strong>Letti: </strong>{{ $apartment->beds }}</p>
+    <p><strong>Bagni: </strong>{{ $apartment->toilets }}</p>
+    <p><strong>Metri quadri: </strong>{{ $apartment->mq }}</p>
+    
+    {{-- servizi --}}
+    <h5 class="fw-bold fs-3">Servizi</h5>
+    @foreach ($services as $service)
+    <div class="mb-3">
         <img src="{{ '/' . $service->icon }}" alt="" style="width: 30px">
         {{ $service->name }}
       </div>
       @endforeach
-
+      
       
       {{-- modifica e cancella --}}
       <div class="mt-4">
-
+        
         <a href="{{ route('user.apartments.edit' , $apartment) }}" class="btn text-white fw-semibold" style="background-color: #1278c6"><i class="fa-solid fa-pen"></i> Modifica</a>
         <button type="button" class="btn text-white fw-semibold mx-1" data-bs-toggle="modal" data-bs-target="#delete-post-{{$apartment->id}}-modal" style="background-color: #A33B3B">
           <i class="fa-solid fa-trash"></i> Cancella
         </button>
-
+        
       </div>
       
       {{-- switch --}}
@@ -57,15 +60,16 @@
         @endif>
         <label class="form-check-label fw-semibold" for="flexSwitchCheckChecked">Visibile</label>
       </div>
-
+      
     </div>
     
 
-@endsection
-
-@section('modal')
-
-<div class="modal fade" id="delete-post-{{$apartment->id}}-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    
+    @endsection
+    
+    @section('modal')
+    
+    <div class="modal fade" id="delete-post-{{$apartment->id}}-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content bg-dark text-light">
       <div class="modal-header">
@@ -77,7 +81,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-
+        
         <form action="{{route('user.apartments.destroy', $apartment)}}" method="POST">
         @csrf
         @method('DELETE')

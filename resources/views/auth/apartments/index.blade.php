@@ -1,19 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
+<div class=" main-index">
 
-    
-
-    <div class="container mt-4">
-      <div class="d-md-flex justify-content-md-end">
-        <a href="{{route('user.apartments.create')}}" class="btn btn-primary my-3" > <i class="fa-solid fa-plus"></i> Aggiungi appartamento</a>
+  
+  
+  <div class="container mt-4">
+    <div class="d-md-flex justify-content-md-end">
+      <a href="{{route('user.apartments.create')}}" class="btn btn-primary my-3" > <i class="fa-solid fa-plus"></i> Aggiungi appartamento</a>
       </div>
-
+      
         <div class="row g-2">
-            @foreach ($apartments as $apartment)
-            <div class="col-3">
+          @foreach ($apartments as $apartment)
+          <div class="col-3">
                 <a class="text-decoration-none" href="{{ route('user.apartments.show', $apartment) }}">
-                    <div class="card card-index h-100" style="width: 18rem;">
+                  <div class="card card-index h-100" style="width: 18rem;">
                         <img 
                         src="@if (substr($apartment->image,0,3) == 'img') {{  '/' . $apartment->image }} 
                              @else {{ asset('storage/' . $apartment->image) }}          
@@ -22,30 +23,31 @@
                         <div class="card-body" style="background-color: ">
                           <h5 class="card-title">{{ $apartment->title }}</h5>
                             <div class="d-md-flex justify-content-md-end">
-                           
-
-                             <a href="{{ route('user.apartments.edit', $apartment) }}" class="btn text-white fw-semibold mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #1278c6"><i class="fa-solid fa-pen"></i></a>                       
-                             <button type="button" class="btn text-white fw-semibold mx-1" data-bs-toggle="modal" data-bs-target="#delete-post-{{$apartment->id}}-modal" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #A33B3B">
-                              <i class="fa-solid fa-trash"></i>
-                            </button>
-
+                              
+                              
+                              <a href="{{ route('user.apartments.edit', $apartment) }}" class="btn text-white fw-semibold mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #1278c6"><i class="fa-solid fa-pen"></i></a>                       
+                              <button type="button" class="btn text-white fw-semibold mx-1" data-bs-toggle="modal" data-bs-target="#delete-post-{{$apartment->id}}-modal" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #A33B3B">
+                                <i class="fa-solid fa-trash"></i>
+                              </button>
+                              
                             </div>
-                             <div class="form-check form-switch fs-5">
-                               <input class="form-check-input" style="background-color: #1278c6;" type="checkbox" role="switch" id="flexSwitchCheckChecked" @if ($apartment->visible) checked                           
+                            <div class="form-check form-switch fs-5">
+                              <input class="form-check-input" style="background-color: #1278c6;" type="checkbox" role="switch" id="flexSwitchCheckChecked" @if ($apartment->visible) checked                           
                                @endif>
                                <label class="form-check-label fw-semibold" for="flexSwitchCheckChecked">Visibile</label>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                </a>
+                        </a>
                 
-            </div>
+                      </div>
             @endforeach
         </div>
     </div>
     
-
-@endsection
+  </div>
+    
+    @endsection
 
 @section('modal')
 @foreach($apartments as $apartment)
