@@ -4,9 +4,13 @@
 
     <div class="container my-4 ">
 
-        <h1 class="mb-5">Aggiungi un nuovo appartamento</h1>
+        @if(!isset($apartment->id))
+            <h1 class="mb-5">Aggiungi un nuovo appartamento</h1>
+        @else
+            <h1 class="mb-5">Modifica l'appartmento {{ $apartment->title }}</h1>
+        @endif
 
-        <form action="@if (!isset($apartment->id)) {{ route('user.apartments.store') }} @else {{ route('user.apartments.update') }} @endif" method="POST" enctype="multipart/form-data" id="apartment-form">
+        <form action="@if (!isset($apartment->id)) {{ route('user.apartments.store') }} @else {{ route('user.apartments.update', $apartment) }} @endif" method="POST" enctype="multipart/form-data" id="apartment-form">
             @csrf
             @if (isset($apartment->id)) 
                 @method('PATCH')
@@ -16,43 +20,43 @@
     
                 <div class="col-6">
                     <label for="description" class="form-label">Titolo</label>
-                    <input type="text" class="form-control" id="title" name="title" value=""/>
+                    <input type="text" class="form-control" id="title" name="title" value="{{ old('title') ?? $apartment->title ?? '' }}"/>
                 </div>
 
                 <div class="col-6">
                     <label for="description" class="form-label">Descrizione</label>
-                    <input type="text" class="form-control" id="description" name="description" value=""/>
+                    <textarea class="form-control" id="description" name="description" cols="30" rows="10">{{ old('description') ?? $apartment->description ?? ''  }}</textarea>
                 </div>
 
                 <div class="col-6">
                     <label for="rooms" class="form-label">N. di camere</label>
-                    <input type="number" class="form-control" id="rooms" name="rooms" value=""/>
+                    <input type="number" class="form-control" id="rooms" name="rooms" min="1" value="{{ old('rooms') ?? $apartment->rooms ?? '' }}"/>
                 </div>
 
                 <div class="col-6">
                     <label for="beds" class="form-label">N. di letti</label>
-                    <input type="number" class="form-control" id="beds" name="beds" value=""/>
+                    <input type="number" class="form-control" id="beds" name="beds" value="{{ old('beds') ?? $apartment->beds ?? '' }}"/>
                 </div>
 
                 <div class="col-6">
                     <label for="toilets" class="form-label">N. di bagni</label>
-                    <input type="number" class="form-control" id="toilets" name="toilets" value=""/>
+                    <input type="number" class="form-control" id="toilets" name="toilets" min="1" value="{{ old('toilets') ?? $apartment->toilets ?? '' }}"/>
                 </div>
 
                 <div class="col-6">
                     <label for="mq" class="form-label">Metri quadri</label>
-                    <input type="number" class="form-control" id="mq" name="mq" value=""/>
+                    <input type="number" class="form-control" id="mq" name="mq" min="5" value="{{ old('mq') ?? $apartment->mq ?? '' }}"/>
                 </div>
 
                 <div class="col-6">
                     <label for="image" class="form-label">Immagine</label>
-                    <input type="text" class="form-control" id="image" name="image" value=""/>
+                    <input type="text" class="form-control" id="image" name="image" value="{{ old('image') ?? $apartment->image ?? '' }}"/>
                 </div>
 
 
                 <div class="col-6">
                     <label for="address" class="form-label">Indirizzo</label>
-                    <input type="text" class="form-control" id="address" name="address" value=""/>
+                    <input type="text" class="form-control" id="address" name="address" value="{{ old('address') ?? $apartment->address ?? '' }}"/>
                 </div>
                 
                 <div class="col">
@@ -90,27 +94,29 @@
 
     <script>
        const saveButton = document.getElementById('save-button-form').addEventListener('click', function(event) {
-        event.preventDefault();
+            event.preventDefault();
 
-        const url = 'https://api.tomtom.com/search/2/geocode/torino via roma 12.json?key=1ylMcjS1X2qwG3Q6Vy0KqcXpAjOa4ZkR';
+            const query = document.getElementById('address').value;
+            const apiKey = 'tVbQugvPnOmcoGB8KmMvPNhfIBjPvzZ4';
+            const url = 'https://api.tomtom.com/search/2/geocode' + query + 'json?key=' + apiKey;
+            // console.log(apiKey);
 
-        axios.get(url).then((response) => {
+            // axios.get(url).then((response) => {
 
-            const lat = response.data.results[0].position.lat;
-            const lon = response.data.results[0].position.lon;
+            //     const lat = response.data.results[0].position.lat;
+            //     const lon = response.data.results[0].position.lon;
 
+            //     document.getElementById('lat').value = lat;
+            //     document.getElementById('lon').value = lon;
 
+            //     document.getElementById('apartment-form').submit();
+            
+            // })
 
-            document.getElementById('lat').value = lat;
-            document.getElementById('lon').value = lon;
-
+            document.getElementById('lat').value = 10;
+            document.getElementById('lon').value = 10;
 
             document.getElementById('apartment-form').submit();
-
-
-
-          
-        })
 
        });
     </script>

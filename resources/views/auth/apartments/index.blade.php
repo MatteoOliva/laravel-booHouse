@@ -22,8 +22,11 @@
                         <div class="card-body">
                           <h5 class="card-title text-black">{{ $apartment->title }}</h5>
                             <div class="d-md-flex justify-content-md-end">
-                             <a href="#" class="btn text-white fw-semibold mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #1278c6"><i class="fa-solid fa-pen"></i></a>
-                             <a href="#" class="btn text-white fw-semibold mx-1" data-bs-toggle="modal" data-bs-target="#delete-post-{{$apartment->id}}-modal" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #A33B3B"><i class="fa-solid fa-trash"></i></a>
+                           
+
+                             <a href="{{ route('user.apartments.edit', $apartment) }}" class="btn text-white fw-semibold mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #1278c6"><i class="fa-solid fa-pen"></i></a>
+                             <a href="#" class="btn text-white fw-semibold mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #A33B3B"><i class="fa-solid fa-trash"></i></a>
+
                             </div>
                              <div class="form-check form-switch fs-5">
                                <input class="form-check-input" style="background-color: #1278c6;" type="checkbox" role="switch" id="flexSwitchCheckChecked" @if ($apartment->visible) checked                           
