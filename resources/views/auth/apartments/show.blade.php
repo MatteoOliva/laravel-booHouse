@@ -5,17 +5,20 @@
     <div class="container my-4">
 
       {{-- pulsante sponsorizzazione --}}
-      <div class="d-md-flex justify-content-md-between">
+      <div class="d-md-flex justify-content-md-between my-3">
         <a href="{{route('user.apartments.index')}}" class="btn btn-primary my -4" > <i class="fa-solid fa-circle-left me-2"></i>Torna agli appartamenti</a>
         <a href="#" class="btn fw-semibold text-white" style="background-color: #a33b3b"><i class="fa-regular fa-handshake"></i> Sponsorizza</a>
       </div>
 
       {{-- immagine --}}
-      <img 
-      src="@if (substr($apartment->image,0,3) == 'img') {{ '/' . $apartment->image }} 
-      @else {{ asset('storage/' . $apartment->image) }}          
-      @endif" 
-      class="img-fluid rounded mt-2" alt="#">
+      <div class="text-center">
+
+        <img 
+        src="@if (substr($apartment->image,0,3) == 'img') {{ '/' . $apartment->image }} 
+        @else {{ asset('storage/' . $apartment->image) }}          
+        @endif" 
+        class="img-fluid rounded mt-2 text-center" alt="#">
+      </div>
 
 
       {{-- appartamento --}}
@@ -66,7 +69,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Stai liberando l'appartamento <strong style="color: #a33b3b">"{{$apartment->title}}".</strong> dal suo destino! L'operazione non ha ritorno, come un contratto con il diavolo!...SEI SICURO?!?
+        Stai liberando l'appartamento <strong style="color: red">"{{$apartment->title}}".</strong> dal suo destino! L'operazione non ha ritorno, come un contratto con il diavolo!...SEI SICURO?!?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
