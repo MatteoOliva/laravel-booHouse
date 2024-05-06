@@ -13,14 +13,14 @@
             @foreach ($apartments as $apartment)
             <div class="col-3">
                 <a class="text-decoration-none" href="{{ route('user.apartments.show', $apartment) }}">
-                    <div class="card card-index" style="width: 18rem;">
+                    <div class="card card-index h-100" style="width: 18rem;">
                         <img 
                         src="@if (substr($apartment->image,0,3) == 'img') {{  '/' . $apartment->image }} 
                              @else {{ asset('storage/' . $apartment->image) }}          
                              @endif" 
-                             class="img-fluid" alt="#">
-                        <div class="card-body">
-                          <h5 class="card-title text-black">{{ $apartment->title }}</h5>
+                             class="img-fluid rounded-top" alt="#">
+                        <div class="card-body" style="background-color: ">
+                          <h5 class="card-title">{{ $apartment->title }}</h5>
                             <div class="d-md-flex justify-content-md-end">
                            
 
@@ -49,13 +49,13 @@
 @foreach($apartments as $apartment)
 <div class="modal fade" id="delete-post-{{$apartment->id}}-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+    <div class="modal-content bg-dark text-light">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Eliminazione appartamento!</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel"><i class="fa-solid fa-skull"></i><i class="fa-solid fa-skull"></i><i class="fa-solid fa-skull"></i> Eliminazione appartamento! <i class="fa-solid fa-skull"></i><i class="fa-solid fa-skull"></i><i class="fa-solid fa-skull"></i></h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Stai rimuovendo l'appartamento <strong style="color: #a33b3b"> "{{$apartment->title}}".</strong> L'operazione non e' reversibile.
+        Stai liberando l'appartamento <strong style="color: red"> "{{$apartment->title}}".</strong> dal suo destino! L'operazione non ha ritorno, come un contratto con il diavolo!...SEI SICURO?!?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
