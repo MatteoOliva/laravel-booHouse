@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Type\Decimal;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 
 class ApartmentController extends Controller
 {
@@ -62,10 +63,13 @@ class ApartmentController extends Controller
         // get all the slugs from the db
         $existing_slugs = Apartment::all()->pluck('slug')->toArray();
         // dd($existing_slugs);
-
         // add the slug to the apartment and save the apartment in the db
         $apartment->slug = $apartment->create_unique_slug($existing_slugs);
-        dd($apartment);
+        // dd($apartment);
+
+        //ifthe request contains the key image then save it in the store folder and save the path in the db
+        if ($request->hasFile('image')) $apartment->image = Storage::put('uploads/projects', $request->file('image'));
+
         $apartment->save();
 
         //if the key services exist in the array data, then assign the values passed
@@ -121,11 +125,19 @@ class ApartmentController extends Controller
         // fill the apartment with the data from the request
         $apartment->fill($data);
 
-
         // get all the slugs from the db
         $existing_slugs = Apartment::all()->pluck('slug')->toArray();
         // add the slug to the apartment and save the apartment in the db
         $apartment->slug = $apartment->create_unique_slug($existing_slugs);
+
+        //if the request has an image
+        if ($apartment->hasFile('image')) {
+            // apartment already has an image, delete it from the storage
+            if ($apartment->image) Storage::delete($apartment->image);
+            //then add the new path to the db
+            $apartment->image = Storage::put('uploads/projects', $request->file('image'));
+        }
+
         $apartment->save();
 
         //if the key services exist in the array data
