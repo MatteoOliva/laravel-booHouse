@@ -45,7 +45,9 @@
       <div class="mt-4">
 
         <a href="{{ route('user.apartments.edit' , $apartment) }}" class="btn text-white fw-semibold" style="background-color: #1278c6"><i class="fa-solid fa-pen"></i> Modifica</a>
-        <a href="#" class="btn text-white fw-semibold" style="background-color: #A33B3B"><i class="fa-solid fa-trash"></i> Cancella</a>
+        <button type="button" class="btn text-white fw-semibold mx-1" data-bs-toggle="modal" data-bs-target="#delete-post-{{$apartment->id}}-modal" style="background-color: #A33B3B">
+          <i class="fa-solid fa-trash"></i> Cancella
+        </button>
 
       </div>
       
