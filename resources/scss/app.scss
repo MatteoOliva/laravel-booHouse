@@ -1,5 +1,7 @@
 @import "~bootstrap/scss/bootstrap";
-@import "IndexApartments.scss";
+@import "partials/variables";
+@import "Apartments/IndexApartments.scss";
+@import "Apartments/ShowApartments.scss";
 
 .wrapper {
     min-height: 100vh;
