@@ -79,12 +79,30 @@
     
             </div>
 
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary" id="save-button-form">Save</button>
         </form>
 
 
     </div>
     
+
+@endsection
+
+@section('js')
+
+
+    <script>
+       const saveButton = document.getElementById('save-button-form').addEventListener('click', function(event) {
+        event.preventDefault();
+
+        const url = 'https://api.tomtom.com/search/2/geocode/torino via roma 12.json?key=tVbQugvPnOmcoGB8KmMvPNhfIBjPvzZ4';
+
+        axios.get(url).then((response) => {
+            console.log(response.data);
+        })
+
+       });
+    </script>
 
 @endsection
 
