@@ -32,7 +32,8 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('auth.apartments.form');
     }
 
     /**

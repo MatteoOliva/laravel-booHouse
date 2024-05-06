@@ -5,6 +5,8 @@
     
 
     <div class="container mt-4">
+    <a href="{{route('user.apartments.create')}}" class="btn btn-primary my -4" > <i class="fa-solid fa-plus"></i>Aggiungi appartamento</a>
+
         <div class="row g-3">
             @foreach ($apartments as $apartment)
             <div class="col">
@@ -22,7 +24,7 @@
 
                           <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" @if ($apartment->visible) checked                           
-                            @endif>
+                            @endif
                             <label class="form-check-label" for="flexSwitchCheckChecked">Visibile</label>
                           </div>
                         </div>
