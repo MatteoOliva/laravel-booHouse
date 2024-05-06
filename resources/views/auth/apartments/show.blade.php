@@ -39,7 +39,7 @@
       
       {{-- modifica e cancella --}}
       <div class="mt-4">
-        <a href="#" class="btn text-white fw-semibold" style="background-color: #1278c6"><i class="fa-solid fa-pen"></i> Modifica</a>
+        <a href="{{ route('user.apartments.edit' , $apartment) }}" class="btn text-white fw-semibold" style="background-color: #1278c6"><i class="fa-solid fa-pen"></i> Modifica</a>
         <a href="#" class="btn text-white fw-semibold" style="background-color: #A33B3B"><i class="fa-solid fa-trash"></i> Cancella</a>
       </div>
       

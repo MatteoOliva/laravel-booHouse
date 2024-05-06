@@ -48,9 +48,20 @@
                     <input type="number" class="form-control" id="mq" name="mq" min="5" value="{{ old('mq') ?? $apartment->mq ?? '' }}"/>
                 </div>
 
-                <div class="col-6">
-                    <label for="image" class="form-label">Immagine</label>
-                    <input type="text" class="form-control" id="image" name="image" value="{{ old('image') ?? $apartment->image ?? '' }}"/>
+                <div class="col-6">                
+                    @if(isset($apartment->image))
+                        <div class="form-label">Immagine</div>
+                        <img class="img-fluid mb-3" src="{{ asset('storage/' . $apartment->image) }}" alt="apartment image">
+                        <label for="image" class="form-label">Cambia immagine</label>
+                    @else
+                        <label for="image" class="form-label">Aggiungi Immagine</label>
+                    @endif
+                    <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image" value="{{ old('image') ?? '' }}">
+                    @error('image')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
 
 
