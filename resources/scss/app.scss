@@ -12,3 +12,13 @@
         flex-grow: 1;
     }
 }
+
+.image-cover {
+    position: relative;
+
+    .image-trash {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+}
