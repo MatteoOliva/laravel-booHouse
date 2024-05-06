@@ -79,6 +79,8 @@
             </div>
 
             <button type="submit" class="btn btn-primary" id="save-button-form">Save</button>
+            
+            <button type="submit" class="btn btn-danger" id="save-button-form">Save</button>
         </form>
 
 
