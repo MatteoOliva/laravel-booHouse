@@ -48,10 +48,29 @@
                     <input type="number" class="form-control" id="mq" name="mq" min="5" value="{{ old('mq') ?? $apartment->mq ?? '' }}"/>
                 </div>
 
-                <div class="col-6">
-                    <label for="image" class="form-label">Immagine</label>
-                    <input type="text" class="form-control" id="image" name="image" value="{{ old('image') ?? $apartment->image ?? '' }}"/>
+                <div class="col-6">                
+                    @if(isset($apartment->image))
+                        <div class="form-label">Immagine</div>
+                        <img class="img-fluid mb-3" src="{{ asset('storage/' . $apartment->image) }}" alt="apartment image">
+                        <label for="image" class="form-label">Cambia immagine</label>
+                    @else
+                        <label for="image" class="form-label">Aggiungi Immagine</label>
+                    @endif
+                    <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image" value="{{ old('image') ?? '' }}">
+                    @error('image')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
+
+                @if(isset($apartment->image))
+                    
+                    <div class="col-6 d-flex flex-column justify-content-end align-items-start">
+                        <div class="btn btn-danger" id="delete-img-btn">Delete Image</div>
+                    </div>
+                    
+                @endif
 
 
                 <div class="col-6">
@@ -83,6 +102,12 @@
             <button type="submit" class="btn btn-danger" id="save-button-form">Save</button>
         </form>
 
+        @if(isset($apartment->image))
+            <form class="d-none" action="{{ route('user.apartments.destroy_image', $apartment) }}" method="POST" id="delete-img-form">
+                @csrf
+                @method('DELETE') 
+            </form>
+        @endif
 
     </div>
     
@@ -119,6 +144,23 @@
             document.getElementById('apartment-form').submit();
 
        });
+
+       // get all elements from the dom
+        const deleteImgForm = document.getElementById('delete-img-form');
+        const deleteImgBtn = document.getElementById('delete-img-btn');
+        // console.log(deleteImgBtn,deleteImgForm);
+
+        if(deleteImgBtn) {
+
+            // add an event listener on the button
+            deleteImgBtn.addEventListener('click', () => {
+
+                console.log(deleteImgForm);
+                //submit the form
+                deleteImgForm.submit();
+            });
+
+        }
     </script>
 
 @endsection

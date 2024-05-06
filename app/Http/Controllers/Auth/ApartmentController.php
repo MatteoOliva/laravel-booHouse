@@ -8,7 +8,6 @@ use App\Models\Apartment;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Ramsey\Uuid\Type\Decimal;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
@@ -68,7 +67,7 @@ class ApartmentController extends Controller
         // dd($apartment);
 
         //ifthe request contains the key image then save it in the store folder and save the path in the db
-        if ($request->hasFile('image')) $apartment->image = Storage::put('uploads/projects', $request->file('image'));
+        if ($request->hasFile('image')) $apartment->image = Storage::put('uploads/apartments', $request->file('image'));
 
         $apartment->save();
 
@@ -131,11 +130,11 @@ class ApartmentController extends Controller
         $apartment->slug = $apartment->create_unique_slug($existing_slugs);
 
         //if the request has an image
-        if ($apartment->hasFile('image')) {
+        if ($request->hasFile('image')) {
             // apartment already has an image, delete it from the storage
             if ($apartment->image) Storage::delete($apartment->image);
             //then add the new path to the db
-            $apartment->image = Storage::put('uploads/projects', $request->file('image'));
+            $apartment->image = Storage::put('uploads/apartments', $request->file('image'));
         }
 
         $apartment->save();
@@ -164,5 +163,23 @@ class ApartmentController extends Controller
     {
         $apartment->delete();
         return redirect()->route('user.apartments.index');
+    }
+
+    /**
+     * Delete the image related to the apartment
+     *
+     */
+    public function destroy_image(Apartment $apartment)
+    {
+        //delete the image from the storage
+        Storage::delete($apartment->image);
+        //set the value of apartment image to null
+        $apartment->image = "img/placeholder.webp";
+        // set the apartment to not visible
+        $apartment->visible = false;
+        //save the apartment in the db
+        $apartment->save();
+        //return the user to where it was
+        return redirect()->back();
     }
 }
