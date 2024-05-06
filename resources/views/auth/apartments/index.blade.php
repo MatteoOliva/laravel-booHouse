@@ -24,8 +24,10 @@
                             <div class="d-md-flex justify-content-md-end">
                            
 
-                             <a href="{{ route('user.apartments.edit', $apartment) }}" class="btn text-white fw-semibold mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #1278c6"><i class="fa-solid fa-pen"></i></a>
-                             <a href="#" class="btn text-white fw-semibold mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #A33B3B"><i class="fa-solid fa-trash"></i></a>
+                             <a href="{{ route('user.apartments.edit', $apartment) }}" class="btn text-white fw-semibold mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #1278c6"><i class="fa-solid fa-pen"></i></a>                       
+                             <button type="button" class="btn text-white fw-semibold mx-1" data-bs-toggle="modal" data-bs-target="#delete-post-{{$apartment->id}}-modal" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #A33B3B">
+                              <i class="fa-solid fa-trash"></i>
+                            </button>
 
                             </div>
                              <div class="form-check form-switch fs-5">
@@ -55,7 +57,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Stai liberando l'appartamento <strong style="color: red"> "{{$apartment->title}}".</strong> dal suo destino! L'operazione non ha ritorno, come un contratto con il diavolo!...SEI SICURO?!?
+        Stai liberando l'appartamento <strong style="color:  #A33B3B"> "{{$apartment->title}}".</strong> dal suo destino! L'operazione non ha ritorno, come un contratto con il diavolo!...SEI SICURO?!?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
