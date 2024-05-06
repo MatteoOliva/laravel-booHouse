@@ -63,6 +63,19 @@
                     <label for="address" class="form-label">Indirizzo</label>
                     <input type="text" class="form-control" id="address" name="address" value=""/>
                 </div>
+                
+                <div class="col">
+                    <div class="form-label mb-1">Servizi aggiuntivi disponibili</div>
+                    <div class="d-flex flex-wrap">
+                        @foreach ($services as $service)
+                            <div>
+                                <input type="checkbox" name="services[]" id="tags-{{ $service->id }}" value="{{ $service->id }}" {{ in_array($service->id, old('service') ?? $related_services_ids ?? []) ? 'checked' : '' }} class="ms-1">
+                                <label for="tags-{{ $service->id }}" class="ms-3">{{ $service->name }}</label>
+                                <img src="{{ '/' . $service->icon }}" alt="">
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
     
             </div>
 

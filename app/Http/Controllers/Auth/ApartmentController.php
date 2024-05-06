@@ -32,7 +32,9 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        return view('auth.apartments.form');
+        // get all services for the db
+        $services = Service::all();
+        return view('auth.apartments.form', compact('services'));
     }
 
     /**
@@ -90,7 +92,11 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        return view('auth.apartments.form', compact('apartment'));
+        // get all services for the db
+        $services = Service::all();
+        // get an array of the ids of services alredy related to this apartment
+        $related_services_ids = $apartment->services->pluck('id')->toArray();
+        return view('auth.apartments.form', compact('apartment', 'services', 'related_services_ids'));
     }
 
     /**
