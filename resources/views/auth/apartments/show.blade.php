@@ -5,8 +5,9 @@
     <div class="container my-4">
 
       {{-- pulsante sponsorizzazione --}}
-      <div class="d-md-flex justify-content-md-end">
-        <a href="#" class="btn fw-semibold text-white" style="background-color: #990000"><i class="fa-regular fa-handshake"></i> Sponsorizza</a>
+      <div class="d-md-flex justify-content-md-between">
+        <a href="{{route('user.apartments.index')}}" class="btn btn-primary my -4" > <i class="fa-solid fa-circle-left me-2"></i>Torna agli appartamenti</a>
+        <a href="#" class="btn fw-semibold text-white" style="background-color: #a33b3b"><i class="fa-regular fa-handshake"></i> Sponsorizza</a>
       </div>
 
       {{-- immagine --}}
@@ -40,7 +41,7 @@
       {{-- modifica e cancella --}}
       <div class="mt-4">
         <a href="#" class="btn text-white fw-semibold" style="background-color: #1278c6"><i class="fa-solid fa-pen"></i> Modifica</a>
-        <a href="#" class="btn text-white fw-semibold" style="background-color: #A33B3B"><i class="fa-solid fa-trash"></i> Cancella</a>
+        <a href="#" class="btn text-white fw-semibold" data-bs-toggle="modal" data-bs-target="#delete-post-{{$apartment->id}}-modal" style="background-color: #A33B3B"><i class="fa-solid fa-trash"></i> Cancella</a>
       </div>
       
       {{-- switch --}}
@@ -52,6 +53,35 @@
 
     </div>
     
+
+@endsection
+
+@section('modal')
+
+<div class="modal fade" id="delete-post-{{$apartment->id}}-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel"><i class="fa-solid fa-skull"></i><i class="fa-solid fa-skull"></i><i class="fa-solid fa-skull"></i> Eliminazione appartamento! <i class="fa-solid fa-skull"></i><i class="fa-solid fa-skull"></i><i class="fa-solid fa-skull"></i></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Stai liberando l'appartamento <strong style="color: #a33b3b">"{{$apartment->title}}".</strong> dal suo destino! L'operazione non ha ritorno, come un contratto con il diavolo!...SEI SICURO?!?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+
+        <form action="{{route('user.apartments.destroy', $apartment)}}" method="POST">
+        @csrf
+        @method('DELETE')
+        <button class="btn btn-danger" style="background-color: #a33b3b">Elimina</button>
+
+         </form>
+
+      </div>
+    </div>
+  </div>
+</div>
 
 @endsection
 
