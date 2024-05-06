@@ -9,6 +9,7 @@ use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Type\Decimal;
+use Illuminate\Support\Arr;
 
 class ApartmentController extends Controller
 {
@@ -58,8 +59,6 @@ class ApartmentController extends Controller
         // set the visibility to false
         $apartment->visible = false;
 
-       
-
         // get all the slugs from the db
         $existing_slugs = Apartment::all()->pluck('slug')->toArray();
         // dd($existing_slugs);
@@ -68,6 +67,10 @@ class ApartmentController extends Controller
         $apartment->slug = $apartment->create_unique_slug($existing_slugs);
         dd($apartment);
         $apartment->save();
+
+        //if the key services exist in the array data, then assign the values passed
+        //with data[services] to the apartment, creating the relations
+        if (Arr::exists($data, 'services')) $apartment->services()->attach($data['services']);
 
         return redirect()->route('user.apartments.show', $apartment);
         // dd($apartment);
@@ -118,12 +121,22 @@ class ApartmentController extends Controller
         // fill the apartment with the data from the request
         $apartment->fill($data);
 
-       
+
         // get all the slugs from the db
         $existing_slugs = Apartment::all()->pluck('slug')->toArray();
         // add the slug to the apartment and save the apartment in the db
         $apartment->slug = $apartment->create_unique_slug($existing_slugs);
         $apartment->save();
+
+        //if the key services exist in the array data
+        if (Arr::exists($data, 'services')) {
+            //assign the values passed
+            //with data[services] to the apartment, creating the relationships
+            $apartment->services()->sync($data['services']);
+        } else {
+            //detach all services from this apartment
+            $apartment->services()->detach();
+        }
 
         return redirect()->route('user.apartments.show', $apartment);
         // dd($apartment);
