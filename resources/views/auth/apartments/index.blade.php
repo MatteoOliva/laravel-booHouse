@@ -13,7 +13,7 @@
             @foreach ($apartments as $apartment)
             <div class="col-3">
                 <a class="text-decoration-none" href="{{ route('user.apartments.show', $apartment) }}">
-                    <div class="card" style="width: 18rem;">
+                    <div class="card card-index" style="width: 18rem;">
                         <img 
                         src="@if (substr($apartment->image,0,3) == 'img') {{  '/' . $apartment->image }} 
                              @else {{ asset('storage/' . $apartment->image) }}          
