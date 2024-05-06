@@ -64,6 +64,14 @@
                     @enderror
                 </div>
 
+                @if(isset($apartment->image))
+                    
+                    <div class="col-6 d-flex flex-column justify-content-end align-items-start">
+                        <div class="btn btn-danger" id="delete-img-btn">Delete Image</div>
+                    </div>
+                    
+                @endif
+
 
                 <div class="col-6">
                     <label for="address" class="form-label">Indirizzo</label>
@@ -92,6 +100,12 @@
             <button type="submit" class="btn btn-primary" id="save-button-form">Save</button>
         </form>
 
+        @if(isset($apartment->image))
+            <form class="d-none" action="{{ route('user.apartments.destroy_image', $apartment) }}" method="POST" id="delete-img-form">
+                @csrf
+                @method('DELETE') 
+            </form>
+        @endif
 
     </div>
     
@@ -128,6 +142,23 @@
             document.getElementById('apartment-form').submit();
 
        });
+
+       // get all elements from the dom
+        const deleteImgForm = document.getElementById('delete-img-form');
+        const deleteImgBtn = document.getElementById('delete-img-btn');
+        // console.log(deleteImgBtn,deleteImgForm);
+
+        if(deleteImgBtn) {
+
+            // add an event listener on the button
+            deleteImgBtn.addEventListener('click', () => {
+
+                console.log(deleteImgForm);
+                //submit the form
+                deleteImgForm.submit();
+            });
+
+        }
     </script>
 
 @endsection

@@ -28,15 +28,16 @@ Route::middleware('auth')
 
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])
       ->name('dashboard');
-
   });
 
-  // rotta protetta apartment
+// rotta protetta apartment
 Route::middleware('auth')
   ->name('user.')
-  ->group(function(){
-    
+  ->group(function () {
+
     Route::resource('apartments', ApartmentController::class);
   });
+
+Route::delete('apartments/{apartment}/destroy_image', [ApartmentController::class, 'destroy_image'])->middleware('auth')->name('user.apartments.destroy_image');
 
 require __DIR__ . '/auth.php';
