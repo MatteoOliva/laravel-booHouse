@@ -6,7 +6,7 @@
 
         <h1 class="mb-5">Aggiungi un nuovo appartamento</h1>
 
-        <form action="@if (!isset($apartment->id)) {{ route('user.apartments.store') }} @else {{ route('user.apartments.update') }} @endif" method="POST" enctype="multipart/form-data">
+        <form action="@if (!isset($apartment->id)) {{ route('user.apartments.store') }} @else {{ route('user.apartments.update') }} @endif" method="POST" enctype="multipart/form-data" id="apartment-form">
             @csrf
             @if (isset($apartment->id)) 
                 @method('PATCH')
@@ -49,15 +49,6 @@
                     <input type="text" class="form-control" id="image" name="image" value=""/>
                 </div>
 
-                <div class="col-6">
-                    <label for="lat" class="form-label">Lat</label>
-                    <input type="number" class="form-control" id="lat" name="lat" value=""/>
-                </div>
-
-                <div class="col-6">
-                    <label for="lon" class="form-label">Lon</label>
-                    <input type="number" class="form-control" id="lon" name="lon" value=""/>
-                </div>
 
                 <div class="col-6">
                     <label for="address" class="form-label">Indirizzo</label>
@@ -76,15 +67,51 @@
                         @endforeach
                     </div>
                 </div>
+
+                {{-- hidden fields for lat and lon --}}
+                <input type="hidden" id="lat" name="lat" value="">
+                <input type="hidden" id="lon" name="lon" value="">
     
             </div>
 
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary" id="save-button-form">Save</button>
         </form>
 
 
     </div>
     
+
+@endsection
+
+@section('js')
+
+
+    <script>
+       const saveButton = document.getElementById('save-button-form').addEventListener('click', function(event) {
+        event.preventDefault();
+
+        const url = 'https://api.tomtom.com/search/2/geocode/torino via roma 12.json?key=1ylMcjS1X2qwG3Q6Vy0KqcXpAjOa4ZkR';
+
+        axios.get(url).then((response) => {
+
+            const lat = response.data.results[0].position.lat;
+            const lon = response.data.results[0].position.lon;
+
+
+
+            document.getElementById('lat').value = lat;
+            document.getElementById('lon').value = lon;
+
+
+            document.getElementById('apartment-form').submit();
+
+
+
+          
+        })
+
+       });
+    </script>
 
 @endsection
 
