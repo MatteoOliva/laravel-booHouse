@@ -35,7 +35,8 @@
                   
                 </div>
                 <div class="form-check form-switch fs-5">
-                  <input class="form-check-input" style="background-color: #1278c6;" type="checkbox" role="switch" id="flexSwitchCheckChecked" @if ($apartment->visible) checked                           
+                  <input class="form-check-input" style="background-color: #1278c6;" type="checkbox" role="switch" id="flexSwitchCheckChecked" 
+                  @if ($apartment->visible) checked                           
                   @endif>
                   <label class="form-check-label fw-semibold" for="flexSwitchCheckChecked">Visibile</label>
                 </div>

@@ -114,6 +114,12 @@
                             @enderror
                         </div>
                         
+                    </div>
+                    
+                    {{-- hidden fields for lat and lon --}}
+                    <input type="hidden" id="lat" name="lat" value="">
+                    <input type="hidden" id="lon" name="lon" value="">
+                    
                 </div>
                 <div class="col-3">                  
                     <div class="form-label mt-3">Servizi aggiuntivi disponibili</div>
@@ -126,15 +132,11 @@
                             </div>
                         @endforeach              
                     </div>
-                </div>        
-
-                {{-- hidden fields for lat and lon --}}
-                <input type="hidden" id="lat" name="lat" value="">
-                <input type="hidden" id="lon" name="lon" value="">
-    
-            </div>
-
-            <button type="submit" class="btn btn-primary mt-3" id="save-button-form">Salva</button>
+                </div>
+                        
+                <div> 
+                    <button type="submit" class="btn btn-primary mt-3" id="save-button-form">Salva</button>
+                </div>
             
         </form>
 
