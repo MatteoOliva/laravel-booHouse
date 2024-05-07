@@ -46,14 +46,46 @@ class StoreApartmentRequest extends FormRequest
     public function messages()
     {
         return [
-            // 'title.required' => 'The title is required'
-            'required' => 'Questo campo è obbligatorio',
-            'string' => 'Questo campo deve essere una stringa',
-            'max' => 'Inserire un valore inferiore a :max caratteri',
-            'min' => 'Il valore inserito deve essere minimo :min',
-            'between' => 'Inserire un numeor tra :min - :max',
-            'image' => 'Scegliere un immagine',
-            'mimes' => 'Scegliere un file compreso tra i seguenti tipi :mimes'
+
+            // title
+            'title.required' => 'Il titolo è obbligatiorio',
+            'title.string' => 'Il titolo deve essere un testo',
+            'title.max' => 'Il titolo deve essere max di 100 caratteri',
+            // description
+            'description.required' => 'La descrizione è obbligatoria',
+            // rooms
+            'rooms.required' => 'La camera è obbligatoria',
+            'rooms.integer' => 'Inserisci un numero',
+            'rooms.between' =>  'Il numero delle camere deve essere tra 1 e 500',
+            // beds
+            'beds.required' => 'Il letto è obbligatorio',
+            'beds.integer' => 'Inserisci un numero',
+            'beds.between' =>  'Il numero dei letti deve essere tra 1 e 500',
+            // toilets
+            'toilets.required' => 'Il bagno è obbligatorio',
+            'toilets.integer' => 'Inserisci un numero',
+            'toilets.between' =>  'Il numero dei bagni deve essere tra 1 e 500',
+            // mq
+            'mq.required' => 'I metri quadri sono obbligatori',
+            'mq.numeric' => 'Inserisci un numero',
+            'mq.min' =>  'Il valore inserito deve essere minimo 5',
+            // image
+            'image.required' => 'Immagine obbligatoria',
+            'image.image' => 'Scegliere una immagine',
+            'image.mimes' => 'Scegliere un file tra i seguenti tipi :mimes',
+
+            // address
+            'address.required' => 'Indirizzo  obbligatorio',
+
+            // services
+            'services.exists' => 'Servizio non disponibile',
+
+            // 'string' => 'Questo campo deve essere una stringa',
+            // 'max' => 'Inserire un valore inferiore a :max caratteri',
+            // 'min' => 'Il valore inserito deve essere minimo :min',
+            // 'between' => 'Inserire un numeor tra :min - :max',
+            // 'image' => 'Scegliere un immagine',
+            // 'mimes' => 'Scegliere un file compreso tra i seguenti tipi :mimes'
         ];
     }
 }
