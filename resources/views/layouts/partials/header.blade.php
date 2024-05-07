@@ -30,7 +30,11 @@
             <li class="nav-item dropdown">
               <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
                 href="#" id="navbarDropdown" role="button" v-pre>
-                {{ Auth::user()->name }}
+                @if(is_null( Auth::user()->name )) {{Auth::user()->email}}
+                @else {{Auth::user()->name}}
+                @endif
+                
+                
               </a>
 
               <div aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-right">

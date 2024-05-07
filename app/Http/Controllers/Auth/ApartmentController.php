@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-
 use App\Models\Apartment;
 use App\Models\Service;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreApartmentRequest;
+use App\Http\Requests\UpadateApartmentRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
@@ -45,10 +47,13 @@ class ApartmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreApartmentRequest $request)
     {
         // get all data from the request
-        $data = $request->all();
+        // $data = $request->all();
+
+        // validate the request
+        $data = $request->validated();
 
         // create a new apartment and fill it with the data from the request
         $apartment = new Apartment;
@@ -90,6 +95,10 @@ class ApartmentController extends Controller
         // var_dump($apartment->services->pluck('id')->toArray());
         $related_services = $apartment->services->pluck('id')->toArray();
 
+        // protection route
+        if (Auth::id() != $apartment->user_id)
+            abort(403);
+
         $services = Service::whereIn('id', $related_services)->get();
         return view('auth.apartments.show', compact('apartment', 'services'));
     }
@@ -106,6 +115,11 @@ class ApartmentController extends Controller
         $services = Service::all();
         // get an array of the ids of services alredy related to this apartment
         $related_services_ids = $apartment->services->pluck('id')->toArray();
+
+        // protection route
+        if (Auth::id() != $apartment->user_id)
+            abort(403);
+
         return view('auth.apartments.form', compact('apartment', 'services', 'related_services_ids'));
     }
 
@@ -116,10 +130,11 @@ class ApartmentController extends Controller
      * @param  \App\Models\Apartment  $apartment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Apartment $apartment)
+    public function update(UpadateApartmentRequest $request, Apartment $apartment)
     {
-        // get all data from the request
-        $data = $request->all();
+        // get all data from the request and validate it
+        // $data = $request->all();
+        $data = $request->validated();
 
         // fill the apartment with the data from the request
         $apartment->fill($data);
@@ -182,4 +197,28 @@ class ApartmentController extends Controller
         //return the user to where it was
         return redirect()->back();
     }
+  
+    /**
+     * toggle the visible paramer
+     *
+     */
+    public function update_visible(Request $request, Apartment $apartment) {
+
+        $data = $request->all();
+        $apartment->visible = Arr::exists($data, 'visible') ? true : false; 
+        $apartment->save();
+        return redirect()->back();
+
+    }
+
+    /**
+     * redirect to index (to be used if API errors occurs)
+     *
+     */
+    public function back_to_index()
+    {
+        return redirect()->route('user.apartments.index')->with('message-class', 'alert-danger')->with('message', 'Un fantasma ci ha rallentati! Per favore riprova più tardi');
+    }  
+    
+  
 }
