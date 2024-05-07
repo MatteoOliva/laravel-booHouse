@@ -29,7 +29,6 @@ return new class extends Migration
             $table->decimal('lon', 10,7);
             $table->string('address');
             $table->boolean('visible');
-            
             $table->timestamps();
         });
     }
