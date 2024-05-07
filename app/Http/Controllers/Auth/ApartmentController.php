@@ -197,4 +197,12 @@ class ApartmentController extends Controller
         //return the user to where it was
         return redirect()->back();
     }
+
+    public function update_visible(Request $request, Apartment $apartment) {
+
+        $data = $request->all();
+        $apartment->visible = Arr::exists($data, 'visible') ? true : false; 
+        $apartment->save();
+        return redirect()->back();
+    }
 }
