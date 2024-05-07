@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-
 use App\Models\Apartment;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreApartmentRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
@@ -45,10 +45,13 @@ class ApartmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreApartmentRequest $request)
     {
         // get all data from the request
-        $data = $request->all();
+        // $data = $request->all();
+
+        // validate the request
+        $data = $request->validated();
 
         // create a new apartment and fill it with the data from the request
         $apartment = new Apartment;
@@ -118,8 +121,9 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, Apartment $apartment)
     {
-        // get all data from the request
+        // get all data from the request and validate it
         $data = $request->all();
+        // $data = $request->validated();
 
         // fill the apartment with the data from the request
         $apartment->fill($data);
