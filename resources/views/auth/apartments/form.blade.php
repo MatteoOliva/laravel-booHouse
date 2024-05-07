@@ -21,7 +21,9 @@
                     <div class="row">
                         <div class="col-12">
                             <label for="title" class="form-label mt-3">Titolo</label>
-                            <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') ?? $apartment->title ?? '' }}" required />
+                            
+                            <input autofocus required type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') ?? $apartment->title ?? '' }}"/>
+
                             @error('title')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -41,8 +43,7 @@
         
                         <div class="col-12">
                             <label for="rooms" class="form-label mt-3">N. di camere</label>
-                            <input type="number" class="form-control @error('rooms') is-invalid @enderror" id="rooms" name="rooms" min="1" value="{{ old('rooms') ?? $apartment->rooms ?? '' }}" required/>
-                            @error('rooms')
+                            <input type="number" class="form-control @error('rooms') is-invalid @enderror" id="rooms" name="rooms" min="1" value="{{ old('rooms') ?? $apartment->rooms ?? '' }}" required/>                            @error('rooms')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -51,7 +52,7 @@
         
                         <div class="col-12">
                             <label for="beds" class="form-label mt-3">N. di letti</label>
-                            <input type="number" class="form-control @error('beds') is-invalid @enderror" id="beds" name="beds" value="{{ old('beds') ?? $apartment->beds ?? '' }}" required/>
+                            <input required type="number" class="form-control @error('beds') is-invalid @enderror" id="beds" name="beds" value="{{ old('beds') ?? $apartment->beds ?? '' }}"/>
                             @error('beds')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -95,7 +96,7 @@
                             @if(isset($apartment->image))
                             
                         @endif
-                            <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image" value="{{ old('image') ?? '' }}">
+                            <input required class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image" value="{{ old('image') ?? '' }}">
                             @error('image')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -105,13 +106,13 @@
         
                         <div class="col-12">
                             <label for="address" class="form-label mt-3">Indirizzo</label>
-                            <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') ?? $apartment->address ?? '' }}" oninput="fetchAutocomplete(this.value)" autocomplete="off"/>
+                            <input required type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') ?? $apartment->address ?? '' }}" oninput="fetchAutocomplete(this.value)" autocomplete="off"/>
                             <div id="autocomplete-results" class="list-group position-absolute"></div>
-                            @error('address')
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback @error('address') d-block @else d-none @enderror" id="adress-feedback">
+                                @error('address')
                                 {{ $message }}
+                                @enderror
                             </div>
-                            @enderror
                         </div>
                         
                     </div>
@@ -159,79 +160,105 @@
        
 
        function fetchAutocomplete(query) {
-    if (query.length > 3) {
-        const apiKey = '{{ env("API_TOMTOM_KEY") }}';
-        const url = 'https://api.tomtom.com/search/2/geocode/' + encodeURIComponent(query) + '.json?countrySet=IT&language=it-IT&key=' + apiKey;
-        console.log(apiKey)
-        axios.get(url)
-            .then(response => {
-                const results = response.data.results;
-                const container = document.getElementById('autocomplete-results');
-                // Pulisce i vecchi risultati
-                container.innerHTML = ''; 
+            if (query.length > 3) {
+                const apiKey = '{{ env("API_TOMTOM_KEY") }}';
+                const url = 'https://api.tomtom.com/search/2/geocode/' + encodeURIComponent(query) + '.json?countrySet=IT&language=it-IT&key=' + apiKey;
+                // console.log(apiKey)
+                axios.get(url)
+                    .then(response => {
+                        const results = response.data.results;
+                        const container = document.getElementById('autocomplete-results');
+                        // Pulisce i vecchi risultati
+                        container.innerHTML = ''; 
 
-                if (results.length > 0) {
-                    results.forEach(result => {
-                        const div = document.createElement('a');
-                        div.innerHTML = result.address.freeformAddress;
+                        if (results.length > 0) {
+                            results.forEach(result => {
+                                const div = document.createElement('a');
+                                div.innerHTML = result.address.freeformAddress;
 
-                        // Classi di Bootstrap per gli elementi della lista
-                        div.classList.add('list-group-item', 'list-group-item-action'); 
-                        div.onclick = function () {
-                            document.getElementById('address').value = result.address.freeformAddress;
-                            
+                                // Classi di Bootstrap per gli elementi della lista
+                                div.classList.add('list-group-item', 'list-group-item-action'); 
+                                div.onclick = function () {
+                                    document.getElementById('address').value = result.address.freeformAddress;
+                                    
 
-                             // Nasconde i risultati dopo la selezione
-                            container.innerHTML = '';
-                        };
-                        container.appendChild(div);
-                    });
-                }
-            })
-    } else {
-        document.getElementById('autocomplete-results').innerHTML = ''; // Pulisce i risultati se la query è troppo breve
-    }
-}
+                                    // Nasconde i risultati dopo la selezione
+                                    container.innerHTML = '';
+                                };
+                                container.appendChild(div);
+                            });
+                        }
+                    })
+            } else {
+                // Pulisce i risultati se la query è troppo breve
+                document.getElementById('autocomplete-results').innerHTML = ''; 
+            }
+        }
 
 
-       const saveButton = document.getElementById('save-button-form').addEventListener('click', function(event) {
+        const saveButton = document.getElementById('save-button-form').addEventListener('click', function(event) {
+            //preveniamo l'invio del form
             event.preventDefault();
+            // prendiamo l'imput dell'indirizzo e il suo valore(ovvero la query)
+            const adressInput = document.getElementById('address');
+            const query = adressInput.value;
+            //se la query ha almeno 1 carattere
+            if (query.length > 0) {
 
-            const query = document.getElementById('address').value;
-            const apiKey = '{{ env("API_TOMTOM_KEY") }}';
+                // prendo l'API key dal file env
+                const apiKey = '{{ env("API_TOMTOM_KEY") }}';
+                // const apiKey = '';
 
-            const url = 'https://api.tomtom.com/search/2/geocode/' + query + '.json?key=' + apiKey;
-            // console.log(apiKey);
+                // compongo l'url con tutti i dati
+                const url = 'https://api.tomtom.com/search/2/geocode/' + query + '.json?key=' + apiKey;
+                // console.log(apiKey);    
 
+                // chiamo l'api di tomtom 
+                axios.get(url).then((response) => {
+                    
+                    // console.log(response);
+                    // salvo i dati della longitudine e della latitudine
+                    const lat = response.data.results[0].position.lat;
+                    const lon = response.data.results[0].position.lon;
+                    // console.log(lat, lon);
 
-            axios.get(url).then((response) => {
+                    // inserisco la latitudine e la longitudine negli appositi input del form
+                    document.getElementById('lat').value = lat;
+                    document.getElementById('lon').value = lon;
+
+                    // console.log(document.getElementById('lat').value, document.getElementById('lon').value);
+
+                    // submitto il form
+                    document.getElementById('apartment-form').submit();
                 
-                // console.log(response);
-                const lat = response.data.results[0].position.lat;
-                const lon = response.data.results[0].position.lon;
-                // console.log(lat, lon);
+                }).catch((error) => {
 
-                document.getElementById('lat').value = lat;
-                document.getElementById('lon').value = lon;
+                    // console.log(error.response.data);
+                    window.location.href = '{{ route("user.apartments.back_to_index") }}';
 
-                // console.log(document.getElementById('lat').value, document.getElementById('lon').value);
-
-                document.getElementById('apartment-form').submit();
-            
-            })
+                })
 
 
+            // se invece il canpo indirizzo è vuoto
+            } else {
 
+                // aggiungi la classe is-invalid all'input
+                adressInput.classList.add('is-invalid');
+                // prendo il div del feedback, gli tolgo il d-none e inserisco il messaggio di errore
+                const adressFeedback = document.getElementById('adress-feedback');
+                adressFeedback.classList.remove('d-none');
+                adressFeedback.innerText = "L'indirizzo è obbligatorio";
+                // console.log(adressFeedback.innerText);
+
+            }
 
             // document.getElementById('lat').value = 10;
             // document.getElementById('lon').value = 10;
-
-
             // document.getElementById('apartment-form').submit();
 
-       });
+        });
 
-       // get all elements from the dom
+        // get all elements from the dom
         const deleteImgForm = document.getElementById('delete-img-form');
         const deleteImgBtn = document.getElementById('delete-img-btn');
         // console.log(deleteImgBtn,deleteImgForm);
@@ -248,10 +275,6 @@
 
         }
     </script>
-
-
-
-
 
 @endsection
 

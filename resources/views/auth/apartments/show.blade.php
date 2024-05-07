@@ -9,7 +9,7 @@
     
     {{-- pulsante sponsorizzazione --}}
     <div class="d-md-flex justify-content-md-between my-3">
-      <a href="{{route('user.apartments.index')}}" class="btn btn-primary my -4" > <i class="fa-solid fa-circle-left me-2"></i>Torna agli appartamenti</a>
+      <a href="{{route('user.apartments.index')}}" class="btn my -4" style="background-color: #B1D2C6; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna agli appartamenti</a>
       <a href="#" class="btn fw-semibold text-white" style="background-color: #a33b3b"><i class="fa-regular fa-handshake"></i> Sponsorizza</a>
     </div>
     
@@ -47,9 +47,9 @@
       {{-- modifica e cancella --}}
       <div class="mt-4">
         
-        <a href="{{ route('user.apartments.edit' , $apartment) }}" class="btn text-white fw-semibold" style="background-color: #1278c6"><i class="fa-solid fa-pen"></i> Modifica</a>
+        <a href="{{ route('user.apartments.edit' , $apartment) }}" class="btn text-white fw-semibold" style="background-color: #F87C5D"><i class="fa-solid fa-pen" style="color: #B1D2C6"></i> Modifica</a>
         <button type="button" class="btn text-white fw-semibold mx-1" data-bs-toggle="modal" data-bs-target="#delete-post-{{$apartment->id}}-modal" style="background-color: #A33B3B">
-          <i class="fa-solid fa-trash"></i> Cancella
+        <i class="fa-solid fa-trash" style="color: #B1D2C6"></i> Cancella
         </button>
         
       </div>
@@ -72,8 +72,13 @@
 
         >
 
-        <label class="form-check-label fw-semibold" for="flexSwitchCheckChecked-{{ $apartment->id }}">Visibile</label>
+        <div class="form-check form-switch mt-3 fs-5">
+        <input class="form-check-input" style="background-color: #F87C5D" type="checkbox" role="switch" id="flexSwitchCheckChecked" @if ($apartment->visible) checked                           
+        @endif>
+        <label class="form-check-label fw-semibold"  for="flexSwitchCheckChecked" >Visibile</label>
+        </div>
       </form>
+
       
     </div>
     

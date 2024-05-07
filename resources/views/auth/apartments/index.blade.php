@@ -10,7 +10,7 @@
     
     <div class="container">
       <div class="d-md-flex justify-content-md-end">
-        <a href="{{route('user.apartments.create')}}" class="btn btn-primary my-3" > <i class="fa-solid fa-plus"></i> Aggiungi appartamento</a>
+        <a href="{{route('user.apartments.create')}}" class="btn my-3" style="background-color: #B1D2C6; color: #0A0F15" > <i class="fa-solid fa-plus"></i> Aggiungi appartamento</a>
       </div>
       
       <div class="row g-2">
@@ -24,17 +24,18 @@
               @else {{ asset('storage/' . $apartment->image) }}          
               @endif" 
               class="img-fluid rounded-top" alt="#">
-              <div class="card-body" style="background-color: ">
-                <h5 class="card-title">{{ $apartment->title }}</h5>
+              <div class="card-body" style="background-color:">
+                <h5 class="card-title" style="color: #F87C5D">{{ $apartment->title }}</h5>
                 <div class="d-md-flex justify-content-md-end">
                   
                   
-                  <a href="{{ route('user.apartments.edit', $apartment) }}" class="btn text-white fw-semibold mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #1278c6"><i class="fa-solid fa-pen"></i></a>                       
+                  <a href="{{ route('user.apartments.edit', $apartment) }}" class="btn text-white fw-semibold mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #F87C5D"><i class="fa-solid fa-pen" style="color: #B1D2C6"></i></a>                       
                   <button type="button" class="btn text-white fw-semibold mx-1" data-bs-toggle="modal" data-bs-target="#delete-post-{{$apartment->id}}-modal" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #A33B3B">
-                    <i class="fa-solid fa-trash"></i>
+                    <i class="fa-solid fa-trash" style="color: #B1D2C6"></i>
                   </button>
                   
                 </div>
+
                 <form action="{{ route('user.apartments.update_visible', $apartment) }}" method="POST" class="form-check form-switch fs-5" id="form-visible-{{ $apartment->id }}">
                   @csrf
                   @method('PATCH')
@@ -52,8 +53,13 @@
 
                   >
 
-                  <label class="form-check-label fw-semibold" for="flexSwitchCheckChecked-{{ $apartment->id }}">Visibile</label>
+                  <div class="form-check form-switch fs-5">
+                  <input class="form-check-input" style="background-color: #F87C5D;" type="checkbox" role="switch" id="flexSwitchCheckChecked" @if ($apartment->visible) checked                           
+                  @endif>
+                  <label class="form-check-label fw-semibold" for="flexSwitchCheckChecked">Visibile</label>
+                  </div>
                 </form>
+
               </div>
             </div>
           </a>

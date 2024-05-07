@@ -5,6 +5,7 @@ use App\Http\Controllers\Guest\DashboardController as GuestDashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Models\Apartment;
 use Illuminate\Support\Facades\Route;
+use App\Models\Apartment;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,10 @@ use Illuminate\Support\Facades\Route;
 // # Rotte pubbliche
 Route::get('/', [GuestDashboardController::class, 'index'])
   ->name('home');
+// # Rotta per lo slug nell'URL anziche ID
+Route::get('/apartments/{apartment:slug}', function(Apartment $apartment) {
+  return $apartment;
+});
 
 // # Rotte protette
 Route::middleware('auth')
@@ -30,6 +35,9 @@ Route::middleware('auth')
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])
       ->name('dashboard');
   });
+
+// Route::redirect('/apartments/back_to_index', '/apartments')->name('user.apartments.back_to_index');
+Route::get('apartments/back_to_index', [ApartmentController::class, 'back_to_index'])->middleware('auth')->name('user.apartments.back_to_index');
 
 // rotta protetta apartment
 Route::middleware('auth')
