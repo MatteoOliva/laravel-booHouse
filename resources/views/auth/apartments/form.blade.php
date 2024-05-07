@@ -124,25 +124,25 @@
 
             const query = document.getElementById('address').value;
             const apiKey = 'tVbQugvPnOmcoGB8KmMvPNhfIBjPvzZ4';
-            const url = 'https://api.tomtom.com/search/2/geocode' + query + 'json?key=' + apiKey;
+            const url = 'https://api.tomtom.com/search/2/geocode/' + query + '.json?key=' + apiKey;
             // console.log(apiKey);
 
-            // axios.get(url).then((response) => {
+            axios.get(url).then((response) => {
 
-            //     const lat = response.data.results[0].position.lat;
-            //     const lon = response.data.results[0].position.lon;
+                const lat = response.data.results[0].position.lat;
+                const lon = response.data.results[0].position.lon;
 
-            //     document.getElementById('lat').value = lat;
-            //     document.getElementById('lon').value = lon;
+                document.getElementById('lat').value = lat;
+                document.getElementById('lon').value = lon;
 
-            //     document.getElementById('apartment-form').submit();
+                document.getElementById('apartment-form').submit();
             
-            // })
+            })
 
-            document.getElementById('lat').value = 10;
-            document.getElementById('lon').value = 10;
+            // document.getElementById('lat').value = 10;
+            // document.getElementById('lon').value = 10;
 
-            document.getElementById('apartment-form').submit();
+            // document.getElementById('apartment-form').submit();
 
        });
 
