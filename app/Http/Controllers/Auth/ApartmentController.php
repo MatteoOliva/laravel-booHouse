@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-
 use App\Models\Apartment;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreApartmentRequest;
+use App\Http\Requests\UpadateApartmentRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
@@ -45,10 +46,13 @@ class ApartmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreApartmentRequest $request)
     {
         // get all data from the request
-        $data = $request->all();
+        // $data = $request->all();
+
+        // validate the request
+        $data = $request->validated();
 
         // create a new apartment and fill it with the data from the request
         $apartment = new Apartment;
@@ -75,7 +79,7 @@ class ApartmentController extends Controller
         //with data[services] to the apartment, creating the relations
         if (Arr::exists($data, 'services')) $apartment->services()->attach($data['services']);
 
-        return redirect()->route('user.apartments.show', $apartment);
+        return redirect()->route('user.apartments.show', $apartment)->with('message-class', 'alert-success')->with('message', 'Appartamento inserito correttamente.');
         // dd($apartment);
     }
 
@@ -116,10 +120,11 @@ class ApartmentController extends Controller
      * @param  \App\Models\Apartment  $apartment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Apartment $apartment)
+    public function update(UpadateApartmentRequest $request, Apartment $apartment)
     {
-        // get all data from the request
-        $data = $request->all();
+        // get all data from the request and validate it
+        // $data = $request->all();
+        $data = $request->validated();
 
         // fill the apartment with the data from the request
         $apartment->fill($data);
@@ -149,7 +154,7 @@ class ApartmentController extends Controller
             $apartment->services()->detach();
         }
 
-        return redirect()->route('user.apartments.show', $apartment);
+        return redirect()->route('user.apartments.show', $apartment)->with('message-class', 'alert-success')->with('message', 'Appartamento modificato correttamente.');
         // dd($apartment);
     }
 
@@ -162,7 +167,7 @@ class ApartmentController extends Controller
     public function destroy(Apartment $apartment)
     {
         $apartment->delete();
-        return redirect()->route('user.apartments.index');
+        return redirect()->route('user.apartments.index')->with('message-class', 'alert-danger')->with('message', 'Appartamento eliminato correttamente.');
     }
 
     /**
