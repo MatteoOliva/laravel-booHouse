@@ -204,12 +204,15 @@
 
             axios.get(url).then((response) => {
                 
-                console.log(response);
+                // console.log(response);
                 const lat = response.data.results[0].position.lat;
                 const lon = response.data.results[0].position.lon;
+                // console.log(lat, lon);
 
                 document.getElementById('lat').value = lat;
                 document.getElementById('lon').value = lon;
+
+                // console.log(document.getElementById('lat').value, document.getElementById('lon').value);
 
                 document.getElementById('apartment-form').submit();
             
