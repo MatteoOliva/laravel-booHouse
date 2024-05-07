@@ -31,7 +31,10 @@ class UpadateApartmentRequest extends FormRequest
             'toilets' => 'required|integer|between:1,500',
             'mq' => 'required|numeric|min:5',
             'image' => 'image|mimes:jpeg,jpg,png,gif',
-            'address' => 'required|string'
+            'address' => 'required|string',
+            'lat' => 'required',
+            'lon' => 'required',
+            'services' => 'exists:services,id',
         ];
     }
 
