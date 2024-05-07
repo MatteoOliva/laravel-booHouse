@@ -18,8 +18,8 @@
       
       <img 
       src="@if (substr($apartment->image,0,3) == 'img') {{ '/' . $apartment->image }} 
-      @else {{ asset('storage/' . $apartment->image) }}          
-      @endif" 
+          @else {{ asset('storage/' . $apartment->image) }}          
+          @endif" 
       class="img-fluid rounded mt-2 text-center" alt="#">
     </div>
     
