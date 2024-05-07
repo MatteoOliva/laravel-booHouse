@@ -97,7 +97,7 @@ class ApartmentController extends Controller
 
         // protection route
         if (Auth::id() != $apartment->user_id)
-        abort(403);
+            abort(403);
 
         $services = Service::whereIn('id', $related_services)->get();
         return view('auth.apartments.show', compact('apartment', 'services'));
@@ -118,7 +118,7 @@ class ApartmentController extends Controller
 
         // protection route
         if (Auth::id() != $apartment->user_id)
-        abort(403);
+            abort(403);
 
         return view('auth.apartments.form', compact('apartment', 'services', 'related_services_ids'));
     }
@@ -196,5 +196,14 @@ class ApartmentController extends Controller
         $apartment->save();
         //return the user to where it was
         return redirect()->back();
+    }
+
+    /**
+     * Delete the image related to the apartment
+     *
+     */
+    public function back_to_index()
+    {
+        return redirect()->route('user.apartments.index')->with('message-class', 'alert-danger')->with('message', 'Un fantasma ci ha rallentati! Per favore riprova più tardi');
     }
 }

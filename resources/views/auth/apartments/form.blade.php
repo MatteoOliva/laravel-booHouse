@@ -205,8 +205,9 @@
             if (query.length > 0) {
 
                 // prendo l'API key dal file env
-                // const apiKey = '{{ env("API_TOMTOM_KEY") }}';
-                const apiKey = '';
+                const apiKey = '{{ env("API_TOMTOM_KEY") }}';
+                // const apiKey = '';
+                
                 // compongo l'url con tutti i dati
                 const url = 'https://api.tomtom.com/search/2/geocode/' + query + '.json?key=' + apiKey;
                 // console.log(apiKey);    
@@ -233,7 +234,7 @@
 
                     console.log(error.response.data);
 
-                    window.location.href = '{{ route("user.apartments.index") }}';
+                    window.location.href = '{{ route("user.apartments.back_to_index") }}';
 
                 })
 
