@@ -25,14 +25,12 @@ class StoreApartmentRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:100',
-            'description' => 'required|text',
+            'description' => 'required',
             'rooms' => 'required|integer|between:1,500',
             'beds' => 'required|integer|between:1,500',
             'toilets' => 'required|integer|between:1,500',
-            'mq' => 'required|numeric',
+            'mq' => 'required|numeric|min:5',
             'image' => 'required|image|mimes:jpeg,jpg,png,gif',
-            'lat' => 'decimal:1,7',
-            'lon' => 'decimal:1,7',
             'address' => 'required|string'
         ];
     }
@@ -49,7 +47,8 @@ class StoreApartmentRequest extends FormRequest
             'required' => 'Questo campo è obbligatorio',
             'string' => 'Questo campo deve essere una stringa',
             'max' => 'Inserire un valore inferiore a :max caratteri',
-            'between' => 'Inserire un numeor tra :min - :max.',
+            'min' => 'Il valore inserito deve essere minimo :min',
+            'between' => 'Inserire un numeor tra :min - :max',
             'image' => 'Scegliere un immagine',
             'mimes' => 'Scegliere un file compreso tra i seguenti tipi :mimes'
         ];
