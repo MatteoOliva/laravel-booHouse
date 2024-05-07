@@ -31,6 +31,9 @@ Route::middleware('auth')
       ->name('dashboard');
   });
 
+// Route::redirect('/apartments/back_to_index', '/apartments')->name('user.apartments.back_to_index');
+Route::get('apartments/back_to_index', [ApartmentController::class, 'back_to_index'])->middleware('auth')->name('user.apartments.back_to_index');
+
 // rotta protetta apartment
 Route::middleware('auth')
   ->name('user.')

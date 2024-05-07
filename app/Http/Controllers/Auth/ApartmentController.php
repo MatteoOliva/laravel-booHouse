@@ -97,7 +97,7 @@ class ApartmentController extends Controller
 
         // protection route
         if (Auth::id() != $apartment->user_id)
-        abort(403);
+            abort(403);
 
         $services = Service::whereIn('id', $related_services)->get();
         return view('auth.apartments.show', compact('apartment', 'services'));
@@ -118,7 +118,7 @@ class ApartmentController extends Controller
 
         // protection route
         if (Auth::id() != $apartment->user_id)
-        abort(403);
+            abort(403);
 
         return view('auth.apartments.form', compact('apartment', 'services', 'related_services_ids'));
     }
@@ -197,12 +197,28 @@ class ApartmentController extends Controller
         //return the user to where it was
         return redirect()->back();
     }
-
+  
+    /**
+     * toggle the visible paramer
+     *
+     */
     public function update_visible(Request $request, Apartment $apartment) {
 
         $data = $request->all();
         $apartment->visible = Arr::exists($data, 'visible') ? true : false; 
         $apartment->save();
         return redirect()->back();
+
     }
+
+    /**
+     * redirect to index (to be used if API errors occurs)
+     *
+     */
+    public function back_to_index()
+    {
+        return redirect()->route('user.apartments.index')->with('message-class', 'alert-danger')->with('message', 'Un fantasma ci ha rallentati! Per favore riprova più tardi');
+    }  
+    
+  
 }
