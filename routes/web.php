@@ -5,7 +5,7 @@ use App\Http\Controllers\Guest\DashboardController as GuestDashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Models\Apartment;
 use Illuminate\Support\Facades\Route;
-use App\Models\Apartment;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ use App\Models\Apartment;
 Route::get('/', [GuestDashboardController::class, 'index'])
   ->name('home');
 // # Rotta per lo slug nell'URL anziche ID
-Route::get('/apartments/{apartment:slug}', function(Apartment $apartment) {
+Route::get('/apartments/{apartment:slug}', function (Apartment $apartment) {
   return $apartment;
 });
 
@@ -46,14 +46,13 @@ Route::middleware('auth')
 
     Route::resource('apartments', ApartmentController::class);
     Route::patch('apartments/{apartment}/update_visible', [ApartmentController::class, 'update_visible'])->name('apartments.update_visible');
-
   });
-  Route::delete('apartments/{apartment}/destroy_image', [ApartmentController::class, 'destroy_image'])->middleware('auth')->name('user.apartments.destroy_image');
+Route::delete('apartments/{apartment}/destroy_image', [ApartmentController::class, 'destroy_image'])->middleware('auth')->name('user.apartments.destroy_image');
 
 // rotta softDeletes
-Route::get('/softDelete', function (){
+Route::get('/softDelete', function () {
   $apartment = Apartment::findorfail(1);
-  $apartment->delete(); 
+  $apartment->delete();
 });
 
 
