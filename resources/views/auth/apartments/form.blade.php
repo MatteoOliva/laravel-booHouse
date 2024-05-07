@@ -105,13 +105,18 @@
         
                         <div class="col-12">
                             <label for="address" class="form-label mt-3">Indirizzo</label>
-                            <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') ?? $apartment->address ?? '' }}"/>
+
+                       
+                        
+
+                            <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') ?? $apartment->address ?? '' }}" oninput="fetchAutocomplete(value)" autocomplete="on"/>
                         </div>
                         @error('address')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                         @enderror
+
                     </div>
                 </div>
                 <div class="col-3">                  
@@ -153,13 +158,33 @@
 
 
     <script>
+       
+
+    function fetchAutocomplete(query) {
+        if (query.length > 3) {  // Verifica che la query sia di almeno 3 caratteri per ridurre il numero di chiamate non necessarie
+            const apiKey = 'tVbQugvPnOmcoGB8KmMvPNhfIBjPvzZ4';
+            const url = 'https://api.tomtom.com/search/2/geocode/' + query + '.json&countrySet=ITlanguage=it-IT?key=' + apiKey;
+
+            axios.get(url)
+                .then(response => {
+                    if (response.data.results.length > 0) {
+                        console.log(response.data);
+
+                    }
+                })
+        }
+    }
+
+
        const saveButton = document.getElementById('save-button-form').addEventListener('click', function(event) {
             event.preventDefault();
 
             const query = document.getElementById('address').value;
             const apiKey = 'tVbQugvPnOmcoGB8KmMvPNhfIBjPvzZ4';
+
             const url = 'https://api.tomtom.com/search/2/geocode/' + query + '.json?key=' + apiKey;
             // console.log(apiKey);
+
 
             axios.get(url).then((response) => {
 
@@ -173,8 +198,12 @@
             
             })
 
+
+
+
             // document.getElementById('lat').value = 10;
             // document.getElementById('lon').value = 10;
+
 
             // document.getElementById('apartment-form').submit();
 
@@ -197,6 +226,10 @@
 
         }
     </script>
+
+
+
+
 
 @endsection
 
