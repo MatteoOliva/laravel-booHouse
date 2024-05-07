@@ -53,7 +53,7 @@
                             @if(isset($apartment->image))
                                 <div class="form-label mt-3">Immagine</div>
                                 <div class="image-cover">
-                                    <img class="img-fluid mb-3 " src="{{ asset('storage/' . $apartment->image) }}" alt="apartment image">
+                                    <img class="img-fluid mb-3 " src="@if (substr($apartment->image,0,3) == 'img') {{ '/' . $apartment->image }} @else {{ asset('storage/' . $apartment->image) }} @endif" alt="apartment image">
                                     <div class="col-6 d-flex flex-column justify-content-end align-items-start">
                                         <div class="btn btn-danger mb-3 image-trash" id="delete-img-btn"><i class="fa-solid fa-x"></i></div>
                                     </div>
@@ -64,8 +64,6 @@
                             @endif
                             @if(isset($apartment->image))
                             
-                            
-                            
                         @endif
                             <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image" value="{{ old('image') ?? '' }}">
                             @error('image')
@@ -73,10 +71,7 @@
                                     {{ $message }}
                                 </div>
                             @enderror
-                        </div>
-        
-                        
-        
+                        </div>                      
         
                         <div class="col-12">
                             <label for="address" class="form-label mt-3">Indirizzo</label>
@@ -97,11 +92,7 @@
                                 @endforeach                    
                     
                 </div>
-            </div>
-
-            
-                
-                
+            </div>        
 
                 {{-- hidden fields for lat and lon --}}
                 <input type="hidden" id="lat" name="lat" value="">
