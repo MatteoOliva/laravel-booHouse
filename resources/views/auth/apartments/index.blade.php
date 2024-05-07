@@ -15,6 +15,7 @@
       
       <div class="row g-2">
         @foreach ($apartments as $apartment)
+        {{-- @if ($apartment->visible) --}}
         <div class="col-3">
           <a class="text-decoration-none" href="{{ route('user.apartments.show', $apartment) }}">
             <div class="card card-index h-100" style="width: 18rem;">
@@ -34,16 +35,31 @@
                   </button>
                   
                 </div>
-                <div class="form-check form-switch fs-5">
-                  <input class="form-check-input" style="background-color: #1278c6;" type="checkbox" role="switch" id="flexSwitchCheckChecked" @if ($apartment->visible) checked                           
-                  @endif>
-                  <label class="form-check-label fw-semibold" for="flexSwitchCheckChecked">Visibile</label>
-                </div>
+                <form action="{{ route('user.apartments.update_visible', $apartment) }}" method="POST" class="form-check form-switch fs-5" id="form-visible-{{ $apartment->id }}">
+                  @csrf
+                  @method('PATCH')
+
+                  <input
+                  @checked($apartment->visible) 
+                  data-apartment-id= "{{ $apartment->id }}" 
+                  id="flexSwitchCheckChecked-{{ $apartment->id }}"
+                  name="visible" 
+                  class="form-check-input" 
+                  type="checkbox" 
+                  role="switch"
+                  style="background-color: #1278c6;"
+                  value="true"
+
+                  >
+
+                  <label class="form-check-label fw-semibold" for="flexSwitchCheckChecked-{{ $apartment->id }}">Visibile</label>
+                </form>
               </div>
             </div>
           </a>
           
         </div>
+        {{-- @endif --}}
         @endforeach
       </div>
     </div>
@@ -82,6 +98,21 @@
 @endforeach
 
 @endsection
+
+
+@section('js')
+  <script>
+    const checkboxes = document.querySelectorAll('input[name="visible"]');
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', () => {
+        const formId = 'form-visible-' + checkbox.getAttribute('data-apartment-id');
+        const formEl = document.getElementById(formId);
+        formEl.submit();
+      })
+    });
+  </script>
+@endsection
+
 
 @section('css')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />

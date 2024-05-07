@@ -37,7 +37,10 @@ Route::middleware('auth')
   ->group(function () {
 
     Route::resource('apartments', ApartmentController::class);
+    Route::patch('apartments/{apartment}/update_visible', [ApartmentController::class, 'update_visible'])->name('apartments.update_visible');
+
   });
+  Route::delete('apartments/{apartment}/destroy_image', [ApartmentController::class, 'destroy_image'])->middleware('auth')->name('user.apartments.destroy_image');
 
 // rotta softDeletes
 Route::get('/softDelete', function (){
@@ -45,6 +48,5 @@ Route::get('/softDelete', function (){
   $apartment->delete(); 
 });
 
-Route::delete('apartments/{apartment}/destroy_image', [ApartmentController::class, 'destroy_image'])->middleware('auth')->name('user.apartments.destroy_image');
 
 require __DIR__ . '/auth.php';

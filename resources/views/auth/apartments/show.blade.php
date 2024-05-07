@@ -55,11 +55,25 @@
       </div>
       
       {{-- switch --}}
-      <div class="form-check form-switch mt-3 fs-5">
-        <input class="form-check-input" style="background-color: #1278c6" type="checkbox" role="switch" id="flexSwitchCheckChecked" @if ($apartment->visible) checked                           
-        @endif>
-        <label class="form-check-label fw-semibold" for="flexSwitchCheckChecked">Visibile</label>
-      </div>
+      <form action="{{ route('user.apartments.update_visible', $apartment) }}" method="POST" class="form-check form-switch fs-5" id="form-visible-{{ $apartment->id }}">
+        @csrf
+        @method('PATCH')
+
+        <input
+        @checked($apartment->visible) 
+        data-apartment-id= "{{ $apartment->id }}" 
+        id="flexSwitchCheckChecked-{{ $apartment->id }}"
+        name="visible" 
+        class="form-check-input" 
+        type="checkbox" 
+        role="switch"
+        style="background-color: #1278c6;"
+        value="true"
+
+        >
+
+        <label class="form-check-label fw-semibold" for="flexSwitchCheckChecked-{{ $apartment->id }}">Visibile</label>
+      </form>
       
     </div>
     
@@ -94,6 +108,19 @@
   </div>
 </div>
 
+@endsection
+
+@section('js')
+  <script>
+    const checkboxes = document.querySelectorAll('input[name="visible"]');
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', () => {
+        const formId = 'form-visible-' + checkbox.getAttribute('data-apartment-id');
+        const formEl = document.getElementById(formId);
+        formEl.submit();
+      })
+    });
+  </script>
 @endsection
 
 @section('css')
