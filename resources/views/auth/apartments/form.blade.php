@@ -158,9 +158,9 @@
 
        function fetchAutocomplete(query) {
     if (query.length > 3) {
-        const apiKey = '8TVYgA3vbL771Lx9e0MWAxKazyXxbjdn';
+        const apiKey = '{{ env("API_TOMTOM_KEY") }}';
         const url = 'https://api.tomtom.com/search/2/geocode/' + encodeURIComponent(query) + '.json?countrySet=IT&language=it-IT&key=' + apiKey;
-
+        console.log(apiKey)
         axios.get(url)
             .then(response => {
                 const results = response.data.results;
@@ -196,7 +196,7 @@
             event.preventDefault();
 
             const query = document.getElementById('address').value;
-            const apiKey = '8TVYgA3vbL771Lx9e0MWAxKazyXxbjdn';
+            const apiKey = '{{ env("API_TOMTOM_KEY") }}';
 
             const url = 'https://api.tomtom.com/search/2/geocode/' + query + '.json?key=' + apiKey;
             // console.log(apiKey);
