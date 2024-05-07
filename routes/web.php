@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\ApartmentController;
 use App\Http\Controllers\Guest\DashboardController as GuestDashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Models\Apartment;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +38,12 @@ Route::middleware('auth')
 
     Route::resource('apartments', ApartmentController::class);
   });
+
+// rotta softDeletes
+Route::get('/softDelete', function (){
+  $apartment = Apartment::findorfail(1);
+  $apartment->delete(); 
+});
 
 Route::delete('apartments/{apartment}/destroy_image', [ApartmentController::class, 'destroy_image'])->middleware('auth')->name('user.apartments.destroy_image');
 
