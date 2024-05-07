@@ -75,7 +75,7 @@ class ApartmentController extends Controller
         //with data[services] to the apartment, creating the relations
         if (Arr::exists($data, 'services')) $apartment->services()->attach($data['services']);
 
-        return redirect()->route('user.apartments.show', $apartment);
+        return redirect()->route('user.apartments.show', $apartment)->with('message-class', 'alert-success')->with('message', 'Appartamento inserito correttamente.');
         // dd($apartment);
     }
 
@@ -149,7 +149,7 @@ class ApartmentController extends Controller
             $apartment->services()->detach();
         }
 
-        return redirect()->route('user.apartments.show', $apartment);
+        return redirect()->route('user.apartments.show', $apartment)->with('message-class', 'alert-success')->with('message', 'Appartamento modificato correttamente.');
         // dd($apartment);
     }
 
@@ -162,7 +162,7 @@ class ApartmentController extends Controller
     public function destroy(Apartment $apartment)
     {
         $apartment->delete();
-        return redirect()->route('user.apartments.index');
+        return redirect()->route('user.apartments.index')->with('message-class', 'alert-danger')->with('message', 'Appartamento eliminato correttamente.');
     }
 
     /**
