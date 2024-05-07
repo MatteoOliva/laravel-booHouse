@@ -21,7 +21,7 @@
                     <div class="row">
                         <div class="col-12">
                             <label for="title" class="form-label mt-3">Titolo</label>
-                            <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') ?? $apartment->title ?? '' }}"/>
+                            <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') ?? $apartment->title ?? '' }}" required />
                             @error('title')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -41,7 +41,7 @@
         
                         <div class="col-12">
                             <label for="rooms" class="form-label mt-3">N. di camere</label>
-                            <input type="number" class="form-control @error('rooms') is-invalid @enderror" id="rooms" name="rooms" min="1" value="{{ old('rooms') ?? $apartment->rooms ?? '' }}"/>
+                            <input type="number" class="form-control @error('rooms') is-invalid @enderror" id="rooms" name="rooms" min="1" value="{{ old('rooms') ?? $apartment->rooms ?? '' }}" required/>
                             @error('rooms')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -51,7 +51,7 @@
         
                         <div class="col-12">
                             <label for="beds" class="form-label mt-3">N. di letti</label>
-                            <input type="number" class="form-control @error('beds') is-invalid @enderror" id="beds" name="beds" value="{{ old('beds') ?? $apartment->beds ?? '' }}"/>
+                            <input type="number" class="form-control @error('beds') is-invalid @enderror" id="beds" name="beds" value="{{ old('beds') ?? $apartment->beds ?? '' }}" required/>
                             @error('beds')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -61,7 +61,7 @@
         
                         <div class="col-12">
                             <label for="toilets" class="form-label mt-3">N. di bagni</label>
-                            <input type="number" class="form-control @error('toilets') is-invalid @enderror" id="toilets" name="toilets" min="1" value="{{ old('toilets') ?? $apartment->toilets ?? '' }}"/>
+                            <input type="number" class="form-control @error('toilets') is-invalid @enderror" id="toilets" name="toilets" min="1" value="{{ old('toilets') ?? $apartment->toilets ?? '' }}" required/>
                              @error('toilets')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -71,7 +71,7 @@
         
                         <div class="col-12">
                             <label for="mq" class="form-label mt-3">Metri quadri</label>
-                            <input type="number" class="form-control @error('mq') is-invalid @enderror" id="mq" name="mq" min="5" value="{{ old('mq') ?? $apartment->mq ?? '' }}"/>
+                            <input type="number" class="form-control @error('mq') is-invalid @enderror" id="mq" name="mq" min="5" value="{{ old('mq') ?? $apartment->mq ?? '' }}" required/>
                             @error('mq')
                             <div class="invalid-feedback">
                                 {{ $message }}
