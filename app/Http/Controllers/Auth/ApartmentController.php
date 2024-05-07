@@ -197,13 +197,28 @@ class ApartmentController extends Controller
         //return the user to where it was
         return redirect()->back();
     }
+  
+    /**
+     * toggle the visible paramer
+     *
+     */
+    public function update_visible(Request $request, Apartment $apartment) {
+
+        $data = $request->all();
+        $apartment->visible = Arr::exists($data, 'visible') ? true : false; 
+        $apartment->save();
+        return redirect()->back();
+
+    }
 
     /**
-     * Delete the image related to the apartment
+     * redirect to index (to be used if API errors occurs)
      *
      */
     public function back_to_index()
     {
         return redirect()->route('user.apartments.index')->with('message-class', 'alert-danger')->with('message', 'Un fantasma ci ha rallentati! Per favore riprova più tardi');
-    }
+    }  
+    
+  
 }
