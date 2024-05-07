@@ -162,7 +162,7 @@
             if (query.length > 3) {
                 const apiKey = '{{ env("API_TOMTOM_KEY") }}';
                 const url = 'https://api.tomtom.com/search/2/geocode/' + encodeURIComponent(query) + '.json?countrySet=IT&language=it-IT&key=' + apiKey;
-                console.log(apiKey)
+                // console.log(apiKey)
                 axios.get(url)
                     .then(response => {
                         const results = response.data.results;
@@ -205,7 +205,8 @@
             if (query.length > 0) {
 
                 // prendo l'API key dal file env
-                const apiKey = '{{ env("API_TOMTOM_KEY") }}';
+                // const apiKey = '{{ env("API_TOMTOM_KEY") }}';
+                const apiKey = '';
                 // compongo l'url con tutti i dati
                 const url = 'https://api.tomtom.com/search/2/geocode/' + query + '.json?key=' + apiKey;
                 // console.log(apiKey);    
@@ -228,7 +229,15 @@
                     // submitto il form
                     document.getElementById('apartment-form').submit();
                 
+                }).catch((error) => {
+
+                    console.log(error.response.data);
+
+                    window.location.href = '{{ route("user.apartments.index") }}';
+
                 })
+
+
             // se invece il canpo indirizzo è vuoto
             } else {
 
