@@ -12,6 +12,7 @@ class Apartment extends Model
 {
   use HasFactory; 
   use SoftDeletes;
+  protected $dates = ['deleted_at'];
 
   
 
@@ -32,7 +33,7 @@ class Apartment extends Model
     'visible'
   ];
 
-  protected $dates = ['deleted_at'];
+  
   
   // public function deleteApartment($id){
   //     $apartment = Apartment::find($id);

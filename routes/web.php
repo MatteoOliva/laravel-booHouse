@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\Auth\ApartmentController;
+use App\Models\Apartment;
 use App\Http\Controllers\Guest\DashboardController as GuestDashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
-use App\Models\Apartment;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 /*
@@ -21,10 +23,7 @@ use Illuminate\Support\Facades\Route;
 // # Rotte pubbliche
 Route::get('/', [GuestDashboardController::class, 'index'])
   ->name('home');
-// # Rotta per lo slug nell'URL anziche ID
-Route::get('/apartments/{apartment:slug}', function (Apartment $apartment) {
-  return $apartment;
-});
+
 
 // # Rotte protette
 Route::middleware('auth')
@@ -45,8 +44,13 @@ Route::middleware('auth')
   ->group(function () {
 
     Route::resource('apartments', ApartmentController::class);
+
     Route::patch('apartments/{apartment}/update_visible', [ApartmentController::class, 'update_visible'])->name('apartments.update_visible');
+
   });
+
+
+
 Route::delete('apartments/{apartment}/destroy_image', [ApartmentController::class, 'destroy_image'])->middleware('auth')->name('user.apartments.destroy_image');
 
 // rotta softDeletes
