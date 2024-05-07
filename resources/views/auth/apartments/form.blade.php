@@ -107,11 +107,11 @@
                             <label for="address" class="form-label mt-3">Indirizzo</label>
                             <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') ?? $apartment->address ?? '' }}" oninput="fetchAutocomplete(this.value)" autocomplete="off"/>
                             <div id="autocomplete-results" class="list-group position-absolute"></div>
-                            @error('address')
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback @error('address') d-block @else d-none @enderror" id="adress-feedback">
+                                @error('address')
                                 {{ $message }}
+                                @enderror
                             </div>
-                            @enderror
                         </div>
                         
                     </div>
@@ -197,36 +197,45 @@
        const saveButton = document.getElementById('save-button-form').addEventListener('click', function(event) {
             event.preventDefault();
 
-            const query = document.getElementById('address').value;
-            const apiKey = '{{ env("API_TOMTOM_KEY") }}';
+            const adressInput = document.getElementById('address');
+            const query = adressInput.value;
 
-            const url = 'https://api.tomtom.com/search/2/geocode/' + query + '.json?key=' + apiKey;
-            // console.log(apiKey);
+            if (query.length > 0) {
 
-
-            axios.get(url).then((response) => {
+                const apiKey = '{{ env("API_TOMTOM_KEY") }}';
+    
+                const url = 'https://api.tomtom.com/search/2/geocode/' + query + '.json?key=' + apiKey;
+                // console.log(apiKey);    
+    
+                axios.get(url).then((response) => {
+                    
+                    // console.log(response);
+                    const lat = response.data.results[0].position.lat;
+                    const lon = response.data.results[0].position.lon;
+                    // console.log(lat, lon);
+    
+                    document.getElementById('lat').value = lat;
+                    document.getElementById('lon').value = lon;
+    
+                    // console.log(document.getElementById('lat').value, document.getElementById('lon').value);
+    
+                    document.getElementById('apartment-form').submit();
                 
-                // console.log(response);
-                const lat = response.data.results[0].position.lat;
-                const lon = response.data.results[0].position.lon;
-                // console.log(lat, lon);
+                })
 
-                document.getElementById('lat').value = lat;
-                document.getElementById('lon').value = lon;
+            } else {
 
-                // console.log(document.getElementById('lat').value, document.getElementById('lon').value);
+                adressInput.classList.add('is-invalid');
 
-                document.getElementById('apartment-form').submit();
-            
-            })
+                const adressFeedback = document.getElementById('adress-feedback');
+                adressFeedback.innerText = "L'indirizzo è obbligatorio";
+                adressFeedback.classList.remove('d-none');
+                console.log(adressFeedback.innerText);
 
-
-
+            }
 
             // document.getElementById('lat').value = 10;
             // document.getElementById('lon').value = 10;
-
-
             // document.getElementById('apartment-form').submit();
 
        });
