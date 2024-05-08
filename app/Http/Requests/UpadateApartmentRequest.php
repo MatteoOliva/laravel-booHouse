@@ -30,7 +30,7 @@ class UpadateApartmentRequest extends FormRequest
             'beds' => 'required|integer|between:1,500',
             'toilets' => 'required|integer|between:1,500',
             'mq' => 'required|numeric|min:5',
-            'image' => 'required|image|mimes:jpeg,jpg,png,gif',
+            'image' => 'image|mimes:jpeg,jpg,png,gif',
             'address' => 'required|string',
             'lat' => 'required',
             'lon' => 'required',
@@ -70,7 +70,7 @@ class UpadateApartmentRequest extends FormRequest
             'mq.numeric' => 'Inserisci un numero',
             'mq.min' =>  'Il valore inserito deve essere minimo 5',
             // image
-            'image.required' => 'Immagine obbligatoria',
+            // 'image.required' => 'Immagine obbligatoria',
             'image.image' => 'Scegliere una immagine',
             'image.mimes' => 'Scegliere un file tra i seguenti tipi :mimes',
 
