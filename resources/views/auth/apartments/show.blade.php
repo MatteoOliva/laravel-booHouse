@@ -91,7 +91,16 @@
       </div>
 
       {{-- visualizzazioni --}}
-      
+      <div class="my-3">
+        <h5>Visualizzazioni</h5>
+        {{-- @forelse ($apartment->views as $view)
+            ({{ $views }})
+        @empty
+          <p>Ancora nessuna visita</p>     
+            
+        @endforelse --}}
+        <p>Il tuo appartamento ha ricevuto {{ $views }} fantasmi</p>
+      </div>
 
     </div>
     

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use App\Models\Message;
 use App\Models\Service;
+use App\Models\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreApartmentRequest;
@@ -91,7 +92,7 @@ class ApartmentController extends Controller
      * @param  \App\Models\Apartment  $apartment
      * @return \Illuminate\Http\Response
      */
-    public function show(Apartment $apartment, Message $message)
+    public function show(Apartment $apartment, Message $message, View $view)
     {
         // var_dump($apartment->services->pluck('id')->toArray());
         $related_services = $apartment->services->pluck('id')->toArray();
@@ -103,8 +104,14 @@ class ApartmentController extends Controller
         // message
         $messages = Message::all();
 
+        // views
+        // $views = View::all()->groupBy('apartment_id');
+        $views = View::fromQuery('Select apartment_id, count(*) from (Select apartment_id, ip_address from views group by apartment_id, ip_address) as x group by apartment_id;');
+        
+        
+
         $services = Service::whereIn('id', $related_services)->get();
-        return view('auth.apartments.show', compact('apartment', 'services', 'messages'));
+        return view('auth.apartments.show', compact('apartment', 'services', 'messages', 'views'));
     }
 
     /**
