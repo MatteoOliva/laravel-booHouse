@@ -75,7 +75,24 @@
 
       </form>
 
+      {{-- messaggi --}}
+      <div class="my-3">
+        <h5>Messaggi ricevuti</h5>
+        @forelse ($apartment->messages as $message)
+        <div class="card my-2">
+          <div class="card-body">
+            <p>Mittente: {{ $message->email }}</p>
+          <p>{{ $message->content }}</p>
+          </div>         
+        </div>      
+        @empty
+          <p>Ancora nessuna vittima</p>     
+        @endforelse
+      </div>
+
+      {{-- visualizzazioni --}}
       
+
     </div>
     
 
