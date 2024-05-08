@@ -15,7 +15,7 @@ class ApiController extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::all();
+        $apartments = Apartment::where('visible', '1')->get();
 
         // per ogni appartamento
         foreach ($apartments as $apartment) {
@@ -30,6 +30,7 @@ class ApiController extends Controller
             }
         }
 
+        // restituisce la risposta in formato json
         return response()->json($apartments);
     }
 
