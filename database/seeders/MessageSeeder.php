@@ -2,8 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Apartment;
+use App\Models\Message;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Faker\Generator as Faker;
+
 
 class MessageSeeder extends Seeder
 {
@@ -12,8 +16,15 @@ class MessageSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Faker $faker)
     {
-        //
+
+        for($i = 0; $i < 10; $i++){
+            $message = new Message;
+            $message->apartment_id = random_int(1,5);
+            $message->email = $faker->email();
+            $message->content = $faker->paragraph(2);
+            $message->save();
+        }
     }
 }
