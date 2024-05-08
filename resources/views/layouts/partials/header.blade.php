@@ -39,7 +39,7 @@
 
               <div aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-right">
                 <a class="dropdown-item" href="{{ route('admin.dashboard') }}"> Dashboard</a>
-                <a class="dropdown-item" href="{{ url('profile') }}"> Profile</a>
+                {{-- <a class="dropdown-item" href="{{ url('profile') }}"> Profile</a> --}}
                 <a class="dropdown-item" href="{{ route('logout') }}" id="logout-link">
                   Logout
                 </a>
