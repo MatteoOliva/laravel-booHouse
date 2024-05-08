@@ -105,13 +105,24 @@ class ApartmentController extends Controller
         $messages = Message::all();
 
         // views
-        // $views = View::all()->groupBy('apartment_id');
-        $views = View::fromQuery('Select apartment_id, count(*) from (Select apartment_id, ip_address from views group by apartment_id, ip_address) as x group by apartment_id;');
+
+        $views = View::fromQuery('Select apartment_id, count(*) as total_views from (Select apartment_id, ip_address, CONVERT(date, date) from views group by apartment_id, ip_address, CONVERT(date, date)) as x group by apartment_id;');
+        $total_views = 0;
+        // dd($views);
+
+        // ciclo ogni riga del db delle views
+        foreach($views as $view) {
+            // prendo quella che corrisponde all'appartamento che andro a visualizzare
+            if($view->apartment_id == $apartment->id) {
+                // setto le total_views
+                $total_views = $view->total_views;
+            }
         
-        
+        }
+        // dd($total_views);
 
         $services = Service::whereIn('id', $related_services)->get();
-        return view('auth.apartments.show', compact('apartment', 'services', 'messages', 'views'));
+        return view('auth.apartments.show', compact('apartment', 'services', 'messages', 'total_views'));
     }
 
     /**

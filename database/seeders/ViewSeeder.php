@@ -19,7 +19,7 @@ class ViewSeeder extends Seeder
     {
         for($i = 0; $i < 100; $i++){
             $view = new View;
-            $view->apartment_id = random_int(1,5);
+            $view->apartment_id = random_int(1,8);
             $view->date = $faker->dateTime();
             $view->ip_address = $faker->ipv4();
             $view->save();

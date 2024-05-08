@@ -99,7 +99,7 @@
           <p>Ancora nessuna visita</p>     
             
         @endforelse --}}
-        <p>Il tuo appartamento ha ricevuto {{ $views }} fantasmi</p>
+        <p>Il tuo appartamento ha ricevuto {{ $total_views }} fantasmi</p>
       </div>
 
     </div>
