@@ -10,12 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Apartment extends Model
 {
-  use HasFactory; 
+  use HasFactory;
   use SoftDeletes;
   protected $dates = ['deleted_at'];
-
-  
-
 
   protected $fillable = [
     'user_id',
@@ -33,18 +30,17 @@ class Apartment extends Model
     'visible'
   ];
 
-  
-  
+
   // public function deleteApartment($id){
   //     $apartment = Apartment::find($id);
   //     $apartment->delete(); // This soft deletes the apartment
   //   }
 
 
-    // public function restoreApartment($id){
-    //   $apartment = Apartment::withTrashed()->find($id);
-    //   $apartment->restore(); // This restores the soft-deleted apartment
-    // }
+  // public function restoreApartment($id){
+  //   $apartment = Apartment::withTrashed()->find($id);
+  //   $apartment->restore(); // This restores the soft-deleted apartment
+  // }
 
   public function create_unique_slug(array $existing_slugs)
   {
@@ -102,7 +98,8 @@ class Apartment extends Model
   {
     return $this->belongsToMany(Sponsorship::class);
   }
-  public function getRouteKeyName() {
+  public function getRouteKeyName()
+  {
     return 'slug';
   }
 }

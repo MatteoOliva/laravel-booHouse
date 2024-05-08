@@ -15,7 +15,22 @@ class ApiController extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::where('visible', '1')->get();
+        $apartments = Apartment::leftJoin('apartment_sponsorship', 'apartments.id', '=', 'apartment_sponsorship.apartment_id');
+        $apartments->where('title', 'like', '%astello%');
+        $apartments->with(['sponsorships']);
+        $apartments = $apartments->paginate(10);
+        //         SELECT * 
+        // FROM apartments 
+
+        // LEFT JOIN apartment_sponsorship
+        // ON apartments.id = apartment_sponsorship.apartment_id
+
+        // WHERE name LIKE '%casa%';
+
+        // $apartments = Apartment::where('visible', '1');
+        // $apartments->where('visible', '1');
+        // $apartments->with(['services', 'sponsorships']);
+        // $apartments = $apartments->paginate(10);
 
         // per ogni appartamento
         foreach ($apartments as $apartment) {
