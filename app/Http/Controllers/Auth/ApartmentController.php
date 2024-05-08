@@ -142,7 +142,7 @@ class ApartmentController extends Controller
         // get all the slugs from the db
         $existing_slugs = Apartment::all()->pluck('slug')->toArray();
         // add the slug to the apartment and save the apartment in the db
-        $apartment->slug = $apartment->create_unique_slug($existing_slugs);
+        if ($apartment->title != $request->input('title')) $apartment->slug = $apartment->create_unique_slug($existing_slugs);
 
         //if the request has an image
         if ($request->hasFile('image')) {
@@ -197,18 +197,18 @@ class ApartmentController extends Controller
         //return the user to where it was
         return redirect()->back();
     }
-  
+
     /**
      * toggle the visible paramer
      *
      */
-    public function update_visible(Request $request, Apartment $apartment) {
+    public function update_visible(Request $request, Apartment $apartment)
+    {
 
         $data = $request->all();
-        $apartment->visible = Arr::exists($data, 'visible') ? true : false; 
+        $apartment->visible = Arr::exists($data, 'visible') ? true : false;
         $apartment->save();
         return redirect()->back();
-
     }
 
     /**
@@ -218,7 +218,5 @@ class ApartmentController extends Controller
     public function back_to_index()
     {
         return redirect()->route('user.apartments.index')->with('message-class', 'alert-danger')->with('message', 'Un fantasma ci ha rallentati! Per favore riprova più tardi');
-    }  
-    
-  
+    }
 }
