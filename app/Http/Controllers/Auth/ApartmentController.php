@@ -65,7 +65,7 @@ class ApartmentController extends Controller
         $apartment->visible = false;
 
         // get all the slugs from the db
-        $existing_slugs = Apartment::all()->pluck('slug')->toArray();
+        $existing_slugs = Apartment::withTrashed()->get()->pluck('slug')->toArray();
         // dd($existing_slugs);
         // add the slug to the apartment and save the apartment in the db
         $apartment->slug = $apartment->create_unique_slug($existing_slugs);
@@ -141,7 +141,7 @@ class ApartmentController extends Controller
             // fill the apartment with the data from the request
             $apartment->fill($data);
             // get all the slugs from the db
-            $existing_slugs = Apartment::all()->pluck('slug')->toArray();
+            $existing_slugs = Apartment::withTrashed()->get()->pluck('slug')->toArray();
             // create a new slug form the new titile and it to the apartment and save the apartment in the db
             $apartment->slug = $apartment->create_unique_slug($existing_slugs);
         } else {
