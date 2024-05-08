@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
+use App\Models\Message;
 use App\Models\Service;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -90,7 +91,7 @@ class ApartmentController extends Controller
      * @param  \App\Models\Apartment  $apartment
      * @return \Illuminate\Http\Response
      */
-    public function show(Apartment $apartment)
+    public function show(Apartment $apartment, Message $message)
     {
         // var_dump($apartment->services->pluck('id')->toArray());
         $related_services = $apartment->services->pluck('id')->toArray();
@@ -99,8 +100,11 @@ class ApartmentController extends Controller
         if (Auth::id() != $apartment->user_id)
             abort(403);
 
+        // message
+        $messages = Message::all();
+
         $services = Service::whereIn('id', $related_services)->get();
-        return view('auth.apartments.show', compact('apartment', 'services'));
+        return view('auth.apartments.show', compact('apartment', 'services', 'messages'));
     }
 
     /**
