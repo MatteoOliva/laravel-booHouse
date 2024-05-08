@@ -136,13 +136,19 @@ class ApartmentController extends Controller
         // $data = $request->all();
         $data = $request->validated();
 
-        // fill the apartment with the data from the request
-        $apartment->fill($data);
+        // if the title in the request is different from the title of the apartment
+        if ($apartment->title != $request->input('title')) {
+            // fill the apartment with the data from the request
+            $apartment->fill($data);
+            // get all the slugs from the db
+            $existing_slugs = Apartment::all()->pluck('slug')->toArray();
+            // create a new slug form the new titile and it to the apartment and save the apartment in the db
+            $apartment->slug = $apartment->create_unique_slug($existing_slugs);
+        } else {
 
-        // get all the slugs from the db
-        $existing_slugs = Apartment::all()->pluck('slug')->toArray();
-        // add the slug to the apartment and save the apartment in the db
-        if ($apartment->title != $request->input('title')) $apartment->slug = $apartment->create_unique_slug($existing_slugs);
+            // fill the apartment with the data from the request
+            $apartment->fill($data);
+        }
 
         //if the request has an image
         if ($request->hasFile('image')) {
