@@ -18,31 +18,45 @@ class ApartmentSponsorshipSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        // get all the apartments from the db
+        // prendo gli appartamenti dal db
         $apartments = Apartment::all();
 
-        // get all the sponsorship' ids and save them as an array
+        // prendo gli le sponsorship id e le salvo in un array
         $sponsorships_ids = Sponsorship::all()->pluck('id')->toArray();
 
-        $end_sponsorships = [
+        // definisco un array con la data di fine di ogni sponsorizzazione
+        $end_sponsorship = [
             1 => now()->addHours(24)->format( 'Y-m-d H:i:s'),
             2 => now()->addHours(72)->format('Y-m-d H:i:s'),
             3 => now()->addHours(144)->format('Y-m-d H:i:s'),
         ];
         
 
-        // for each Apartment
+        
         foreach ($apartments as $apartment) {
-            // get a random number of sponsor, min 0, max 1
-            $sponsors_to_add = $faker->randomElements($sponsorships_ids, random_int(0, 1));
+        
+            // Numero casuale di sponsorizzazioni da associare
+            $numberSponsorships = random_int(0, 1); 
+            $randomSponsorships = $faker->randomElements($sponsorships_ids, $numberSponsorships);
 
-            $endDate = $faker->randomElement($end_sponsorships);
+            // estraggo gli id degli sponsor casuali 
+            $sponsorshipIds = array_slice($randomSponsorships, 0, $numberSponsorships);
 
-            // assign them to the apartment
-            $apartment->sponsorships()->attach($sponsors_to_add , [
+            foreach ($sponsorshipIds as $sponsorshipId){
+                // data di fine dello sponsor
+                $endDate = $end_sponsorship[$sponsorshipId] ?? null;
+
+                // assegno lo sponsor all'appartamento
+                 $apartment->sponsorships()->attach($sponsorshipId , [
                 'payment_date' => now(),
                 'end_date' => $endDate,
-            ]);
+                ]);
+            }
+
+            
+
+            
+            
 
 
 
