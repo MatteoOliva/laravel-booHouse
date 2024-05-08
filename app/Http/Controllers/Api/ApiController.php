@@ -35,9 +35,28 @@ class ApiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        // Prendi il primo progetto che corrisponde allo slug ricevuto
+        $apartment = Apartment::select('id', 'title', 'slug', 'description', 'rooms', 'beds', 'toilets', 'mq', 'image', 'lat', 'lon', 'address',)
+            ->where([
+                'slug' => $slug,
+                'visible' => true
+            ])
+            ->with(['sponsorships:duration', 'services:name,icon', 'user:name'])
+            ->first();
+
+        // se l'url dell'immagine inizia per img
+        if (substr($apartment->image, 0, 3) == 'img') {
+            // setta l'url dell'immagine dalla cartella img
+            $apartment->image = asset('/' . $apartment->image);
+        } else {
+            //setta l'url dell'immagine dalla cartella storage
+            $apartment->image = asset('/storage/' . $apartment->image);
+        }
+
+        // restituisce la risposta in formato json
+        return response()->json($apartment);
     }
 
     /**

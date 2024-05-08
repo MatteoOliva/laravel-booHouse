@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::apiResource('Apartments', ApiController::class)->only(['index', 'show']);
-Route::get('/search/{search_param}', [ApiController::class, 'search'])->name('api.search');
+Route::get('apartments/{slug}', [ApiController::class, 'show'])->name('api.apartments.show');
+Route::get('apartments/search/{search_param}', [ApiController::class, 'search'])->name('api.apartments.search');
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
