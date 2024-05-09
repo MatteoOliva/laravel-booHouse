@@ -83,7 +83,7 @@ class ApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function search(string $search_term)
+    public function search($search_term)
     {
         // $search_term = 'otta';
 
@@ -160,14 +160,15 @@ class ApiController extends Controller
         }
 
         // ordino per numero di visualizzazioni
-        $sponsored_apartments->sortBy('views');
+        $ordered_apartments = $sponsored_apartments->sortByDesc('views')->toArray();
+        // dd($ordered_apartments);
 
         // restituisce la risposta in formato json
         // return response()->json([
         //     'sponsored apartments' => $sponsored_apartments,
         //     'views per apartment' => $views_per_apartment
         // ]);
-        return response()->json($sponsored_apartments);
+        return response()->json($ordered_apartments);
     }
 
     /**
