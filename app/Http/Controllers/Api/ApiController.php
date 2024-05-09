@@ -128,7 +128,7 @@ class ApiController extends Controller
     public function sponsored_all()
     {
         $sponsored_apartments = Apartment::join('apartment_sponsorship', 'apartments.id', '=', 'apartment_sponsorship.apartment_id')
-            ->select('apartments.id', 'apartments.title', 'apartments.slug', 'apartments.image', 'apartments.address', 'apartments.description', 'apartment_sponsorship.payment_date')
+            ->select('apartments.id', 'apartments.title', 'apartments.slug', 'apartments.image', 'apartments.address', 'apartments.description')
             ->where('visible', true)
             ->orderBy('apartment_sponsorship.payment_date', 'desc');
         $sponsored_apartments = $sponsored_apartments->get();
