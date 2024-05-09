@@ -20,9 +20,7 @@
           <a class="text-decoration-none" href="{{ route('user.apartments.show', $apartment) }}">
             <div class="card card-index h-100" style="width: 18rem;">
               <img 
-              src="@if (substr($apartment->image,0,3) == 'img') {{  '/' . $apartment->image }} 
-              @else {{ asset('storage/' . $apartment->image) }}          
-              @endif" 
+              src="{{ $apartment->get_img_absolute_path() }}" 
               class="img-fluid rounded-top" alt="#">
               <div class="card-body" style="background-color:">
                 <h5 class="card-title" style="color: #F87C5D">{{ $apartment->title }}</h5>

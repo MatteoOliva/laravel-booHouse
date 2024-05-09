@@ -46,14 +46,8 @@ class ApiController extends Controller
             ->with(['sponsorships:duration', 'services:name,icon', 'user:name'])
             ->first();
 
-        // se l'url dell'immagine inizia per img
-        if (substr($apartment->image, 0, 3) == 'img') {
-            // setta l'url dell'immagine dalla cartella img
-            $apartment->image = asset('/' . $apartment->image);
-        } else {
-            //setta l'url dell'immagine dalla cartella storage
-            $apartment->image = asset('/storage/' . $apartment->image);
-        }
+        // ottieni il path assoluto dell'immagine
+        $apartment->image = $apartment->get_img_absolute_path();
 
         // restituisce la risposta in formato json
         return response()->json($apartment);
@@ -105,15 +99,8 @@ class ApiController extends Controller
 
         // per ogni appartamento
         foreach ($apartments as $apartment) {
-
-            // se l'url dell'immagine inizia per img
-            if (substr($apartment->image, 0, 3) == 'img') {
-                // setta l'url dell'immagine dalla cartella img
-                $apartment->image = asset('/' . $apartment->image);
-            } else {
-                //setta l'url dell'immagine dalla cartella storage
-                $apartment->image = asset('/storage/' . $apartment->image);
-            }
+            // ottieni il path assoluto dell'immagine
+            $apartment->image = $apartment->get_img_absolute_path();
         }
 
         // restituisce la risposta in formato json
@@ -140,15 +127,45 @@ class ApiController extends Controller
 
         // per ogni appartamento
         foreach ($sponsored_apartments as $apartment) {
+            // ottieni il path assoluto dell'immagine
+            $apartment->image = $apartment->get_img_absolute_path();
+        }
 
-            // se l'url dell'immagine inizia per img
-            if (substr($apartment->image, 0, 3) == 'img') {
-                // setta l'url dell'immagine dalla cartella img
-                $apartment->image = asset('/' . $apartment->image);
-            } else {
-                //setta l'url dell'immagine dalla cartella storage
-                $apartment->image = asset('/storage/' . $apartment->image);
-            }
+        // restituisce la risposta in formato json
+        return response()->json($sponsored_apartments);
+    }
+
+    // return response()->json([
+    //     'status' => true,
+    //     'message' => 'Login successfully',
+    //     'data' => $response]);
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function sponsored_search(string $search_term)
+    {
+        $sponsored_apartments = Apartment::join('apartment_sponsorship', 'apartments.id', '=', 'apartment_sponsorship.apartment_id')
+            ->select('apartments.id', 'apartments.title', 'apartments.slug', 'apartments.image', 'apartments.address', 'apartments.description')
+            ->where([
+                ['apartments.visible', '=', true],
+                ['apartments.address', 'like', '%' . $search_term . '%']
+            ])
+            ->orderBy('apartment_sponsorship.payment_date', 'desc');
+        $sponsored_apartments = $sponsored_apartments->get();
+
+        // SELECT * 
+        // FROM apartments 
+        // INNER JOIN apartment_sponsorship ON apartments.id = apartment_sponsorship.apartment_id 
+        // WHERE visible = true 
+        // AND address LIKE '%pe%'; 
+
+        // per ogni appartamento
+        foreach ($sponsored_apartments as $apartment) {
+            // ottieni il path assoluto dell'immagine
+            $apartment->image = $apartment->get_img_absolute_path();
         }
 
         // restituisce la risposta in formato json

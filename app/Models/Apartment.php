@@ -78,6 +78,22 @@ class Apartment extends Model
     return $new_slug;
   }
 
+  public function get_img_absolute_path()
+  {
+    //crea variabile vuota per path immagine
+    $image_path = '';
+    // se l'url dell'immagine inizia per img
+    if (substr($this->image, 0, 3) == 'img') {
+      // salva nella var l'url dell'immagine dalla cartella img
+      $image_path = asset('/' . $this->image);
+    } else {
+      //salva nella var l'url dell'immagine dalla cartella storage
+      $image_path =  asset('/storage/' . $this->image);
+    }
+    // restituisci il path dell'immagine
+    return $image_path;
+  }
+
   public function user()
   {
     return $this->belongsTo(User::class);

@@ -17,9 +17,7 @@
     <div class="text-center">
       
       <img 
-      src="@if (substr($apartment->image,0,3) == 'img') {{ '/' . $apartment->image }} 
-          @else {{ asset('storage/' . $apartment->image) }}          
-          @endif" 
+      src="{{ $apartment->get_img_absolute_path() }}" 
       class="img-fluid rounded mt-2 text-center" alt="#">
     </div>
     
