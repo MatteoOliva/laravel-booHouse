@@ -244,4 +244,25 @@ class ApiController extends Controller
 
         return response()->json($not_sponsored_apartments);
     }
+
+    public function search_ordered($destination_lat, $destination_lon, $radius)
+    {
+
+        $radius_apartments = Apartment::selectRaw('*, ACOS(SIN(RADIANS(lat)) * SIN(RADIANS(?)) + COS(RADIANS(lat)) * COS(RADIANS(?)) * COS(RADIANS(ABS(lon - ?)))) * 6371 AS distance')
+            ->orderBy('distance', 'ASC')
+            ->setBindings(([$destination_lat, $destination_lon, $radius]))
+            ->whereRaw(
+                'ACOS(SIN(RADIANS(lat)) * SIN(RADIANS(?)) + COS(RADIANS(lat)) * COS(RADIANS(?)) * COS(RADIANS(ABS(lon - ?)))) * 6371 <= ?',
+                [
+                    $destination_lat,
+                    $destination_lat,
+                    $destination_lon,
+                    $radius
+                ]
+            );
+
+        $results = $radius_apartments->where('visible', true)->get();
+
+        return response()->json($results);
+    }
 }
