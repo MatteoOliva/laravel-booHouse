@@ -19,6 +19,8 @@ return new class extends Migration
 
             $table->dateTime('date');
             $table->ipAddress('ip_address');
+            $table->timestamps();
+
 
         });
     }

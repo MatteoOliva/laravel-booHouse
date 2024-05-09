@@ -20,7 +20,6 @@ Route::get('apartments/{slug}', [ApiController::class, 'show'])->name('api.apart
 Route::get('apartments/search/{search_param}', [ApiController::class, 'search'])->name('api.apartments.search'); // riceve termine di ricerca e restituisce elenco di appartanmenti
 Route::get('apartments/sponsored/all', [ApiController::class, 'sponsored_all'])->name('api.apartments.sponsored.all'); // riceve niente e mostra tutti gli appartamenti sponsorizzati
 
-
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
