@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::apiResource('Apartments', ApiController::class)->only(['index', 'show']);
+// Route::apiResource('Apartments', ApiController::class)->only(['index']);
+Route::get('apartments', [ApiController::class, 'index'])->name('api.apartments.index'); // restituisce sempre tutti gli appartamenti
 Route::get('apartments/{slug}', [ApiController::class, 'show'])->name('api.apartments.show'); // riceve slug e mostra appartamento
 Route::get('apartments/search/{search_param}', [ApiController::class, 'search'])->name('api.apartments.search'); // riceve termine di ricerca e restituisce elenco di appartanmenti
 Route::get('apartments/search/sponsored/{search_term}', [ApiController::class, 'sponsored_search'])->name(('api.apartments.search.sponsored')); // riceve termine di ricerca e restituisce elenco di appartamenti sponsorizzati

@@ -17,7 +17,16 @@ class ApiController extends Controller
      */
     public function index()
     {
-        // 
+        $apartments = Apartment::select('id', 'title', 'slug', 'description', 'rooms', 'beds', 'toilets', 'mq', 'image', 'lat', 'lon', 'address')
+            ->where('visible', true)
+            ->get();
+
+        // SELECT * 
+        // FROM apartments 
+        // WHERE visible = true; 
+
+        // restituisce la risposta in formato json
+        return response()->json($apartments);
     }
 
     /**
@@ -176,7 +185,7 @@ class ApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function sponsored_search(string $search_term)
+    public function sponsored_search($search_term)
     {
         $sponsored_apartments = Apartment::join('apartment_sponsorship', 'apartments.id', '=', 'apartment_sponsorship.apartment_id')
             ->select('apartments.id', 'apartments.title', 'apartments.slug', 'apartments.image', 'apartments.address', 'apartments.description')
@@ -201,5 +210,12 @@ class ApiController extends Controller
 
         // restituisce la risposta in formato json
         return response()->json($sponsored_apartments);
+    }
+
+    public function not_sponsored_search($search_term)
+    {
+        // prendo l'elenco di tutti gli id degli appartamenti sponsorizzati
+        $sponsored_apartment_ids = DB::table('apartment_sponsorship')->all()->pluck('id');
+        dd($sponsored_apartment_ids);
     }
 }
