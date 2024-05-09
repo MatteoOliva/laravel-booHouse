@@ -138,6 +138,19 @@ class ApiController extends Controller
         // INNER JOIN apartment_sponsorship ON apartments.id = apartment_sponsorship.apartment_id 
         // WHERE visible = true; 
 
+        // per ogni appartamento
+        foreach ($sponsored_apartments as $apartment) {
+
+            // se l'url dell'immagine inizia per img
+            if (substr($apartment->image, 0, 3) == 'img') {
+                // setta l'url dell'immagine dalla cartella img
+                $apartment->image = asset('/' . $apartment->image);
+            } else {
+                //setta l'url dell'immagine dalla cartella storage
+                $apartment->image = asset('/storage/' . $apartment->image);
+            }
+        }
+
         // restituisce la risposta in formato json
         return response()->json($sponsored_apartments);
     }
