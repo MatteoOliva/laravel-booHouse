@@ -16,8 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::apiResource('Apartments', ApiController::class)->only(['index', 'show']);
-Route::get('apartments/{slug}', [ApiController::class, 'show'])->name('api.apartments.show');
-Route::get('apartments/search/{search_param}', [ApiController::class, 'search'])->name('api.apartments.search');
+Route::get('apartments/{slug}', [ApiController::class, 'show'])->name('api.apartments.show'); // riceve slug e mostra appartamento
+Route::get('apartments/search/{search_param}', [ApiController::class, 'search'])->name('api.apartments.search'); // riceve termine di ricerca e restituisce elenco di appartanmenti
+Route::get('apartments/sponsored/all', [ApiController::class, 'sponsored_all'])->name('api.apartments.sponsored.all'); // riceve niente e mostra tutti gli appartamenti sponsorizzati
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
