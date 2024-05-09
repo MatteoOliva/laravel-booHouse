@@ -25,6 +25,12 @@ class ApiController extends Controller
         // FROM apartments 
         // WHERE visible = true; 
 
+        // per ogni appartamento
+        foreach ($apartments as $apartment) {
+            // ottieni il path assoluto dell'immagine
+            $apartment->image = $apartment->get_img_absolute_path();
+        }
+
         // restituisce la risposta in formato json
         return response()->json($apartments);
     }
@@ -98,7 +104,10 @@ class ApiController extends Controller
 
         $apartments = Apartment::leftJoin('apartment_sponsorship', 'apartments.id', '=', 'apartment_sponsorship.apartment_id')
             ->select('apartments.id', 'apartments.title', 'apartments.slug', 'apartments.image', 'apartments.address')
-            ->where('title', 'like', '%' . $search_term . '%')
+            ->where([
+                ['apartments.visible', '=', true],
+                ['apartments.address', 'like', '%' . $search_term . '%']
+            ])
             ->with(['sponsorships']);
         $apartments = $apartments->paginate(10);
 
@@ -215,7 +224,24 @@ class ApiController extends Controller
     public function not_sponsored_search($search_term)
     {
         // prendo l'elenco di tutti gli id degli appartamenti sponsorizzati
-        $sponsored_apartment_ids = DB::table('apartment_sponsorship')->all()->pluck('id');
-        dd($sponsored_apartment_ids);
+        $sponsored_apartment_ids = DB::table('apartment_sponsorship')->get()->pluck('apartment_id')->toArray();
+        // dd($sponsored_apartment_ids);
+
+        $apartments = Apartment::select('apartments.id', 'apartments.title', 'apartments.slug', 'apartments.image', 'apartments.address', 'apartments.description')
+            ->where([
+                ['apartments.visible', '=', true],
+                ['apartments.address', 'like', '%' . $search_term . '%']
+            ])
+            ->get();
+
+        $not_sponsored_apartments = [];
+
+        // ciclo tutti gli appartamenti
+        foreach ($apartments as $apartment) {
+            // se l'id dell'appartamento non è compreso tra gli id degli appartamenti sponsorizzati aggiungilo all'array degli appartamenti non sponsorizzati
+            if (!in_array($apartment->id, $sponsored_apartment_ids)) $not_sponsored_apartments[] = $apartment;
+        }
+
+        return response()->json($not_sponsored_apartments);
     }
 }
