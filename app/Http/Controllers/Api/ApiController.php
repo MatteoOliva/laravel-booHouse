@@ -17,7 +17,22 @@ class ApiController extends Controller
      */
     public function index()
     {
-        // 
+        $apartments = Apartment::select('id', 'title', 'slug', 'description', 'rooms', 'beds', 'toilets', 'mq', 'image', 'lat', 'lon', 'address')
+            ->where('visible', true)
+            ->get();
+
+        // SELECT * 
+        // FROM apartments 
+        // WHERE visible = true; 
+
+        // per ogni appartamento
+        foreach ($apartments as $apartment) {
+            // ottieni il path assoluto dell'immagine
+            $apartment->image = $apartment->get_img_absolute_path();
+        }
+
+        // restituisce la risposta in formato json
+        return response()->json($apartments);
     }
 
     /**
