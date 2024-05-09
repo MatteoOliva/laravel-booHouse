@@ -119,4 +119,26 @@ class ApiController extends Controller
         // restituisce la risposta in formato json
         return response()->json($apartments);
     }
+
+    /**
+     * Mostra tutti gli appartamenti sponsorizzati dal più recente
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function sponsored_all()
+    {
+        $sponsored_apartments = Apartment::join('apartment_sponsorship', 'apartments.id', '=', 'apartment_sponsorship.apartment_id')
+            ->select('apartments.id', 'apartments.title', 'apartments.slug', 'apartments.image', 'apartments.address', 'apartments.description')
+            ->where('visible', true)
+            ->orderBy('apartment_sponsorship.payment_date', 'desc');
+        $sponsored_apartments = $sponsored_apartments->get();
+
+        // SELECT * 
+        // FROM apartments 
+        // INNER JOIN apartment_sponsorship ON apartments.id = apartment_sponsorship.apartment_id 
+        // WHERE visible = true; 
+
+        // restituisce la risposta in formato json
+        return response()->json($sponsored_apartments);
+    }
 }
