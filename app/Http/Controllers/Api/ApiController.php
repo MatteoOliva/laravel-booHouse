@@ -60,7 +60,7 @@ class ApiController extends Controller
                 'slug' => $slug,
                 'visible' => true
             ])
-            ->with(['sponsorships:duration', 'services:name,icon', 'user:name'])
+            ->with(['sponsorships:end_date', 'services:name,icon', 'user:name'])
             ->first();
 
         // ottieni il path assoluto dell'immagine
@@ -109,6 +109,7 @@ class ApiController extends Controller
                 ['apartments.address', 'like', '%' . $search_term . '%']
             ])
             ->orWhere([
+                ['apartments.visible', '=', true],
                 ['apartments.title', 'like', '%' . $search_term . '%']
             ])
             ->with(['sponsorships']);
@@ -139,7 +140,8 @@ class ApiController extends Controller
     {
         $sponsored_apartments = Apartment::join('apartment_sponsorship', 'apartments.id', '=', 'apartment_sponsorship.apartment_id')
             ->select('apartments.id', 'apartments.title', 'apartments.slug', 'apartments.image', 'apartments.address', 'apartments.description')
-            ->where('visible', true);
+            ->where('apartments.visible', true)
+            ->where('apartment_sponsorship.end_date', '>=', now());
         // ->orderBy('apartment_sponsorship.payment_date', 'desc');
         $sponsored_apartments = $sponsored_apartments->get();
 
@@ -203,6 +205,7 @@ class ApiController extends Controller
             ->select('apartments.id', 'apartments.title', 'apartments.slug', 'apartments.image', 'apartments.address', 'apartments.description')
             ->where([
                 ['apartments.visible', '=', true],
+                ['apartment_sponsorship.end_date', '>=', now()],
                 ['apartments.address', 'like', '%' . $search_term . '%']
             ])
             ->orWhere([
@@ -240,7 +243,7 @@ class ApiController extends Controller
             ->orWhere([
                 ['apartments.title', 'like', '%' . $search_term . '%']
             ])
-            ->where(['apartments.visible', '=', true])
+            ->where('apartments.visible', true)
             ->get();
 
         // $apartments->->get();
@@ -262,6 +265,7 @@ class ApiController extends Controller
         $radius_apartments = Apartment::selectRaw('*, ACOS(SIN(RADIANS(lat)) * SIN(RADIANS(?)) + COS(RADIANS(lat)) * COS(RADIANS(?)) * COS(RADIANS(ABS(lon - ?)))) * 6371 AS distance')
             ->orderBy('distance', 'ASC')
             ->setBindings(([$destination_lat, $destination_lon, $radius]))
+            ->where('apartments.visible', true)
             ->whereRaw(
                 'ACOS(SIN(RADIANS(lat)) * SIN(RADIANS(?)) + COS(RADIANS(lat)) * COS(RADIANS(?)) * COS(RADIANS(ABS(lon - ?)))) * 6371 <= ?',
                 [
@@ -272,18 +276,31 @@ class ApiController extends Controller
                 ]
             )
             ->orWhere([
+                ['apartments.visible', '=', true],
                 ['apartments.title', 'like', '%' . $search_term . '%'],
-            ]);
+            ])->get();
 
-        $results = $radius_apartments->where('visible', true)->get();
+        // filtro gli appartamenti trestituiendo solo quelli che corrispondono alla condizione
+        // $sponsored_apartments = $radius_apartments->filter(function ($apartment) {
+        //     // restiruiscono vero solo gli appartamenti in cui ci sia almeno una sponsorizzazione con data di fine maggiore di adesso
+        //     return $apartment->sponsorships()->where('end_date', '>', now())->exist();
+        // });
+
+        // // prendo gli id degli appartamenti sponsorizzati
+        // $sponsored_ids = $sponsored_apartments->pluck('id');
+
+        // // ordino gli appartamenti sponsorizzati mettendo per primi quelli con la data di fine maggiore
+        // $sponsored_apartments = $sponsored_apartments->sortByDesc(function ($apartment) {
+        //     return $apartment->sponsorships()->where('end_date', '>', now())->max('end_date');
+        // });
+
+        // // per ogni appartamento trovato
+        // foreach ($sponsored_apartments as $apartment) {
+        //     // ottieni il path assoluto dell'immagine
+        //     $apartment->image = $apartment->get_img_absolute_path();
+        // }
 
 
-        // per ogni appartamento trovato
-        foreach ($results as $apartment) {
-            // ottieni il path assoluto dell'immagine
-            $apartment->image = $apartment->get_img_absolute_path();
-        }
-
-        return response()->json($results);
+        return response()->json($radius_apartments);
     }
 }
