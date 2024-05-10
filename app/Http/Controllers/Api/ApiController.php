@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
+use App\Models\Service;
 use App\Models\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
+use function PHPUnit\Framework\isEmpty;
 
 class ApiController extends Controller
 {
@@ -98,20 +101,25 @@ class ApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function search($search_term)
+    public function search($search_term, $destination_lat, $destination_lon, $radius = 20)
     {
         // $search_term = 'otta';
 
         $apartments = Apartment::leftJoin('apartment_sponsorship', 'apartments.id', '=', 'apartment_sponsorship.apartment_id')
             ->select('apartments.id', 'apartments.title', 'apartments.slug', 'apartments.image', 'apartments.address')
-            ->where([
-                ['apartments.visible', '=', true],
-                ['apartments.address', 'like', '%' . $search_term . '%']
-            ])
+            ->whereRaw(
+                'ACOS(SIN(RADIANS(lat)) * SIN(RADIANS(?)) + COS(RADIANS(lat)) * COS(RADIANS(?)) * COS(RADIANS(ABS(lon - ?)))) * 6371 <= ?',
+                [
+                    $destination_lat,
+                    $destination_lat,
+                    $destination_lon,
+                    $radius
+                ]
+            )
             ->orWhere([
                 ['apartments.visible', '=', true],
-                ['apartments.title', 'like', '%' . $search_term . '%']
-            ])
+                ['apartments.title', 'like', '%' . $search_term . '%'],
+            ])->get()
             ->with(['sponsorships']);
         $apartments = $apartments->paginate(10);
 
@@ -128,7 +136,7 @@ class ApiController extends Controller
         }
 
         // restituisce la risposta in formato json
-        return response()->json($apartments);
+        return response()->json(array_values($apartments));
     }
 
     /**
@@ -313,5 +321,33 @@ class ApiController extends Controller
         }
 
         return response()->json(array_values($results));
+    }
+
+    public function services_all()
+    {
+        // prendo tutti i servizi dal db
+        $all_services = Service::select('name', 'icon')->get();
+        // dd($all_services);
+
+        // per ogni appartamento trovato
+        foreach ($all_services as $service) {
+            // ottieni il path assoluto dell'immagine
+            $service->icon = asset('/' . $service->icon);
+        }
+
+        // setto il messaggio di successo
+        $message = 'success';
+
+        // se non ci sono servizi
+        if ($all_services->isEmpty()) {
+            // setto il messaggio a fallimento e un risultato di errore
+            $message = 'fail';
+            $results = 'Errore del server';
+        };
+
+        return response()->json([
+            'message' => $message,
+            'results' => ($all_services->isEmpty()) ? $results : $all_services,
+        ]);
     }
 }
