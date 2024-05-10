@@ -280,8 +280,10 @@ class ApiController extends Controller
     //     $radius = $query->radius;
 
 
-    public function search_ordered($search_term, $destination_lat, $destination_lon, $radius, $rooms, $beds, $toilets, $mq)
+    public function search_ordered($search_term, $destination_lat, $destination_lon, $radius, $query_rooms, $query_beds, $query_toilets, $query_mq)
     {
+        $query_services = [5];
+
         // trova tutti gli appartamenti la cui distanza dalla longitudine e latitudine date sono inferirori al radius dato (default 20)
         $radius_apartments = Apartment::selectRaw('*, (6371 * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lon) - radians(?)) + sin(radians(?)) * sin(radians(lat)))) AS distance')
             ->setBindings(([$destination_lat, $destination_lon, $destination_lat]))
@@ -299,30 +301,43 @@ class ApiController extends Controller
             ->orWhere([
                 ['apartments.visible', '=', true],
                 ['apartments.title', 'like', '%' . $search_term . '%'],
-            ])->get();
+            ])
+            ->with(['services:id'])->get();
 
         // se l'utente ha dato un minimo di stanze
-        if ($rooms) {
+        if ($query_rooms) {
             // prendo solo gli appartamenti con un num di stanze maggiori di quelle scelte dall'utente
-            $radius_apartments = $radius_apartments->where('rooms', '>=', $rooms);
+            $radius_apartments = $radius_apartments->where('rooms', '>=', $query_rooms);
         }
 
         // se l'utente ha dato un minimo di letti
-        if ($beds) {
+        if ($query_beds) {
             // prendo solo gli appartamenti con un num di stanze maggiori di quelle scelte dall'utente
-            $radius_apartments = $radius_apartments->where('beds', '>=', $beds);
+            $radius_apartments = $radius_apartments->where('beds', '>=', $query_beds);
         }
 
         // se l'utente ha dato un minimo di bagni
-        if ($toilets) {
+        if ($query_toilets) {
             // prendo solo gli appartamenti con un num di stanze maggiori di quelle scelte dall'utente
-            $radius_apartments = $radius_apartments->where('toilets', '>=', $toilets);
+            $radius_apartments = $radius_apartments->where('toilets', '>=', $query_toilets);
         }
 
         // se l'utente ha dato un minimo di mq
-        if ($mq) {
+        if ($query_mq) {
             // prendo solo gli appartamenti con un num di stanze maggiori di quelle scelte dall'utente
-            $radius_apartments = $radius_apartments->where('mq', '>=', $mq);
+            $radius_apartments = $radius_apartments->where('mq', '>=', $query_mq);
+        }
+
+        //se l'utente ha scelto dei servizi
+        if (!empty($query_services)) {
+
+            // filtro gli appartamenti 
+            $radius_apartments = $radius_apartments->filter(function ($apartment) use ($query_services) {
+                //recupero tutti gli id associati all'appartamento
+                $services_ids = $apartment->services()->pluck('service_id')->toArray();
+                // restituisco solo gli appartamenti il cui array di servizi contiene tutti i servizi scelti dall'utente
+                return array_diff($query_services, $services_ids) === [];
+            });
         }
 
         foreach ($radius_apartments as $apartment) {
