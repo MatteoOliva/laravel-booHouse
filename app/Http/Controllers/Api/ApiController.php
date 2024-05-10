@@ -280,7 +280,7 @@ class ApiController extends Controller
     //     $radius = $query->radius;
     // , $beds, $toilets, $mq
 
-    public function search_ordered($search_term, $destination_lat, $destination_lon, $radius, $rooms)
+    public function search_ordered($search_term, $destination_lat, $destination_lon, $radius, $rooms, $beds)
     {
         // trova tutti gli appartamenti la cui distanza dalla longitudine e latitudine date sono inferirori al radius dato (default 20)
         $radius_apartments = Apartment::selectRaw('*, (6371 * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lon) - radians(?)) + sin(radians(?)) * sin(radians(lat)))) AS distance')
@@ -307,9 +307,17 @@ class ApiController extends Controller
             $radius_apartments = $radius_apartments->where('rooms', '>=', $rooms);
         }
 
+        // se l'utente ha dato un minimo di letti
+        if ($beds) {
+            // prendo solo gli appartamenti con un num di stanze maggiori di quelle scelte dall'utente
+            $radius_apartments = $radius_apartments->where('beds', '>=', $beds);
+        }
+
         foreach ($radius_apartments as $apartment) {
             // arrotondo la distanza ad un numero senza la virgola
             $apartment->distance = round($apartment->distance, 0);
+            //setto la chiave sponsored afalse di default
+            $apartment->sponsored = false;
         }
 
         //filtro gli appartamenti trestituiendo solo quelli che corrispondono alla condizione
@@ -318,6 +326,11 @@ class ApiController extends Controller
             return $apartment->sponsorships()->where('end_date', '>=', now())->exists();
         });
         // dd($sponsored_apartments);
+
+        // segna la chiave sponsored a true per tutti gli appartamenti sponsorizzati
+        foreach ($sponsored_apartments as $apartment) {
+            $apartment->sponsored = true;
+        }
 
         // prendo gli id degli appartamenti sponsorizzati
         $sponsored_ids = $sponsored_apartments->pluck('id')->toArray();
