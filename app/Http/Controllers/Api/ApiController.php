@@ -187,11 +187,11 @@ class ApiController extends Controller
         // dd($ordered_apartments);
 
         // restituisce la risposta in formato json
-        // return response()->json([
-        //     'sponsored apartments' => $sponsored_apartments,
-        //     'views per apartment' => $views_per_apartment
-        // ]);
-        return response()->json($ordered_apartments);
+        return response()->json([
+            'message' => 'success',
+            'sponsored apartments' => array_values($ordered_apartments),
+        ]);
+        // return response()->json(array_values($ordered_apartments));
     }
 
     /**
@@ -283,24 +283,35 @@ class ApiController extends Controller
         //filtro gli appartamenti trestituiendo solo quelli che corrispondono alla condizione
         $sponsored_apartments = $radius_apartments->filter(function ($apartment) {
             // restiruiscono vero solo gli appartamenti in cui ci sia almeno una sponsorizzazione con data di fine maggiore di adesso
-            return $apartment->sponsorships()->where('end_date', '>', now())->exists();
+            return $apartment->sponsorships()->where('end_date', '>=', now())->exists();
         });
-        dd($sponsored_apartments);
+        // dd($sponsored_apartments);
 
-        // // prendo gli id degli appartamenti sponsorizzati
-        // $sponsored_ids = $sponsored_apartments->pluck('id');
+        // prendo gli id degli appartamenti sponsorizzati
+        $sponsored_ids = $sponsored_apartments->pluck('id')->toArray();
+        // dd($sponsored_ids);
 
-        // // ordino gli appartamenti sponsorizzati mettendo per primi quelli con la data di fine maggiore
-        // $sponsored_apartments = $sponsored_apartments->sortByDesc(function ($apartment) {
-        //     return $apartment->sponsorships()->where('end_date', '>', now())->max('end_date');
-        // });
+        // ordino gli appartamenti sponsorizzati mettendo per primi quelli con la data di fine maggiore
+        $sponsored_apartments = $sponsored_apartments->sortByDesc(function ($apartment) {
+            return $apartment->sponsorships()->where('end_date', '>=', now())->max('end_date');
+        });
+        // dd($sponsored_apartments);
+
+        // uniamo gli appartamenti trovati agli appartamenti sponsorizzati e ordinati, escludendo quelli il cui id è uguale ad uno di quelli sponsorizzati
+        $results = $sponsored_apartments->merge($radius_apartments);
+        // $results_ids = $results->pluck('id')->toArray();
+        // $radius_apartments_ids = $radius_apartments->pluck('id')->toArray();
+        // return response()->json([
+        //     'results_ids' => $results_ids,
+        //     'radius_apartments_ids' => $radius_apartments_ids
+        // ]);
 
         // per ogni appartamento trovato
-        foreach ($radius_apartments as $apartment) {
+        foreach ($results as $apartment) {
             // ottieni il path assoluto dell'immagine
             $apartment->image = $apartment->get_img_absolute_path();
         }
 
-        return response()->json($radius_apartments);
+        return response()->json($results);
     }
 }
