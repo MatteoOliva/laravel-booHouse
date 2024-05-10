@@ -60,11 +60,12 @@ class ApiController extends Controller
     {
         // Prendi il primo progetto che corrisponde allo slug ricevuto
         $apartment = Apartment::select('id', 'title', 'slug', 'description', 'rooms', 'beds', 'toilets', 'mq', 'image', 'lat', 'lon', 'address',)
-            ->where([
-                'slug' => $slug,
-                'visible' => true
-            ])
-            ->with(['sponsorships:end_date', 'services:name,icon', 'user:name'])
+                ->where('slug', $slug)
+        // ->where([
+            //     'slug' => $slug,
+            //     'visible' => true
+            // ])
+            // ->with(['sponsorships:end_date', 'services:name,icon', 'user:name'])
             ->first();
 
         // ottieni il path assoluto dell'immagine
