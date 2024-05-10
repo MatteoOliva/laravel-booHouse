@@ -294,12 +294,11 @@ class ApiController extends Controller
         //     return $apartment->sponsorships()->where('end_date', '>', now())->max('end_date');
         // });
 
-        // // per ogni appartamento trovato
-        // foreach ($sponsored_apartments as $apartment) {
-        //     // ottieni il path assoluto dell'immagine
-        //     $apartment->image = $apartment->get_img_absolute_path();
-        // }
-
+        // per ogni appartamento trovato
+        foreach ($radius_apartments as $apartment) {
+            // ottieni il path assoluto dell'immagine
+            $apartment->image = $apartment->get_img_absolute_path();
+        }
 
         return response()->json($radius_apartments);
     }
