@@ -278,9 +278,9 @@ class ApiController extends Controller
     //     $destination_lat = $query->lat;
     //     $destination_lon = $query->lon;
     //     $radius = $query->radius;
-    // , $beds, $toilets, $mq
 
-    public function search_ordered($search_term, $destination_lat, $destination_lon, $radius, $rooms, $beds)
+
+    public function search_ordered($search_term, $destination_lat, $destination_lon, $radius, $rooms, $beds, $toilets, $mq)
     {
         // trova tutti gli appartamenti la cui distanza dalla longitudine e latitudine date sono inferirori al radius dato (default 20)
         $radius_apartments = Apartment::selectRaw('*, (6371 * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lon) - radians(?)) + sin(radians(?)) * sin(radians(lat)))) AS distance')
@@ -311,6 +311,18 @@ class ApiController extends Controller
         if ($beds) {
             // prendo solo gli appartamenti con un num di stanze maggiori di quelle scelte dall'utente
             $radius_apartments = $radius_apartments->where('beds', '>=', $beds);
+        }
+
+        // se l'utente ha dato un minimo di bagni
+        if ($toilets) {
+            // prendo solo gli appartamenti con un num di stanze maggiori di quelle scelte dall'utente
+            $radius_apartments = $radius_apartments->where('toilets', '>=', $toilets);
+        }
+
+        // se l'utente ha dato un minimo di mq
+        if ($mq) {
+            // prendo solo gli appartamenti con un num di stanze maggiori di quelle scelte dall'utente
+            $radius_apartments = $radius_apartments->where('mq', '>=', $mq);
         }
 
         foreach ($radius_apartments as $apartment) {
