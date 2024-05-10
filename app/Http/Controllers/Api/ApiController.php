@@ -398,14 +398,13 @@ class ApiController extends Controller
         }
 
         $results = $results->toArray();
-
         return response()->json(array_values($results));
     }
 
     public function services_all()
     {
         // prendo tutti i servizi dal db
-        $all_services = Service::select('name', 'icon')->get();
+        $all_services = Service::select( 'id', 'name', 'icon')->get();
         // dd($all_services);
 
         // per ogni appartamento trovato
