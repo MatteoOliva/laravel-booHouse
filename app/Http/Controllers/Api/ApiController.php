@@ -109,6 +109,7 @@ class ApiController extends Controller
                 ['apartments.address', 'like', '%' . $search_term . '%']
             ])
             ->orWhere([
+                ['apartments.visible', '=', true],
                 ['apartments.title', 'like', '%' . $search_term . '%']
             ])
             ->with(['sponsorships']);
@@ -204,6 +205,7 @@ class ApiController extends Controller
             ->select('apartments.id', 'apartments.title', 'apartments.slug', 'apartments.image', 'apartments.address', 'apartments.description')
             ->where([
                 ['apartments.visible', '=', true],
+                ['apartment_sponsorship.end_date', '>=', now()],
                 ['apartments.address', 'like', '%' . $search_term . '%']
             ])
             ->orWhere([
@@ -263,6 +265,7 @@ class ApiController extends Controller
         $radius_apartments = Apartment::selectRaw('*, ACOS(SIN(RADIANS(lat)) * SIN(RADIANS(?)) + COS(RADIANS(lat)) * COS(RADIANS(?)) * COS(RADIANS(ABS(lon - ?)))) * 6371 AS distance')
             ->orderBy('distance', 'ASC')
             ->setBindings(([$destination_lat, $destination_lon, $radius]))
+            ->where('apartments.visible', true)
             ->whereRaw(
                 'ACOS(SIN(RADIANS(lat)) * SIN(RADIANS(?)) + COS(RADIANS(lat)) * COS(RADIANS(?)) * COS(RADIANS(ABS(lon - ?)))) * 6371 <= ?',
                 [
@@ -273,11 +276,15 @@ class ApiController extends Controller
                 ]
             )
             ->orWhere([
+                ['apartments.visible', '=', true],
                 ['apartments.address', 'like', '%' . $search_term . '%'],
             ])
-            ->orWhere('apartments.title', 'like', '%' . $search_term . '%')->get();
+            ->orWhere([
+                ['apartments.visible', '=', true],
+                ['apartments.title', 'like', '%' . $search_term . '%'],
+            ])->get();
 
-        // $radius_apartments = $radius_apartments->where('visible', true)->get();
+        // $radius_apartments = $radius_apartments->where('visible', true);
 
         // filtro gli appartamenti trestituiendo solo quelli che corrispondono alla condizione
         // $sponsored_apartments = $radius_apartments->filter(function ($apartment) {
