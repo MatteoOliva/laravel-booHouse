@@ -101,43 +101,46 @@ class ApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function search($search_term, $destination_lat, $destination_lon, $radius = 20)
-    {
-        // $search_term = 'otta';
+    // public function search($search_term, $destination_lat, $destination_lon, $radius = 20)
+    // {
+    //     // $search_term = 'otta';
 
-        $apartments = Apartment::leftJoin('apartment_sponsorship', 'apartments.id', '=', 'apartment_sponsorship.apartment_id')
-            ->select('apartments.id', 'apartments.title', 'apartments.slug', 'apartments.image', 'apartments.address')
-            ->whereRaw(
-                'ACOS(SIN(RADIANS(lat)) * SIN(RADIANS(?)) + COS(RADIANS(lat)) * COS(RADIANS(?)) * COS(RADIANS(ABS(lon - ?)))) * 6371 <= ?',
-                [
-                    $destination_lat,
-                    $destination_lat,
-                    $destination_lon,
-                    $radius
-                ]
-            )
-            ->orWhere([
-                ['apartments.visible', '=', true],
-                ['apartments.title', 'like', '%' . $search_term . '%'],
-            ])->get()
-            ->with(['sponsorships']);
-        $apartments = $apartments->paginate(10);
+    //     $apartments = Apartment::leftJoin('apartment_sponsorship', 'apartments.id', '=', 'apartment_sponsorship.apartment_id')
+    //         ->select('apartments.id', 'apartments.title', 'apartments.slug', 'apartments.image', 'apartments.address')
+    //         ->whereRaw(
+    //             'ACOS(SIN(RADIANS(lat)) * SIN(RADIANS(?)) + COS(RADIANS(lat)) * COS(RADIANS(?)) * COS(RADIANS(ABS(lon - ?)))) * 6371 <= ?',
+    //             [
+    //                 $destination_lat,
+    //                 $destination_lat,
+    //                 $destination_lon,
+    //                 $radius
+    //             ]
+    //         )
+    //         ->orWhere([
+    //             ['apartments.visible', '=', true],
+    //             ['apartments.title', 'like', '%' . $search_term . '%'],
+    //         ])
+    //         ->with(['sponsorships'])->get();
+    //     // $apartments = $apartments->paginate(10);
 
-        // SELECT * 
-        // FROM apartments 
-        // LEFT JOIN apartment_sponsorship
-        // ON apartments.id = apartment_sponsorship.apartment_id
-        // WHERE name LIKE '%casa%';
+    //     // SELECT * 
+    //     // FROM apartments 
+    //     // LEFT JOIN apartment_sponsorship
+    //     // ON apartments.id = apartment_sponsorship.apartment_id
+    //     // WHERE name LIKE '%casa%';
 
-        // per ogni appartamento
-        foreach ($apartments as $apartment) {
-            // ottieni il path assoluto dell'immagine
-            $apartment->image = $apartment->get_img_absolute_path();
-        }
+    //     // per ogni appartamento
+    //     foreach ($apartments as $apartment) {
+    //         // ottieni il path assoluto dell'immagine
+    //         $apartment->image = $apartment->get_img_absolute_path();
+    //     }
 
-        // restituisce la risposta in formato json
-        return response()->json(array_values($apartments));
-    }
+    //     $apartments = $apartments->toArray();
+    //     dd($apartments);
+
+    //     // restituisce la risposta in formato json
+    //     return response()->json(array_values($apartments));
+    // }
 
     /**
      * Mostra tutti gli appartamenti sponsorizzati dal più recente
@@ -270,16 +273,16 @@ class ApiController extends Controller
     public function search_ordered($search_term, $destination_lat, $destination_lon, $radius = 20)
     {
         // trova tutti gli appartamenti la cui distanza dalla longitudine e latitudine date sono inferirori al radius dato (default 20)
-        $radius_apartments = Apartment::selectRaw('*, ACOS(SIN(RADIANS(lat)) * SIN(RADIANS(?)) + COS(RADIANS(lat)) * COS(RADIANS(?)) * COS(RADIANS(ABS(lon - ?)))) * 6371 AS distance')
+        $radius_apartments = Apartment::selectRaw('*, (6371 * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lon) - radians(?)) + sin(radians(?)) * sin(radians(lat)))) AS distance')
+            ->setBindings(([$destination_lat, $destination_lon, $destination_lat]))
             ->orderBy('distance', 'ASC')
-            ->setBindings(([$destination_lat, $destination_lon, $radius]))
             ->where('apartments.visible', true)
             ->whereRaw(
-                'ACOS(SIN(RADIANS(lat)) * SIN(RADIANS(?)) + COS(RADIANS(lat)) * COS(RADIANS(?)) * COS(RADIANS(ABS(lon - ?)))) * 6371 <= ?',
+                '(6371 * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lon) - radians(?)) + sin(radians(?)) * sin(radians(lat)))) <= ?',
                 [
                     $destination_lat,
-                    $destination_lat,
                     $destination_lon,
+                    $destination_lat,
                     $radius
                 ]
             )
@@ -287,6 +290,11 @@ class ApiController extends Controller
                 ['apartments.visible', '=', true],
                 ['apartments.title', 'like', '%' . $search_term . '%'],
             ])->get();
+
+        foreach ($radius_apartments as $apartment) {
+            // arrotondo la distanza ad un numero senza la virgola
+            $apartment->distance = round($apartment->distance, 0);
+        }
 
         //filtro gli appartamenti trestituiendo solo quelli che corrispondono alla condizione
         $sponsored_apartments = $radius_apartments->filter(function ($apartment) {
@@ -319,6 +327,8 @@ class ApiController extends Controller
             // ottieni il path assoluto dell'immagine
             $apartment->image = $apartment->get_img_absolute_path();
         }
+
+        $results = $results->toArray();
 
         return response()->json(array_values($results));
     }

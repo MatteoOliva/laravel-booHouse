@@ -94,6 +94,29 @@ class Apartment extends Model
     return $image_path;
   }
 
+  function get_distance($destination_lat, $destination_lon)
+  {
+    $earthRadius = 6371; // Raggio medio della Terra in chilometri
+
+    $destination_lat = deg2rad($destination_lat);
+    $destination_lon = deg2rad($destination_lon);
+    $this->lat = deg2rad($this->lat);
+    $this->lon = deg2rad($this->lon);
+
+    $deltaLat = $this->lat - $destination_lat;
+    $deltaLon = $this->lon - $destination_lon;
+
+    $a = sin($deltaLat / 2) * sin($deltaLat / 2) +
+      cos($destination_lat) * cos($this->lat) *
+      sin($deltaLon / 2) * sin($deltaLon / 2);
+
+    $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+
+    $distance = $earthRadius * $c;
+
+    return $distance; // Distanza in chilometri
+  }
+
   public function user()
   {
     return $this->belongsTo(User::class);
