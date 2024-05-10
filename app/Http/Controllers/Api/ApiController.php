@@ -271,18 +271,31 @@ class ApiController extends Controller
         return response()->json($not_sponsored_apartments);
     }
 
-    // public function search_ordered(Request $query)
-    // {
-    //     // recuperiamo i dati dalla query
-    //     $search_term = $query->search_term;
-    //     $destination_lat = $query->lat;
-    //     $destination_lon = $query->lon;
-    //     $radius = $query->radius;
-
-
-    public function search_ordered($search_term, $destination_lat, $destination_lon, $radius, $query_rooms, $query_beds, $query_toilets, $query_mq)
+    public function search(Request $query)
     {
-        $query_services = [5];
+        // recuperiamo i dati dalla query
+        $search_term = $query->search_term;
+        $destination_lat = $query->lat;
+        $destination_lon = $query->lon;
+        $radius = $query->radius;
+        $query_rooms = $query->rooms;
+        $query_beds = $query->beds;
+        $query_mq = $query->mq;
+        $query_toilets = $query->toilets;
+        $query_services = $query->services;
+
+        // return response()->json($query_services);
+        // {
+        //     "search_term": "castellananana",
+        //     "lat": 45.0058800,
+        //     "lon": 7.5315310,
+        //     "radius": 200,
+        //     "rooms": 0,
+        //     "beds": 0,
+        //     "mq": 0,
+        //     "toilets": 0,
+        //     "services": [5, 10, 6]
+        // }
 
         // trova tutti gli appartamenti la cui distanza dalla longitudine e latitudine date sono inferirori al radius dato (default 20)
         $radius_apartments = Apartment::selectRaw('*, (6371 * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lon) - radians(?)) + sin(radians(?)) * sin(radians(lat)))) AS distance')
