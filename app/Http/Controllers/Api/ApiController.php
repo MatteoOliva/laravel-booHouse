@@ -312,6 +312,6 @@ class ApiController extends Controller
             $apartment->image = $apartment->get_img_absolute_path();
         }
 
-        return response()->json($results);
+        return response()->json(array_values($results));
     }
 }
