@@ -277,14 +277,8 @@ class ApiController extends Controller
             )
             ->orWhere([
                 ['apartments.visible', '=', true],
-                ['apartments.address', 'like', '%' . $search_term . '%'],
-            ])
-            ->orWhere([
-                ['apartments.visible', '=', true],
                 ['apartments.title', 'like', '%' . $search_term . '%'],
             ])->get();
-
-        // $radius_apartments = $radius_apartments->where('visible', true);
 
         // filtro gli appartamenti trestituiendo solo quelli che corrispondono alla condizione
         // $sponsored_apartments = $radius_apartments->filter(function ($apartment) {
