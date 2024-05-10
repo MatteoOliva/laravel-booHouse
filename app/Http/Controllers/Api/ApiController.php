@@ -8,6 +8,7 @@ use App\Models\Service;
 use App\Models\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Expr\Cast\Object_;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -270,7 +271,16 @@ class ApiController extends Controller
         return response()->json($not_sponsored_apartments);
     }
 
-    public function search_ordered($search_term, $destination_lat, $destination_lon, $radius = 20)
+    // public function search_ordered(Request $query)
+    // {
+    //     // recuperiamo i dati dalla query
+    //     $search_term = $query->search_term;
+    //     $destination_lat = $query->lat;
+    //     $destination_lon = $query->lon;
+    //     $radius = $query->radius;
+    // , $beds, $toilets, $mq
+
+    public function search_ordered($search_term, $destination_lat, $destination_lon, $radius, $rooms)
     {
         // trova tutti gli appartamenti la cui distanza dalla longitudine e latitudine date sono inferirori al radius dato (default 20)
         $radius_apartments = Apartment::selectRaw('*, (6371 * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lon) - radians(?)) + sin(radians(?)) * sin(radians(lat)))) AS distance')
@@ -290,6 +300,12 @@ class ApiController extends Controller
                 ['apartments.visible', '=', true],
                 ['apartments.title', 'like', '%' . $search_term . '%'],
             ])->get();
+
+        // se l'utente ha dato un minimo di stanze
+        if ($rooms) {
+            // prendo solo gli appartamenti con un num di stanze maggiori di quelle scelte dall'utente
+            $radius_apartments = $radius_apartments->where('rooms', '>=', $rooms);
+        }
 
         foreach ($radius_apartments as $apartment) {
             // arrotondo la distanza ad un numero senza la virgola
