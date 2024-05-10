@@ -201,7 +201,7 @@ class ApiController extends Controller
         // restituisce la risposta in formato json
         return response()->json([
             'message' => 'success',
-            'sponsored apartments' => array_values($ordered_apartments),
+            'sponsored_apartments' => array_values($ordered_apartments),
         ]);
         // return response()->json(array_values($ordered_apartments));
     }
