@@ -280,11 +280,12 @@ class ApiController extends Controller
                 ['apartments.title', 'like', '%' . $search_term . '%'],
             ])->get();
 
-        // filtro gli appartamenti trestituiendo solo quelli che corrispondono alla condizione
-        // $sponsored_apartments = $radius_apartments->filter(function ($apartment) {
-        //     // restiruiscono vero solo gli appartamenti in cui ci sia almeno una sponsorizzazione con data di fine maggiore di adesso
-        //     return $apartment->sponsorships()->where('end_date', '>', now())->exist();
-        // });
+        //filtro gli appartamenti trestituiendo solo quelli che corrispondono alla condizione
+        $sponsored_apartments = $radius_apartments->filter(function ($apartment) {
+            // restiruiscono vero solo gli appartamenti in cui ci sia almeno una sponsorizzazione con data di fine maggiore di adesso
+            return $apartment->sponsorships()->where('end_date', '>', now())->exists();
+        });
+        dd($sponsored_apartments);
 
         // // prendo gli id degli appartamenti sponsorizzati
         // $sponsored_ids = $sponsored_apartments->pluck('id');
