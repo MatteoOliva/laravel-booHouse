@@ -319,14 +319,14 @@ class ApiController extends Controller
             // ottieni il path assoluto dell'immagine
             $apartment->image = $apartment->get_img_absolute_path();
         }
-
+        $results = $results->toArray();
         return response()->json(array_values($results));
     }
 
     public function services_all()
     {
         // prendo tutti i servizi dal db
-        $all_services = Service::select('name', 'icon')->get();
+        $all_services = Service::select( 'id', 'name', 'icon')->get();
         // dd($all_services);
 
         // per ogni appartamento trovato
