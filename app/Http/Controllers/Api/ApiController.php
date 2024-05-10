@@ -274,7 +274,7 @@ class ApiController extends Controller
     public function search(Request $query)
     {
         // recuperiamo i dati dalla query
-        $search_term = $query->search_term;
+        $search_term = $query->address;
         $destination_lat = $query->lat;
         $destination_lon = $query->lon;
         $radius = $query->radius;
