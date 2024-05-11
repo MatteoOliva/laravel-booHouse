@@ -70,15 +70,15 @@ class UpadateApartmentRequest extends FormRequest
             'mq.numeric' => 'Inserisci un numero',
             'mq.min' =>  'Il valore inserito deve essere minimo 5',
             // image
-            // 'image.required' => 'Immagine obbligatoria',
-            'image.image' => 'Scegliere una immagine',
-            'image.mimes' => 'Scegliere un file tra i seguenti tipi :mimes',
+            // // 'image.required' => 'Immagine obbligatoria',
+            // 'image.image' => 'Scegliere una immagine',
+            // 'image.mimes' => 'Scegliere un file tra i seguenti tipi :mimes',
 
             // address
             'address.required' => 'Indirizzo obbligatorio',
 
-            // services
-            'services.exists' => 'Servizio non disponibile',
+            // // services
+            // 'services.exists' => 'Servizio non disponibile',
 
             // 'title.required' => 'The title is required'
             // 'required' => 'Questo campo è obbligatorio',
