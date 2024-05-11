@@ -23,61 +23,97 @@
                             <label for="title" class="form-label mt-3">Titolo</label>
                             
                             <input autofocus required type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') ?? $apartment->title ?? '' }}"/>
-
-                            @error('title')
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback @error('title') d-block @else d-none @enderror" id="title-feedback">
+                                @error('title')
                                 {{ $message }}
+                                @enderror
+                            </div>                           
+                        </div>
+
+                        <div class="col-12">
+                            <label for="address" class="form-label mt-3">Indirizzo</label>
+                            <input required type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') ?? $apartment->address ?? '' }}" oninput="fetchAutocomplete(this.value)" autocomplete="off"/>
+                            <div id="autocomplete-results" class="list-group position-absolute"></div>
+                            <div class="invalid-feedback @error('address') d-block @else d-none @enderror" id="adress-feedback">
+                                @error('address')
+                                {{ $message }}
+                                @enderror
                             </div>
-                            @enderror
                         </div>
         
                         <div class="col-12">
                             <label for="description" class="form-label mt-3">Descrizione</label>
                             <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" cols="30" rows="10">{{ old('description') ?? $apartment->description ?? ''  }}</textarea>
-                            @error('description')
+                            <div class="invalid-feedback @error('description') d-block @else d-none @enderror" id="description-feedback">
+                                @error('description')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                            {{-- @error('description')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
-                            @enderror
+                            @enderror --}}
                         </div>
         
                         <div class="col-12">
                             <label for="rooms" class="form-label mt-3">N. di camere</label>
-                            <input type="number" class="form-control @error('rooms') is-invalid @enderror" id="rooms" name="rooms" min="1" value="{{ old('rooms') ?? $apartment->rooms ?? '' }}" required/>                            @error('rooms')
+                            <input type="number" class="form-control @error('rooms') is-invalid @enderror" id="rooms" name="rooms" min="1" value="{{ old('rooms') ?? $apartment->rooms ?? '' }}" required/>                            
+                            <div class="invalid-feedback @error('rooms') d-block @else d-none @enderror" id="rooms-feedback">
+                                @error('rooms')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                            {{-- @error('rooms')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
-                            @enderror
+                            @enderror --}}
                         </div>
         
                         <div class="col-12">
                             <label for="beds" class="form-label mt-3">N. di letti</label>
                             <input required type="number" class="form-control @error('beds') is-invalid @enderror" id="beds" name="beds" value="{{ old('beds') ?? $apartment->beds ?? '' }}"/>
-                            @error('beds')
+                            <div class="invalid-feedback @error('beds') d-block @else d-none @enderror" id="beds-feedback">
+                                @error('beds')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                            {{-- @error('beds')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
-                            @enderror
+                            @enderror --}}
                         </div>
         
                         <div class="col-12">
                             <label for="toilets" class="form-label mt-3">N. di bagni</label>
-                            <input type="number" class="form-control @error('toilets') is-invalid @enderror" id="toilets" name="toilets" min="1" value="{{ old('toilets') ?? $apartment->toilets ?? '' }}" required/>
-                             @error('toilets')
+                            <input type="number" class="form-control @error('toilets') is-invalid @enderror" id="toilets" name="toilets"  value="{{ old('toilets') ?? $apartment->toilets ?? '' }}" required/>
+                            <div class="invalid-feedback @error('toilets') d-block @else d-none @enderror" id="toilets-feedback">
+                                @error('toilets')
+                                {{ $message }}
+                                @enderror
+                            </div> 
+                            {{-- @error('toilets')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
-                            @enderror
+                            @enderror --}}
                         </div>
         
                         <div class="col-12">
                             <label for="mq" class="form-label mt-3">Metri quadri</label>
                             <input type="number" class="form-control @error('mq') is-invalid @enderror" id="mq" name="mq" min="5" value="{{ old('mq') ?? $apartment->mq ?? '' }}" required/>
-                            @error('mq')
+                            <div class="invalid-feedback @error('mq') d-block @else d-none @enderror" id="mq-feedback">
+                                @error('mq')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                            {{-- @error('mq')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
-                            @enderror
+                            @enderror --}}
                         </div>
         
                         <div class="col-12 ">                
@@ -89,7 +125,7 @@
                                         <div class="btn btn-danger mb-3 image-trash" id="delete-img-btn"><i class="fa-solid fa-x"></i></div>
                                     </div>
                                 </div>                               
-                                {{-- <label for="image" class="form-label">Cambia immagine</label> --}}
+                                <label for="image" class="form-label">Cambia immagine</label>
                             @else
                                 <label for="image" class="form-label mt-3">Aggiungi Immagine</label>
                             @endif
@@ -104,16 +140,7 @@
                             @enderror
                         </div>                      
         
-                        <div class="col-12">
-                            <label for="address" class="form-label mt-3">Indirizzo</label>
-                            <input required type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') ?? $apartment->address ?? '' }}" oninput="fetchAutocomplete(this.value)" autocomplete="off"/>
-                            <div id="autocomplete-results" class="list-group position-absolute"></div>
-                            <div class="invalid-feedback @error('address') d-block @else d-none @enderror" id="adress-feedback">
-                                @error('address')
-                                {{ $message }}
-                                @enderror
-                            </div>
-                        </div>
+                        
                         
                     </div>
                     
@@ -256,6 +283,78 @@
             // document.getElementById('lon').value = 10;
             // document.getElementById('apartment-form').submit();
 
+
+            //validazione titolo
+            const titleInput = document.getElementById('title');
+            const querytitle = titleInput.value;
+            if (querytitle.length == 0){
+                // aggiungi la classe is-invalid all'input
+                titleInput.classList.add('is-invalid');
+                // prendo il div del feedback, gli tolgo il d-none e inserisco il messaggio di errore
+                const titleFeedback = document.getElementById('title-feedback');
+                titleFeedback.classList.remove('d-none');
+                titleFeedback.innerText = "Il titolo è obbligatorio";
+            }
+
+            //validazione descrizione
+            const descriptionInput = document.getElementById('description');
+            const querydescription = descriptionInput.value;
+            if (querydescription.length == 0){
+                // aggiungi la classe is-invalid all'input
+                descriptionInput.classList.add('is-invalid');
+                // prendo il div del feedback, gli tolgo il d-none e inserisco il messaggio di errore
+                const descriptionFeedback = document.getElementById('description-feedback');
+                descriptionFeedback.classList.remove('d-none');
+                descriptionFeedback.innerText = "Aggiungi descrizione";
+            }
+
+            //validazione camere
+            const roomsInput = document.getElementById('rooms');
+            const queryrooms = roomsInput.value;
+            if (queryrooms <= 0 || queryrooms >= 500){
+                // aggiungi la classe is-invalid all'input
+                roomsInput.classList.add('is-invalid');
+                // prendo il div del feedback, gli tolgo il d-none e inserisco il messaggio di errore
+                const roomsFeedback = document.getElementById('rooms-feedback');
+                roomsFeedback.classList.remove('d-none');
+                roomsFeedback.innerText = "Aggiungi un numero tra 0 e 500";
+            }
+
+            //validazione letti
+            const bedsInput = document.getElementById('beds');
+            const querybeds = bedsInput.value;
+            if (querybeds <= 0 || querybeds >= 500){
+                // aggiungi la classe is-invalid all'input
+                bedsInput.classList.add('is-invalid');
+                // prendo il div del feedback, gli tolgo il d-none e inserisco il messaggio di errore
+                const bedsFeedback = document.getElementById('beds-feedback');
+                bedsFeedback.classList.remove('d-none');
+                bedsFeedback.innerText = "Aggiungi un numero tra 0 e 500";
+            }
+
+            //validazione bagni
+            const toiletsInput = document.getElementById('toilets');
+            const querytoilets = toiletsInput.value;
+            if (querytoilets <= 0 || querytoilets >= 500){
+                // aggiungi la classe is-invalid all'input
+                toiletsInput.classList.add('is-invalid');
+                // prendo il div del feedback, gli tolgo il d-none e inserisco il messaggio di errore
+                const toiletsFeedback = document.getElementById('toilets-feedback');
+                toiletsFeedback.classList.remove('d-none');
+                toiletsFeedback.innerText = "Aggiungi un numero tra 0 e 500";
+            }
+
+            //validazione metri quadri
+            const mqInput = document.getElementById('mq');
+            const querymq = toiletsInput.value;
+            if (querymq <= 5){
+                // aggiungi la classe is-invalid all'input
+                mqInput.classList.add('is-invalid');
+                // prendo il div del feedback, gli tolgo il d-none e inserisco il messaggio di errore
+                const mqFeedback = document.getElementById('mq-feedback');
+                mqFeedback.classList.remove('d-none');
+                mqFeedback.innerText = "Aggiungi un numero maggiore di 5";
+            }
         });
 
         // get all elements from the dom
@@ -274,7 +373,7 @@
             });
 
         }
-    </script>
+</script>
 
 @endsection
 
