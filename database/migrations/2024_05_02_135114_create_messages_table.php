@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('apartment_id')->constrained();
 
-            $table->string('email')->unique();
+            $table->string('email');
             $table->text('content');
             // $table->dateTime('date');
             // $table->string('name', 100);
