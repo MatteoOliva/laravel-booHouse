@@ -7,7 +7,7 @@
         @if(!isset($apartment->id))
             <h1 class="mb-5">Aggiungi un nuovo appartamento</h1>
         @else
-            <h1 class="mb-5">Modifica l'appartmento {{ $apartment->title }}</h1>
+            <h1 class="mb-5">Modifica l'appartamento {{ $apartment->title }}</h1>
         @endif
 
         <form action="@if (!isset($apartment->id)) {{ route('user.apartments.store') }} @else {{ route('user.apartments.update', $apartment) }} @endif" method="POST" enctype="multipart/form-data" id="apartment-form">
