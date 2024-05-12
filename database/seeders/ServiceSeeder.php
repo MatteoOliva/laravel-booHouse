@@ -17,47 +17,47 @@ class ServiceSeeder extends Seeder
     {
         $data = [
             [
-                "name" => "aria condizionata",
+                "name" => "Aria Condizionata",
                 "icon" => "svg/icons/aria-incondizionata.svg",
             ],
             [
-                "name" => "cimitero",
+                "name" => "Cimitero",
                 "icon" => "svg/icons/cimitero.svg",
             ],
             [
-                "name" => "colazione",
+                "name" => "Colazione",
                 "icon" => "svg/icons/colazione.svg",
             ],
             [
-                "name" => "fantasmi",
+                "name" => "Fantasmi",
                 "icon" => "svg/icons/fantasmi.svg",
             ],
             [
-                "name" => "lavatrice",
+                "name" => "Lavatrice",
                 "icon" => "svg/icons/lavatrice.svg",
             ],
             [
-                "name" => "parcheggio",
+                "name" => "Parcheggio",
                 "icon" => "svg/icons/parcheggio.svg",
             ],
             [
-                "name" => "pulizia",
+                "name" => "Pulizia",
                 "icon" => "svg/icons/pulizia.svg",
             ],
             [
-                "name" => "servizio-in-camera",
+                "name" => "Servizio in Camera",
                 "icon" => "svg/icons/servizio-in-camera.svg",
             ],
             [
-                "name" => "sveglia",
+                "name" => "Sveglia",
                 "icon" => "svg/icons/sveglia.svg",
             ],
             [
-                "name" => "trappola",
+                "name" => "Trappola",
                 "icon" => "svg/icons/trappola.svg",
             ],
             [
-                "name" => "wifi",
+                "name" => "Wifi",
                 "icon" => "svg/icons/wifi.svg",
             ],
         ];

@@ -59,17 +59,27 @@ class ApiController extends Controller
     public function show($slug)
     {
         // Prendi il primo progetto che corrisponde allo slug ricevuto
-        $apartment = Apartment::select('id', 'title', 'slug', 'description', 'rooms', 'beds', 'toilets', 'mq', 'image', 'lat', 'lon', 'address',)
-                ->where('slug', $slug)
-        // ->where([
-            //     'slug' => $slug,
-            //     'visible' => true
-            // ])
-            // ->with(['sponsorships:end_date', 'services:name,icon', 'user:name'])
+        $apartment = Apartment::select('id', 'title', 'slug', 'description', 'rooms', 'beds', 'toilets', 'mq', 'image', 'lat', 'lon', 'address')
+                // ->where('slug', $slug)
+        ->where([
+                'slug' => $slug,
+                'visible' => true
+            ])
+            ->with([
+                // 'sponsorships:end_date', 
+                'services:name,icon', 'user:name'])
             ->first();
+
+           
+
 
         // ottieni il path assoluto dell'immagine
         $apartment->image = $apartment->get_img_absolute_path();
+
+        foreach ($apartment->services as $service) {
+            // ottieni il path assoluto dell'immagine
+            $service->icon = asset('/' . $service->icon);
+        }
 
         // restituisce la risposta in formato json
         return response()->json($apartment);
