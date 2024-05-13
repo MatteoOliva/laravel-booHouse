@@ -132,12 +132,17 @@
                             @if(isset($apartment->image))
                             
                         @endif
-                            <input required class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image" value="{{ old('image') ?? '' }}">
-                            @error('image')
+                            <input required class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image" value="{{ old('image') ?? '' }}" accept=".jpeg,.jpg,.png,.gif">
+                            <div class="invalid-feedback @error('image') d-block @else d-none @enderror" id="image-feedback">
+                                @error('image')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                            {{-- @error('image')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
-                            @enderror
+                            @enderror --}}
                         </div>                      
         
                         
@@ -305,7 +310,7 @@
                 // prendo il div del feedback, gli tolgo il d-none e inserisco il messaggio di errore
                 const descriptionFeedback = document.getElementById('description-feedback');
                 descriptionFeedback.classList.remove('d-none');
-                descriptionFeedback.innerText = "Aggiungi descrizione";
+                descriptionFeedback.innerText = "La descrizione è obbligatoria";
             }
 
             //validazione camere
@@ -317,7 +322,7 @@
                 // prendo il div del feedback, gli tolgo il d-none e inserisco il messaggio di errore
                 const roomsFeedback = document.getElementById('rooms-feedback');
                 roomsFeedback.classList.remove('d-none');
-                roomsFeedback.innerText = "Aggiungi un numero tra 0 e 500";
+                roomsFeedback.innerText = "Il numero delle camere deve essere tra 1 e 500";
             }
 
             //validazione letti
@@ -329,7 +334,7 @@
                 // prendo il div del feedback, gli tolgo il d-none e inserisco il messaggio di errore
                 const bedsFeedback = document.getElementById('beds-feedback');
                 bedsFeedback.classList.remove('d-none');
-                bedsFeedback.innerText = "Aggiungi un numero tra 0 e 500";
+                bedsFeedback.innerText = "Il numero dei letti deve essere tra 1 e 500";
             }
 
             //validazione bagni
@@ -341,7 +346,7 @@
                 // prendo il div del feedback, gli tolgo il d-none e inserisco il messaggio di errore
                 const toiletsFeedback = document.getElementById('toilets-feedback');
                 toiletsFeedback.classList.remove('d-none');
-                toiletsFeedback.innerText = "Aggiungi un numero tra 0 e 500";
+                toiletsFeedback.innerText = "Il numero dei bagni deve essere tra 1 e 500";
             }
 
             //validazione metri quadri
@@ -353,7 +358,19 @@
                 // prendo il div del feedback, gli tolgo il d-none e inserisco il messaggio di errore
                 const mqFeedback = document.getElementById('mq-feedback');
                 mqFeedback.classList.remove('d-none');
-                mqFeedback.innerText = "Aggiungi un numero maggiore di 5";
+                mqFeedback.innerText = "Il valore inserito deve essere minimo 5";
+            }
+
+            //validazione immagine
+            const imageInput = document.getElementById('image');
+            const queryimage = imageInput.value;
+            if (!queryimage){
+                // aggiungi la classe is-invalid all'input
+                imageInput.classList.add('is-invalid');
+                // prendo il div del feedback, gli tolgo il d-none e inserisco il messaggio di errore
+                const imageFeedback = document.getElementById('image-feedback');
+                imageFeedback.classList.remove('d-none');
+                imageFeedback.innerText = "Immagine obbligatoria";
             }
         });
 
