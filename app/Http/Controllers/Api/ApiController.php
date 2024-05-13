@@ -29,14 +29,41 @@ class ApiController extends Controller
         // FROM apartments 
         // WHERE visible = true; 
 
+        //filtro gli appartamenti restituiendo solo quelli che corrispondono alla condizione
+        $sponsored_apartments = $apartments->filter(function ($apartment) {
+            // metto ogni appartamento la chiave sponsored di default a false
+            $apartment->sponsored = false;
+            // restiruiscono vero solo gli appartamenti in cui ci sia almeno una sponsorizzazione con data di fine maggiore di adesso
+            return $apartment->sponsorships()->where('end_date', '>=', now())->exists();
+        });
+
+        // segna la chiave sponsored a true per tutti gli appartamenti sponsorizzati
+        foreach ($sponsored_apartments as $apartment) {
+            $apartment->sponsored = true;
+        }
+        // dd($apartments);
+
+        // prendo gli id degli appartamenti sponsorizzati
+        $sponsored_ids = $sponsored_apartments->pluck('id')->toArray();
+        // dd($sponsored_ids);
+
+        // ordino gli appartamenti sponsorizzati mettendo per primi quelli con la data di fine maggiore
+        $sponsored_apartments = $sponsored_apartments->sortByDesc(function ($apartment) {
+            return $apartment->sponsorships()->where('end_date', '>=', now())->max('end_date');
+        });
+        // dd($sponsored_apartments);
+
+        // uniamo gli appartamenti trovati agli appartamenti sponsorizzati e ordinati, escludendo quelli il cui id è uguale ad uno di quelli sponsorizzati
+        $results = $sponsored_apartments->merge($apartments);
+
         // per ogni appartamento
-        foreach ($apartments as $apartment) {
+        foreach ($results as $apartment) {
             // ottieni il path assoluto dell'immagine
             $apartment->image = $apartment->get_img_absolute_path();
         }
 
         // restituisce la risposta in formato json
-        return response()->json($apartments);
+        return response()->json($results);
     }
 
     /**
@@ -404,7 +431,7 @@ class ApiController extends Controller
     public function services_all()
     {
         // prendo tutti i servizi dal db
-        $all_services = Service::select( 'id', 'name', 'icon')->get();
+        $all_services = Service::select('id', 'name', 'icon')->get();
         // dd($all_services);
 
         // per ogni appartamento trovato
