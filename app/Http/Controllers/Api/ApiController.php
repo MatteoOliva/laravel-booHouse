@@ -28,15 +28,13 @@ class ApiController extends Controller
         // SELECT * 
         // FROM apartments 
         // WHERE visible = true; 
-
-        //filtro gli appartamenti trestituiendo solo quelli che corrispondono alla condizione
+        //filtro gli appartamenti restituiendo solo quelli che corrispondono alla condizione
         $sponsored_apartments = $apartments->filter(function ($apartment) {
-            // setto chiave sponsored default false
+            // metto ogni appartamento la chiave sponsored di default a false
             $apartment->sponsored = false;
             // restiruiscono vero solo gli appartamenti in cui ci sia almeno una sponsorizzazione con data di fine maggiore di adesso
             return $apartment->sponsorships()->where('end_date', '>=', now())->exists();
         });
-        // dd($sponsored_apartments);
 
         // segna la chiave sponsored a true per tutti gli appartamenti sponsorizzati
         foreach ($sponsored_apartments as $apartment) {
@@ -45,7 +43,6 @@ class ApiController extends Controller
 
         // prendo gli id degli appartamenti sponsorizzati
         $sponsored_ids = $sponsored_apartments->pluck('id')->toArray();
-        // dd($sponsored_ids);
 
         // ordino gli appartamenti sponsorizzati mettendo per primi quelli con la data di fine maggiore
         $sponsored_apartments = $sponsored_apartments->sortByDesc(function ($apartment) {
@@ -56,6 +53,7 @@ class ApiController extends Controller
         // uniamo gli appartamenti trovati agli appartamenti sponsorizzati e ordinati, escludendo quelli il cui id è uguale ad uno di quelli sponsorizzati
         $results = $sponsored_apartments->merge($apartments);
 
+        $results = $results->toArray();
         // per ogni appartamento
         foreach ($results as $apartment) {
             // ottieni il path assoluto dell'immagine
