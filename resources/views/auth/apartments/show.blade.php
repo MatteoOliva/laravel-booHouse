@@ -10,15 +10,14 @@
     {{-- pulsante sponsorizzazione --}}
     <div class="d-md-flex justify-content-md-between my-3">
       <a href="{{route('user.apartments.index')}}" class="btn my -4" style="background-color: #B1D2C6; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna agli appartamenti</a>
-      <a href="#" class="btn fw-semibold text-white" style="background-color: #a33b3b"><i class="fa-regular fa-handshake"></i> Sponsorizza</a>
+      <a href="{{route('user.sponsorships.index')}}" class="btn fw-semibold text-white" style="background-color: #a33b3b"><i class="fa-regular fa-handshake"></i> Sponsorizza</a>
     </div>
     
     {{-- immagine --}}
-    <div class="text-center">
-      
+    <div class="container-img">  
       <img 
       src="{{ $apartment->get_img_absolute_path() }}" 
-      class="img-fluid rounded mt-2 text-center" alt="#">
+      class="img-fluid rounded mt-2 text-center" alt="#" style="height: 600px">
     </div>
     
     
@@ -34,12 +33,14 @@
     
     {{-- servizi --}}
     <h5 class="fw-bold fs-3">Servizi</h5>
-    @foreach ($services as $service)
+    @forelse ($services as $service)
     <div class="mb-3">
         <img src="{{ '/' . $service->icon }}" alt="" style="width: 30px">
         {{ $service->name }}
       </div>
-      @endforeach
+      @empty
+      <p>Nessun servizio disponibile</p>     
+      @endforelse
       
       
       {{-- modifica e cancella --}}
@@ -75,11 +76,11 @@
 
       {{-- messaggi --}}
       <div class="my-3">
-        <h5>Messaggi ricevuti</h5>
+        <h5 class="fw-bold fs-3 mb-3">Messaggi ricevuti</h5>
         @forelse ($apartment->messages as $message)
         <div class="card my-2">
+          <h6 class="card-header">Mittente: {{ $message->email }}</h6>
           <div class="card-body">
-            <p>Mittente: {{ $message->email }}</p>
           <p>{{ $message->content }}</p>
           </div>         
         </div>      
@@ -90,7 +91,7 @@
 
       {{-- visualizzazioni --}}
       <div class="my-3">
-        <h5>Visualizzazioni</h5>
+        <h5 class="fw-bold fs-3 mb-3">Visualizzazioni</h5>
         {{-- @forelse ($apartment->views as $view)
             ({{ $views }})
         @empty
