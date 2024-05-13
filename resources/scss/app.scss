@@ -25,6 +25,19 @@
         background-size: cover;
         height: calc(100vh - 156px);
     }
+
+    .main-sponsor {
+        background-image: url(../../public/img/background-index.jpg);
+        background-position: center;
+        background-size: cover;
+        height: calc(100vh - 156px);
+
+        .semi-trasp-spons {
+            background-color: rgba($color: #000000, $alpha: 0.6);
+            border-radius: 25px;
+            padding: 30px;
+        }
+    }
 }
 
 .image-cover {

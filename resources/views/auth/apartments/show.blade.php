@@ -5,7 +5,7 @@
 
 
   
-  <div class="container my-4">
+  <div class="container my-4 main-conteiner">
     
     {{-- pulsante sponsorizzazione --}}
     <div class="d-md-flex justify-content-md-between my-3">
@@ -53,7 +53,7 @@
       </div>
       
       {{-- switch --}}
-      <form action="{{ route('user.apartments.update_visible', $apartment) }}" method="POST" class="form-check form-switch fs-5" id="form-visible-{{ $apartment->id }}">
+      <form action="{{ route('user.apartments.update_visible', $apartment) }}" method="POST" class="form-check form-switch fs-5 mt-3" id="form-visible-{{ $apartment->id }}">
         @csrf
         @method('PATCH')
 
