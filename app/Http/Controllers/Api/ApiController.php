@@ -321,7 +321,8 @@ class ApiController extends Controller
         $query_beds = $query->beds;
         $query_mq = $query->mq;
         $query_toilets = $query->toilets;
-        $query_services = $query->services;
+        // $query_services = $query->services;
+        $query_services = json_decode($query->services);
 
         // return response()->json($query_services);
         // {
