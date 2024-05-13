@@ -53,7 +53,6 @@ class ApiController extends Controller
         // uniamo gli appartamenti trovati agli appartamenti sponsorizzati e ordinati, escludendo quelli il cui id è uguale ad uno di quelli sponsorizzati
         $results = $sponsored_apartments->merge($apartments);
 
-        $results = $results->toArray();
         // per ogni appartamento
         foreach ($results as $apartment) {
             // ottieni il path assoluto dell'immagine
