@@ -395,7 +395,7 @@ class ApiController extends Controller
 
         foreach ($radius_apartments as $apartment) {
             // arrotondo la distanza ad un numero senza la virgola
-            $apartment->distance = round($apartment->distance, 0);
+            $apartment->distance = round($apartment->distance, 2);
             //setto la chiave sponsored afalse di default
             $apartment->sponsored = false;
         }
