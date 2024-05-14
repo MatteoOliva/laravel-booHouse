@@ -9,7 +9,7 @@
     <title>{{ env('APP_NAME', 'Laravel project') }} - @yield('title', 'My page') </title>
 
     @vite('resources/js/app.js')
-
+    @yield('head-js')
     @yield('css')
   </head>
 
