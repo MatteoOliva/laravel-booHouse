@@ -35,17 +35,20 @@ Route::middleware('auth')
   });
 
 // Route::redirect('/apartments/back_to_index', '/apartments')->name('user.apartments.back_to_index');
-Route::get('apartments/back_to_index', [ApartmentController::class, 'back_to_index'])->middleware('auth')->name('user.apartments.back_to_index');
 
+Route::get('apartments/back_to_index', [ApartmentController::class, 'back_to_index'])->middleware('auth')->name('user.apartments.back_to_index');
 // rotta protetta apartment
 Route::middleware('auth')
-  ->name('user.')
-  ->group(function () {
+->name('user.')
+->group(function () {
+  
+  Route::resource('apartments', ApartmentController::class);
+  Route::patch('apartments/{apartment}/update_visible', [ApartmentController::class, 'update_visible'])->name('apartments.update_visible');
+  Route::get('sponsorships/{apartment_id}', [SponsorshipController::class, 'index'])->name('sponsorships.index');
+});
 
-    Route::resource('apartments', ApartmentController::class);
-    Route::patch('apartments/{apartment}/update_visible', [ApartmentController::class, 'update_visible'])->name('apartments.update_visible');
-    Route::get('sponsorships/{apartment_id}', [SponsorshipController::class, 'index'])->name('sponsorships.index');
-  });
+Route::post('sponsorships/checkout', [SponsorshipController::class, 'checkout'])->middleware('auth')->name('user.sponsorship.checkout');
+Route::get('sponsorships/{apartment_id}/pay', [SponsorshipController::class, 'goToPayment'])->middleware('auth')->name('user.sponsorship.payment');
 
 Route::delete('apartments/{apartment}/destroy_image', [ApartmentController::class, 'destroy_image'])->middleware('auth')->name('user.apartments.destroy_image');
 
