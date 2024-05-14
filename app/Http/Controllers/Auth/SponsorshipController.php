@@ -37,7 +37,28 @@ class SponsorshipController extends Controller
     public function checkOut() 
     {
         $nonceFromTheClient = $_POST["payment_method_nonce"];
-        dd($nonceFromTheClient);
+
+        $gateway = new Gateway([
+            'environment' => env('BRAINTREE_ENVIRONMENT'),
+            'merchantId' => env('BRAINTREE_MERCHANT_ID'),
+            'publicKey' => env('BRAINTREE_PUBLIC_KEY'),
+            'privateKey' => env('BRAINTREE_PRIVATE_KEY'),
+        ]);
+
+        $result = $gateway->transaction()->sale([
+            'amount' => '10.00',
+            'paymentMethodNonce' => $nonceFromTheClient,
+            'options' => [
+              'submitForSettlement' => True
+            ]
+          ]);
+
+
+        if ($result->success == true) {
+            return redirect()->route('user.apartments.index');
+        } else {
+            return redirect()->route('user.sponsorships.index', '10');
+        }
     }
 
 
