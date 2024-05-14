@@ -34,6 +34,12 @@ class SponsorshipController extends Controller
 
     }
 
+    public function checkOut() 
+    {
+        $nonceFromTheClient = $_POST["payment_method_nonce"];
+        dd($nonceFromTheClient);
+    }
+
 
 }
 

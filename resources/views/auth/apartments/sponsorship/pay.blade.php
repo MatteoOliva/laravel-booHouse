@@ -8,8 +8,16 @@
 
 <div class="container">
 
-    <div id="dropin-container"></div>
-    <button id="submit-button">Request payment method</button>
+    <form id="payment-form" action="{{ route('user.sponsorship.checkout') }}" method="post">
+        @csrf
+        <!-- Putting the empty container you plan to pass to
+          'braintree.dropin.create' inside a form will make layout and flow
+          easier to manage -->
+        <div id="dropin-container"></div>
+        <input type="submit" value="Effettua Pagamento"/>
+        <input type="hidden" id="nonce" name="payment_method_nonce" />
+      </form>
+
 </div>
 
 
@@ -17,21 +25,40 @@
 @endsection
 
 @section('js')
-    <script>
-    var button = document.querySelector('#submit-button');
+<script>
+    var form = document.getElementById('payment-form');
+    var nonceInput = document.getElementById('nonce');  
 
-braintree.dropin.create({
-  authorization: '{{$clientToken}}',
-  container: '#dropin-container'
-}, function (createErr, instance) {
-  button.addEventListener('click', function () {
-    instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
-      // Submit payload.nonce to your server
+    braintree.dropin.create({
+        authorization: '{{ $clientToken }}',  
+        container: '#dropin-container'
+    }, function (createErr, instance) {
+        if (createErr) {
+            console.error(createErr);
+            return;  
+        }
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();  
+
+            instance.requestPaymentMethod(function (err, payload) {
+                if (err) {
+                    console.error(err);
+                    return;  
+                }
+
+                if (payload && payload.nonce) {
+                    nonceInput.value = payload.nonce;  
+                    form.submit();  
+                } else {
+                    console.error("Payment method nonce is missing.");
+                }
+            });
+        });
     });
-  });
-});
-    </script>
+</script>
 @endsection
+
 
 @section('css')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
