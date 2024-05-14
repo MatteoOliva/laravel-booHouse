@@ -44,7 +44,7 @@ Route::middleware('auth')
 
     Route::resource('apartments', ApartmentController::class);
     Route::patch('apartments/{apartment}/update_visible', [ApartmentController::class, 'update_visible'])->name('apartments.update_visible');
-    Route::get('sponsorships', [SponsorshipController::class, 'index'])->name('sponsorships.index');
+    Route::get('sponsorships/{apartment_id}', [SponsorshipController::class, 'index'])->name('sponsorships.index');
   });
 
 Route::delete('apartments/{apartment}/destroy_image', [ApartmentController::class, 'destroy_image'])->middleware('auth')->name('user.apartments.destroy_image');

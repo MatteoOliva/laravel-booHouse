@@ -7,9 +7,10 @@
 
         
         <main class="container">
+            <a href="{{ route('user.apartments.show', $apartment) }}" class="btn my-4" style="background-color: #B1D2C6; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna all'appartamento</a>
             <div class="semi-trasp-spons">
-
-                <div class="display-5 fw-bold text-center pb-5">Scegli una sponsorizzazione per il tuo alloggio!!</div>
+                <div class="display-5 fw-bold text-center pb-5">Scegli una sponsorizzazione per il tuo alloggio:
+                    <br> <span style="color: greenyellow ">{{ $apartment->title }}</span></div>
                 <div class="row text-center">
                     @foreach ($sponsorships as $sponsorship)
                     <div class="col-4">
