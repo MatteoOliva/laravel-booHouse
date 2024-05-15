@@ -49,10 +49,10 @@ class MessageController extends Controller
      * @param  \App\Models\Apartment  $apartment
      * 
      */
-    public function show()
+    public function show(Message $message)
     {
        
-        
+        return view('auth.apartments.message.show', compact('message'));
     }
 
     /**
