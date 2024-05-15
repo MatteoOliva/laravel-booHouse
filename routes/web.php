@@ -45,7 +45,7 @@ Route::middleware('auth')
   
   Route::resource('apartments', ApartmentController::class);
   Route::patch('apartments/{apartment}/update_visible', [ApartmentController::class, 'update_visible'])->name('apartments.update_visible');
-  Route::get('messages/{apartment_id}', [MessageController::class, 'index'])->name('messages.index');
+  Route::get('messages/{apartment}', [MessageController::class, 'index'])->name('messages.index');
   Route::get('messages/{message}/show', [MessageController::class, 'show'])->name('messages.show');
   
   Route::get('sponsorships/{apartment_id}', [SponsorshipController::class, 'index'])->name('sponsorships.index');
