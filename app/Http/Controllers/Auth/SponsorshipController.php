@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
+
+
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use App\Models\Sponsorship;
 use Braintree\Gateway;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\DateTime;
+
+
+
 
 class SponsorshipController extends Controller
 {
@@ -60,7 +67,19 @@ class SponsorshipController extends Controller
         }
 
         $amount = $sponsorship->price;
-        $endDate = now()->addHours($sponsorship->duration);
+
+        $active_sponsorship = DB::table('apartment_sponsorship')
+            ->where('apartment_id', $apartmentId  )
+            ->orderByDesc('end_date')
+            ->first();
+
+            if(isset($active_sponsorship) && $active_sponsorship->end_date >= now()) {
+                $date_format_end_date = \Carbon\Carbon::parse( $active_sponsorship->end_date);
+                // dd($date_format_end_date);
+                $endDate = $date_format_end_date->addHours($sponsorship->duration)->format( 'Y-m-d H:i:s');
+            } else {
+                $endDate = now()->addHours($sponsorship->duration);
+            }
 
         // Salvare i dati nel database
         Sponsorship::find($sponsorshipId)->apartments()->attach($apartmentId, [
