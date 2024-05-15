@@ -12,8 +12,6 @@
 
     @vite('resources/js/app.js')
     @yield('head-js')
-
-
     @yield('css')
   </head>
 

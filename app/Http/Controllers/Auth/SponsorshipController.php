@@ -25,7 +25,7 @@ class SponsorshipController extends Controller
         session(['selected_apartment_id' => $apartmentId]);
         session(['selected_sponsorship_id' => $sponsorshipId]);
     
-        return redirect()->route('token');
+        return redirect()->route('user.sponsorship.payment', $apartmentId );
     }
     
     public function goToPayment($apartment_id) 
@@ -44,9 +44,29 @@ class SponsorshipController extends Controller
 
     }
 
-    public function checkOut() 
+    public function checkOut(Request $request) 
     {
-        $nonceFromTheClient = $_POST["payment_method_nonce"];
+        // $nonceFromTheClient = $_POST["payment_method_nonce"];
+        $nonceFromTheClient = $request->input('payment_method_nonce');
+
+        // Ottieni l'id dell'appartamento e dellasponsorship dalla sessione
+        $apartmentId = $request->session()->get('selected_apartment_id'); 
+        $sponsorshipId = $request->session()->get('selected_sponsorship_id'); 
+
+        // Ottieni l'oggetto Sponsorship corrispondente all'id
+        $sponsorship = Sponsorship::find($sponsorshipId);
+        if (!$sponsorship) {
+            return redirect()->route('user.apartments.index')->with('message-class', 'alert-danger')->with('message', 'Sponsorship non valida.');
+        }
+
+        $amount = $sponsorship->price;
+        $endDate = now()->addHours($sponsorship->duration);
+
+        // Salvare i dati nel database
+        Sponsorship::find($sponsorshipId)->apartments()->attach($apartmentId, [
+            'payment_date' => now(),
+            'end_date' => $endDate,
+        ]);
 
         $gateway = new Gateway([
             'environment' => env('BRAINTREE_ENVIRONMENT'),
@@ -56,7 +76,7 @@ class SponsorshipController extends Controller
         ]);
 
         $result = $gateway->transaction()->sale([
-            'amount' => '10.00',
+            'amount' => $amount,
             'paymentMethodNonce' => $nonceFromTheClient,
             'options' => [
               'submitForSettlement' => True
