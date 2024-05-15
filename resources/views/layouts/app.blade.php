@@ -7,6 +7,8 @@
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <meta content="{{ csrf_token() }}" name="csrf-token">
     <title>{{ env('APP_NAME', 'Laravel project') }} - @yield('title', 'My page') </title>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+    <!-- <script src="https://js.braintreegateway.com/web/dropin/1.24.0/js/dropin.min.js"></script> -->
 
     @vite('resources/js/app.js')
     @yield('head-js')

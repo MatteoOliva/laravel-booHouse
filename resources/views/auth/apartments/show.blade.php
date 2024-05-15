@@ -10,7 +10,7 @@
     {{-- pulsante sponsorizzazione --}}
     <div class="d-md-flex justify-content-md-between my-3">
       <a href="{{route('user.apartments.index')}}" class="btn my -4" style="background-color: #B1D2C6; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna agli appartamenti</a>
-      <a href="{{route('user.sponsorships.index', $apartment->id)}}" class="btn fw-semibold text-white" style="background-color: #a33b3b"><i class="fa-regular fa-handshake"></i> Sponsorizza</a>
+      <a href="{{route('user.sponsorships.index', $apartment->slug)}}" class="btn fw-semibold text-white" style="background-color: #a33b3b"><i class="fa-regular fa-handshake"></i> Sponsorizza</a>
     </div>
     
     {{-- immagine --}}
