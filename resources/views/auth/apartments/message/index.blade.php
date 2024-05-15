@@ -15,9 +15,9 @@
             @foreach ($messages as $message)
             <tr>
                 <th >{{ $message->email }}</th>
-                <td>{{ Str::limit($message->content, 50) }}</td>
+                <td>{{ Str::limit($message->content, 100) }}</td>
                 <td>{{ $message->created_at }}</td>
-                <td>APRI</td>
+                <td><a href="{{route('user.messages.show', $message)}}"><i class="fa-solid fa-eye"></i></a></td>
             </tr>
             @endforeach
         </tbody>
