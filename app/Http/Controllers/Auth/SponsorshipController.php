@@ -17,28 +17,29 @@ use App\Http\Controllers\Auth\DateTime;
 
 class SponsorshipController extends Controller
 {
-    public function index($apartment_id)
+    public function index($apartment_slug)
     {
         // Trova l'appartamento corrispondente all'ID fornito
-        $apartment = Apartment::findOrFail($apartment_id);
-      
+        $apartment = Apartment::where('slug', $apartment_slug)->firstOrFail();
         $sponsorships = Sponsorship::all(); 
     
 
         return view('auth.apartments.sponsorship.index', compact('sponsorships', 'apartment'));
     }
+    
+    public function select($apartmentSlug, $sponsorshipId) {
 
-    public function select($apartmentId, $sponsorshipId) {
-
-        session(['selected_apartment_id' => $apartmentId]);
+        session(['selected_apartment_slug' => $apartmentSlug]);
         session(['selected_sponsorship_id' => $sponsorshipId]);
     
-        return redirect()->route('user.sponsorship.payment', $apartmentId );
+        
+        return redirect()->route('user.sponsorship.payment', $apartmentSlug );
     }
     
-    public function goToPayment($apartment_id) 
+    public function goToPayment($apartment_slug) 
     {
-        $apartment = Apartment::where('id', $apartment_id)->first();
+        $apartment = Apartment::where('slug', $apartment_slug)->first();
+        $apartment_id = $apartment->id;
         $gateway = new Gateway([
             'environment' => env('BRAINTREE_ENVIRONMENT'),
             'merchantId' => env('BRAINTREE_MERCHANT_ID'),
@@ -59,7 +60,9 @@ class SponsorshipController extends Controller
 
         // Ottieni l'id dell'appartamento e dellasponsorship dalla sessione
         $apartmentId = $request->session()->get('selected_apartment_id'); 
-        $sponsorshipId = $request->session()->get('selected_sponsorship_id'); 
+        $sponsorshipId = $request->session()->get('selected_sponsorship_id');
+        
+        
 
         // Ottieni l'oggetto Sponsorship corrispondente all'id
         $sponsorship = Sponsorship::find($sponsorshipId);

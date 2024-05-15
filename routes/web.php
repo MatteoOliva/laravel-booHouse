@@ -45,13 +45,13 @@ Route::middleware('auth')
 
     Route::resource('apartments', ApartmentController::class);
     Route::patch('apartments/{apartment}/update_visible', [ApartmentController::class, 'update_visible'])->name('apartments.update_visible');
-    Route::get('sponsorships/{apartment_id}', [SponsorshipController::class, 'index'])->name('sponsorships.index');
-    Route::get('sponsorship/select/{apartment_id}/{sponsorship_id}', 'App\Http\Controllers\Auth\SponsorshipController@select')->name('sponsorship.select');
+    Route::get('sponsorships/{slug}', [SponsorshipController::class, 'index'])->name('sponsorships.index');
+    Route::get('sponsorship/select/{apartment_slug}/{sponsorship_id}', 'App\Http\Controllers\Auth\SponsorshipController@select')->name('sponsorship.select');
 
   });
 
 Route::post('sponsorships/checkout', [SponsorshipController::class, 'checkout'])->middleware('auth')->name('user.sponsorship.checkout');
-Route::get('sponsorships/{apartment_id}/pay', [SponsorshipController::class, 'goToPayment'])->middleware('auth')->name('user.sponsorship.payment');
+Route::get('sponsorships/{apartment_slug}/pay', [SponsorshipController::class, 'goToPayment'])->middleware('auth')->name('user.sponsorship.payment');
 
 Route::delete('apartments/{apartment}/destroy_image', [ApartmentController::class, 'destroy_image'])->middleware('auth')->name('user.apartments.destroy_image');
 

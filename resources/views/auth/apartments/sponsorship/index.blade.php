@@ -24,7 +24,8 @@
                                 </div>
                                 <!-- <button type="button" class="w-100 btn btn-lg btn-outline-primary">Sponsorizza!!</button> -->
                                 <!-- <a href="{{ route('user.sponsorship.payment', $apartment->id) }}" type="button" class="w-100 btn btn-lg btn-outline-primary">Sponsorizza!!</a> -->
-                                <a href="{{ route('user.sponsorship.select', ['apartment_id' => $apartment->id, 'sponsorship_id' => $sponsorship->id]) }}" type="button" class="w-100 btn btn-lg btn-outline-primary">Sponsorizza!!</a>
+
+                                <a href="{{ route('user.sponsorship.select', ['apartment_slug' => $apartment->slug, 'sponsorship_id' => $sponsorship->id]) }}" type="button" class="w-100 btn btn-lg btn-outline-primary">Sponsorizza!!</a>
 
                             </div>
                         </div>
