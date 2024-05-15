@@ -21,9 +21,9 @@ class MessageSeeder extends Seeder
 
         for($i = 0; $i < 10; $i++){
             $message = new Message;
-            $message->apartment_id = random_int(1,10);
+            $message->apartment_id = random_int(1,13);
             $message->email = $faker->email();
-            $message->content = $faker->paragraph(2);
+            $message->content = $faker->paragraph(5);
             $message->save();
         }
     }
