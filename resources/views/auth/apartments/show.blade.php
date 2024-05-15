@@ -52,7 +52,7 @@
         </button>
 
         {{-- messaggi --}}
-        <a  class="btn btn-primary position-relative" href="{{route('user.messages.index', $apartment->id)}}">
+        <a  class="btn btn-primary position-relative" href="{{route('user.messages.index', $apartment->slug)}}">
           Messaggi
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             {{ $messages }}
