@@ -12,19 +12,23 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($messages as $message)
+            @forelse ($messages as $message)
             <tr>
                 <th >{{ $message->email }}</th>
                 <td>{{ Str::limit($message->content, 100) }}</td>
                 <td>{{ $message->created_at }}</td>
                 <td><a href="{{route('user.messages.show', $message)}}"><i class="fa-solid fa-eye"></i></a></td>
             </tr>
-            @endforeach
+            @empty
+            <tr>
+                <td colspan="4"><i>Nessun messaggio ricevuto</i></td>
+            </tr>
+            @endforelse
         </tbody>
     </table>
     
     {{-- Se è stata usata la paginazione --}}
-    {{-- {{ $related_messages->links('pagination::bootstrap-5') }} --}}
+    {{ $messages->links('pagination::bootstrap-5') }}
 </div>
 @endsection
 
