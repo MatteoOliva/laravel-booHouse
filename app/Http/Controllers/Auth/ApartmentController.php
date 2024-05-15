@@ -102,7 +102,7 @@ class ApartmentController extends Controller
             abort(403);
 
         // message
-        $messages = Message::all();
+        $messages = Message::where('apartment_id', $apartment->id)->count();
 
         // views
 

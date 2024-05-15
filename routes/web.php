@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\ApartmentController;
+use App\Http\Controllers\Auth\MessageController;
 use App\Http\Controllers\Auth\SponsorshipController;
 use App\Models\Apartment;
 use App\Http\Controllers\Guest\DashboardController as GuestDashboardController;
@@ -44,7 +45,11 @@ Route::middleware('auth')
   
   Route::resource('apartments', ApartmentController::class);
   Route::patch('apartments/{apartment}/update_visible', [ApartmentController::class, 'update_visible'])->name('apartments.update_visible');
+  Route::get('messages/{apartment}', [MessageController::class, 'index'])->name('messages.index');
+  Route::get('messages/{message}/show', [MessageController::class, 'show'])->name('messages.show');
+  
   Route::get('sponsorships/{apartment_id}', [SponsorshipController::class, 'index'])->name('sponsorships.index');
+  
 });
 
 Route::post('sponsorships/checkout', [SponsorshipController::class, 'checkout'])->middleware('auth')->name('user.sponsorship.checkout');

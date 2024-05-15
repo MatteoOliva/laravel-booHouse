@@ -50,8 +50,20 @@
         <button type="button" class="btn text-white fw-semibold mx-1" data-bs-toggle="modal" data-bs-target="#delete-post-{{$apartment->id}}-modal" style="background-color: #A33B3B">
         <i class="fa-solid fa-trash" style="color: #B1D2C6"></i> Cancella
         </button>
+
+        {{-- messaggi --}}
+        <a  class="btn btn-primary position-relative" href="{{route('user.messages.index', $apartment->slug)}}">
+          Messaggi
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ $messages }}
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        </a>
         
       </div>
+
+
+      
       
       {{-- switch --}}
       <form action="{{ route('user.apartments.update_visible', $apartment) }}" method="POST" class="form-check form-switch fs-5 mt-3" id="form-visible-{{ $apartment->id }}">
@@ -74,20 +86,11 @@
 
       </form>
 
-      {{-- messaggi --}}
-      <div class="my-3">
-        <h5 class="fw-bold fs-3 mb-3">Messaggi ricevuti</h5>
-        @forelse ($apartment->messages as $message)
-        <div class="card my-2">
-          <h6 class="card-header">Mittente: {{ $message->email }}</h6>
-          <div class="card-body">
-          <p>{{ $message->content }}</p>
-          </div>         
-        </div>      
-        @empty
-          <p>Ancora nessuna vittima</p>     
-        @endforelse
-      </div>
+      
+
+
+
+     
 
       {{-- visualizzazioni --}}
       <div class="my-3">
