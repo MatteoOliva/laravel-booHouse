@@ -59,9 +59,10 @@ class SponsorshipController extends Controller
         $nonceFromTheClient = $request->input('payment_method_nonce');
 
         // Ottieni l'id dell'appartamento e dellasponsorship dalla sessione
-        $apartmentId = $request->session()->get('selected_apartment_id'); 
+        $apartmentSlug = $request->session()->get('selected_apartment_slug'); 
         $sponsorshipId = $request->session()->get('selected_sponsorship_id');
-        
+        $apartment = Apartment::where('slug', $apartmentSlug)->firstOrFail();
+        $apartmentId = $apartment->id;
         
 
         // Ottieni l'oggetto Sponsorship corrispondente all'id
