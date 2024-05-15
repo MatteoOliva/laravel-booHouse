@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
@@ -15,11 +16,18 @@ class MessageController extends Controller
      *
      * 
      */
-    public function index($apartment_id)
+    public function index( $apartment_slug)
     {
-        
-        $messages = Message::where('apartment_id', $apartment_id)->orderBy('created_at', 'DESC')->paginate(5);
-        return view('auth.apartments.message.index', compact('messages','apartment_id'));
+        $apartment = Apartment::where('slug', $apartment_slug)->firstOrFail();
+        $auth_user_id = auth()->id();
+
+        if($apartment->user_id !=  $auth_user_id){
+            abort(403);
+        };
+
+        $apartment_id = $apartment->id;
+        $messages = Message::where('apartment_id', $apartment->id)->orderBy('created_at', 'DESC')->paginate(12);
+        return view('auth.apartments.message.index', compact('messages','apartment_slug'));
     }
 
     /**
@@ -49,8 +57,16 @@ class MessageController extends Controller
      * @param  \App\Models\Apartment  $apartment
      * 
      */
-    public function show(Message $message)
+    public function show( Message $message)
     {
+        $apartment_id = $message->apartment_id;
+        $apartment= Apartment::where('id', $apartment_id)->firstOrFail();
+        $user_id= $apartment->user_id;
+        $auth_user_id = auth()->id();
+
+        if($apartment->user_id !=  $auth_user_id){
+            abort(403);
+        };
        
         return view('auth.apartments.message.show', compact('message'));
     }
