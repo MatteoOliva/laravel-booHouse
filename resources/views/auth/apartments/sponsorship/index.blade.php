@@ -6,7 +6,7 @@
 
         
         <main class="container">
-            <a href="{{ route('user.apartments.show', $apartment) }}" class="btn my-4" style="background-color: #B1D2C6; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna all'appartamento</a>
+            <a href="{{ route('user.apartments.show', $apartment) }}" class="btn my-4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna all'appartamento</a>
             <div class="semi-trasp-spons">
                 <div class="display-5 fw-bold text-center pb-5">Scegli una sponsorizzazione per il tuo alloggio:
                     <br> <span style="color: greenyellow ">{{ $apartment->title }}</span></div>
@@ -25,7 +25,8 @@
                                 <!-- <button type="button" class="w-100 btn btn-lg btn-outline-primary">Sponsorizza!!</button> -->
                                 <!-- <a href="{{ route('user.sponsorship.payment', $apartment->id) }}" type="button" class="w-100 btn btn-lg btn-outline-primary">Sponsorizza!!</a> -->
 
-                                <a href="{{ route('user.sponsorship.select', ['apartment_slug' => $apartment->slug, 'sponsorship_id' => $sponsorship->id]) }}" type="button" class="w-100 btn btn-lg btn-outline-primary">Sponsorizza!!</a>
+                                <a href="{{ route('user.sponsorship.select', ['apartment_slug' => $apartment->slug, 'sponsorship_id' => $sponsorship->id]) }}" 
+                                    type="button" class="w-100 btn btn-lg btn-outline-primary">Sponsorizza!!</a>
 
                             </div>
                         </div>
