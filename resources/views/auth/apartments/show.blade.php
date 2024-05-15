@@ -52,6 +52,10 @@
         </button>
         
       </div>
+
+      <a href="{{route('user.messages.index', $apartment->id)}}" class="btn fw-semibold text-white" style="background-color: #a33b3b"><i class="fa-regular fa-handshake"></i> Messaggi</a>
+
+      
       
       {{-- switch --}}
       <form action="{{ route('user.apartments.update_visible', $apartment) }}" method="POST" class="form-check form-switch fs-5 mt-3" id="form-visible-{{ $apartment->id }}">
