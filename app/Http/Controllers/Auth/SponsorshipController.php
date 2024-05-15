@@ -23,6 +23,7 @@ class SponsorshipController extends Controller
         $apartment = Apartment::findOrFail($apartment_id);
       
         $sponsorships = Sponsorship::all(); 
+    
 
         return view('auth.apartments.sponsorship.index', compact('sponsorships', 'apartment'));
     }
@@ -68,24 +69,24 @@ class SponsorshipController extends Controller
 
         $amount = $sponsorship->price;
 
-        $active_sponsorship = DB::table('apartment_sponsorship')
-            ->where('apartment_id', $apartmentId  )
-            ->orderByDesc('end_date')
-            ->first();
+        // $active_sponsorship = DB::table('apartment_sponsorship')
+        //     ->where('apartment_id', $apartmentId  )
+        //     ->orderByDesc('end_date')
+        //     ->first();
 
-            if(isset($active_sponsorship) && $active_sponsorship->end_date >= now()) {
-                $date_format_end_date = \Carbon\Carbon::parse( $active_sponsorship->end_date);
-                // dd($date_format_end_date);
-                $endDate = $date_format_end_date->addHours($sponsorship->duration)->format( 'Y-m-d H:i:s');
-            } else {
-                $endDate = now()->addHours($sponsorship->duration);
-            }
+        //     if(isset($active_sponsorship) && $active_sponsorship->end_date >= now()) {
+        //         $date_format_end_date = \Carbon\Carbon::parse( $active_sponsorship->end_date);
+        //         // dd($date_format_end_date);
+        //         $endDate = $date_format_end_date->addHours($sponsorship->duration)->format( 'Y-m-d H:i:s');
+        //     } else {
+        //         $endDate = now()->addHours($sponsorship->duration);
+        //     }
 
-        // Salvare i dati nel database
-        Sponsorship::find($sponsorshipId)->apartments()->attach($apartmentId, [
-            'payment_date' => now(),
-            'end_date' => $endDate,
-        ]);
+        // // Salvare i dati nel database
+        // Sponsorship::find($sponsorshipId)->apartments()->attach($apartmentId, [
+        //     'payment_date' => now(),
+        //     'end_date' => $endDate,
+        // ]);
 
         $gateway = new Gateway([
             'environment' => env('BRAINTREE_ENVIRONMENT'),
@@ -104,12 +105,29 @@ class SponsorshipController extends Controller
 
 
         if ($result->success == true) {
-            return redirect()->route('user.apartments.index');
+            $active_sponsorship = DB::table('apartment_sponsorship')
+            ->where('apartment_id', $apartmentId  )
+            ->orderByDesc('end_date')
+            ->first();
+
+            if(isset($active_sponsorship) && $active_sponsorship->end_date >= now()) {
+                $date_format_end_date = \Carbon\Carbon::parse( $active_sponsorship->end_date);
+                // dd($date_format_end_date);
+                $endDate = $date_format_end_date->addHours($sponsorship->duration)->format( 'Y-m-d H:i:s');
+            } else {
+                $endDate = now()->addHours($sponsorship->duration);
+            }
+
+        // Salvare i dati nel database
+        Sponsorship::find($sponsorshipId)->apartments()->attach($apartmentId, [
+            'payment_date' => now(),
+            'end_date' => $endDate,
+        ]);
+            return redirect()->route('user.apartments.index')->with('message-class', 'alert-success')->with('message', 'Pagamento effettuato correttamente.');
         } else {
-            return redirect()->route('user.sponsorships.index', '10');
+            return redirect()->route('user.sponsorships.index', $apartmentId)->with('message-class', 'alert-danger')->with('message', 'Pagamento non effettuato.');
         }
     }
-
 
 }
 
