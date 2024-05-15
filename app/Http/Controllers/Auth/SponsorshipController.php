@@ -12,10 +12,20 @@ class SponsorshipController extends Controller
 {
     public function index($apartment_id)
     {
-        $apartment = Apartment::where('id', $apartment_id)->first();
-        
+        // Trova l'appartamento corrispondente all'ID fornito
+        $apartment = Apartment::findOrFail($apartment_id);
+      
         $sponsorships = Sponsorship::all(); 
-        return view('auth.apartments.sponsorship.index', compact('sponsorships', 'apartment_id', 'apartment' )); 
+
+        return view('auth.apartments.sponsorship.index', compact('sponsorships', 'apartment'));
+    }
+
+    public function select($apartmentId, $sponsorshipId) {
+
+        session(['selected_apartment_id' => $apartmentId]);
+        session(['selected_sponsorship_id' => $sponsorshipId]);
+    
+        return redirect()->route('token');
     }
     
     public function goToPayment($apartment_id) 
@@ -63,4 +73,5 @@ class SponsorshipController extends Controller
 
 
 }
+
 
