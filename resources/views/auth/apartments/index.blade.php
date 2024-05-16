@@ -4,7 +4,7 @@
 
 <div class="content">
   
-  <div class=" main-index">
+  <div class="main-index">
     
     
     
