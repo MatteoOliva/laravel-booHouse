@@ -60,7 +60,7 @@
         
         <a href="{{ route('user.apartments.edit' , $apartment) }}" class="btn text-white fw-semibold" style="background-color: #fab005; color: black !important" ><i class="fa-solid fa-pen" style="color: black"></i> Modifica</a>
         <button type="button" class="btn text-white fw-semibold mx-1" data-bs-toggle="modal" data-bs-target="#delete-post-{{$apartment->id}}-modal" style="background-color: #cc1136">
-        <i class="fa-solid fa-trash" style="color: #B1D2C6"></i> Cancella
+        <i class="fa-solid fa-trash" style="color: white"></i> Cancella
         </button>
 
         {{-- messaggi --}}
@@ -132,7 +132,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Stai liberando l'appartamento <strong style="color: #A33B3B">"{{$apartment->title}}" </strong> dal suo destino! L'operazione non ha ritorno, come un contratto con il diavolo!...SEI SICURO?!?
+        Stai liberando l'appartamento <strong style="color: #cc1136">"{{$apartment->title}}" </strong> dal suo destino! L'operazione non ha ritorno, come un contratto con il diavolo!...SEI SICURO?!?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
@@ -140,7 +140,7 @@
         <form action="{{route('user.apartments.destroy', $apartment)}}" method="POST">
         @csrf
         @method('DELETE')
-        <button class="btn btn-danger" style="background-color: #a33b3b">Elimina</button>
+        <button class="btn btn-danger" style="background-color: #cc1136">Elimina</button>
 
          </form>
 
