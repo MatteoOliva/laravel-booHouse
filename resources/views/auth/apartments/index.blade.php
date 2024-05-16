@@ -9,14 +9,14 @@
     
     
     <div class="container">
-      <div class="d-md-flex justify-content-md-end">
+      <div class="d-flex justify-content-end">
         <a href="{{route('user.apartments.create')}}" class="btn my-3" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-plus"></i> Aggiungi appartamento</a>
       </div>
       
-      <div class="row g-2">
+      <div class="row g-2 mb-4">
         @foreach ($apartments as $apartment)
         {{-- @if ($apartment->visible) --}}
-        <div class="col-3">
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3">
           <a class="text-decoration-none" href="{{ route('user.apartments.show', $apartment) }}">
             <div class="card card-index h-100" >
 
