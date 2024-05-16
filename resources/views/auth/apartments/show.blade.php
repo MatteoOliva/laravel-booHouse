@@ -36,7 +36,7 @@
       <div class="col-12 col-md-2 col-lg-1">
         <p><strong>Bagni: </strong>{{ $apartment->toilets }}</p>
       </div>
-      <div class="col-12 col-md-2 col-lg-1">
+      <div class="col-12 col-md-2 col-lg-2">
         <p><strong>Metri quadri: </strong>{{ $apartment->mq }}</p>
       </div>
     </div>
