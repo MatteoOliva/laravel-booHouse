@@ -6,7 +6,7 @@
         <thead>
             <tr>
                 <th scope="col">Mittente</th>
-                <th scope="col">Contenuto</th>
+                <th scope="col" class="cont-col">Contenuto</th>
                 <th scope="col">Data</th>
                 <th scope="col"></th>
             </tr>
@@ -15,7 +15,7 @@
             @forelse ($messages as $message)
             <tr>
                 <th >{{ $message->email }}</th>
-                <td>{{ Str::limit($message->content, 100) }}</td>
+                <td class="cont-col">{{ Str::limit($message->content, 100) }}</td>
                 <td>{{ $message->created_at }}</td>
                 <td><a href="{{route('user.messages.show', $message)}}"><i class="fa-solid fa-eye"></i></a></td>
             </tr>
