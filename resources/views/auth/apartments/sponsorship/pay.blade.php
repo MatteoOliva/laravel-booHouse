@@ -13,7 +13,7 @@
         <!-- Putting the empty container you plan to pass to
           'braintree.dropin.create' inside a form will make layout and flow
           easier to manage -->
-        <div id="dropin-container" style="margin-left: 170px; margin-right: 170px"></div>
+        <div id="dropin-container" class="drop-pay"></div>
         <div class="d-flex justify-content-center">
         <input type="submit" value="Effettua Pagamento" class="btn btn-success"/>
         </div>
