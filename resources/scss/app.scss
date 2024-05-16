@@ -60,3 +60,10 @@ a {
         margin-left: 15px;
     }
 }
+
+@media screen and (max-width: 992px) {
+    .image-apartment {
+        height: 350px;
+        overflow: hidden;
+    }
+}
