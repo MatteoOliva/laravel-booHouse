@@ -1,15 +1,18 @@
 <header>
   <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #0A0F15 !important">
-    <div class="container d-flex justify-content-between">
-     
-        <a class="navbar-brand fw-semibold fs-3" href="http://localhost:5174/"><img src={{ asset("img/head-logo.png") }} style="max-height: 58px" alt=""></a>
+    <div class="container d-flex justify-content-between prova">
+     <span class="logo-big"><a href="http://localhost:5174/"><img src={{ asset("img/head-logo.png") }} style="max-height: 58px" alt="" ></a>
+     </span>
+     <span class="logo-mini">
+      <a href="http://localhost:5174/"><img src={{ asset("img/head-logo-mini.png") }} style="max-height: 58px" alt=""></a>
+     </span>
    
       <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
         class="navbar-toggler" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse flex-row-reverse " id="navbarSupportedContent">
-        <ul class="navbar-nav ">
+        <ul class="navbar-nav">
           {{-- <li class="nav-item">
             <a @class(['nav-link', 'active' => Route::currentRouteName() == 'home']) aria-current="page" href="{{ route('home') }}">Home</a>
           </li> --}}

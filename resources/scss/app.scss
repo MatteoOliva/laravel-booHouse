@@ -71,3 +71,30 @@ a {
 .main-sponsor {
     overflow: auto;
 }
+
+@media screen and (max-width: 768px) {
+    .cont-col {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 3000px) {
+    .logo-mini {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .logo-big {
+        display: none;
+        order: 2;
+    }
+
+    .logo-mini {
+        display: block;
+        order: 1;
+    }
+    .prova {
+        flex-direction: row-reverse;
+    }
+}
