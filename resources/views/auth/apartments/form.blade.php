@@ -4,6 +4,10 @@
 
     <div class="container my-4 ">
 
+        <div class="d-md-flex justify-content-md-between my-3">
+            <a href="{{route('user.apartments.index')}}" class="btn my -4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna agli appartamenti</a>
+          </div>
+
         @if(!isset($apartment->id))
             <h1 class="mb-5">Aggiungi un nuovo appartamento</h1>
         @else
