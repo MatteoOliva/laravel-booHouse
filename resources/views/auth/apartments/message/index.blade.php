@@ -4,7 +4,7 @@
 <div class="container mt-4">
     <table class="table">
         <thead>
-            <tr>
+            <tr class="">
                 <th scope="col">Mittente</th>
                 <th scope="col" class="cont-col">Contenuto</th>
                 <th scope="col">Data</th>
@@ -14,11 +14,11 @@
         <tbody>
             @forelse ($messages as $message)
             <tr>
-                <th >{{ $message->email }}</th>
+                <th class="text-warning">{{ $message->email }}</th>
                 <td class="cont-col-bg">{{ Str::limit($message->content, 100) }}</td>
                 <td class="cont-col-md">{{ Str::limit($message->content, 50) }}</td>
                 <td>{{ $message->created_at }}</td>
-                <td><a href="{{route('user.messages.show', $message)}}"><i class="fa-solid fa-eye"></i></a></td>
+                <td><a href="{{route('user.messages.show', $message)}}"><i class="fa-solid fa-eye text-primary"></i></a></td>
             </tr>
             @empty
             <tr>
