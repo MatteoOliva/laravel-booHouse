@@ -17,7 +17,7 @@
             @endif
 
             <div class="row">
-                <div class="col-9">
+                <div class="col-12 col-lg-9">
                     <div class="row">
                         <div class="col-12">
                             <label for="title" class="form-label mt-3">Titolo</label>
@@ -154,16 +154,17 @@
                     <input type="hidden" id="lon" name="lon" value="">
                     
                 </div>
-                <div class="col-3">                  
+                
+                <div class="col-12 col-lg-3">                  
                     <div class="form-label mt-3">Servizi aggiuntivi disponibili</div>
-                    <div >
+                    <div class="row">
                         @foreach ($services as $service)
-                            <div class="my-2">
+                            <div class="my-2 col-6 col-lg-12">
                                 <input type="checkbox" name="services[]" id="tags-{{ $service->id }}" value="{{ $service->id }}" {{ in_array($service->id, old('service') ?? $related_services_ids ?? []) ? 'checked' : '' }} class="me-1">
                                 <img src="{{ '/' . $service->icon }}" alt="" style="width: 30px" class="me-1">
-                                <label for="tags-{{ $service->id }}" class="me-1">{{ $service->name }}</label>
+                                <label for="tags-{{ $service->id }}" class="me-1 text-service">{{ $service->name }}</label>
                             </div>
-                        @endforeach              
+                        @endforeach          
                     </div>
                 </div>
                         
@@ -396,4 +397,5 @@
 
 @section('css')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 @endsection
