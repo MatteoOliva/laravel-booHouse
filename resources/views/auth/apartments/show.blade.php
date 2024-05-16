@@ -8,13 +8,13 @@
   <div class="container my-4 main-conteiner">
     
     {{-- pulsante sponsorizzazione --}}
-    <div class="d-md-flex justify-content-md-between my-3">
+    <div class="d-flex justify-content-between my-3">
       <a href="{{route('user.apartments.index')}}" class="btn my -4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna agli appartamenti</a>
       <a href="{{route('user.sponsorships.index', $apartment->slug)}}" class="btn fw-semibold text-white" style="background-color: #cc1136"><i class="fa-regular fa-handshake"></i> Sponsorizza</a>
     </div>
     
     {{-- immagine --}}
-    <div class="container-img">  
+    <div class="container-img image-apartment">  
       <img 
       src="{{ $apartment->get_img_absolute_path() }}" 
       class="img-fluid rounded mt-2 text-center" alt="#" style="height: 600px">
@@ -26,21 +26,33 @@
     <p>{{ $apartment->description }}</p>
     <h5 class="fw-bold fs-3">Informazioni Appartamento</h5>
     <p> <strong>Indirizzo: </strong>{{ $apartment->address }}</p>
-    <p><strong>Camere: </strong>{{ $apartment->rooms }}</p>
-    <p><strong>Letti: </strong>{{ $apartment->beds }}</p>
-    <p><strong>Bagni: </strong>{{ $apartment->toilets }}</p>
-    <p><strong>Metri quadri: </strong>{{ $apartment->mq }}</p>
-    
+    <div class="row">
+      <div class="col-12 col-md-2 col-lg-1">
+        <p><strong>Camere: </strong>{{ $apartment->rooms }}</p>
+      </div>
+      <div class="col-12 col-md-2 col-lg-1">
+        <p><strong>Letti: </strong>{{ $apartment->beds }}</p>
+      </div>
+      <div class="col-12 col-md-2 col-lg-1">
+        <p><strong>Bagni: </strong>{{ $apartment->toilets }}</p>
+      </div>
+      <div class="col-12 col-md-2 col-lg-2">
+        <p><strong>Metri quadri: </strong>{{ $apartment->mq }}</p>
+      </div>
+    </div>
+   
     {{-- servizi --}}
-    <h5 class="fw-bold fs-3">Servizi</h5>
+    <h5 class="fw-bold fs-4">Servizi</h5>
+    <div class="row">
     @forelse ($services as $service)
-    <div class="mb-3">
+    <div class="mb-3 col-6 col-md-4 col-lg-2">
         <img src="{{ '/' . $service->icon }}" alt="" style="width: 30px">
         {{ $service->name }}
       </div>
       @empty
       <p>Nessun servizio disponibile</p>     
       @endforelse
+    </div>
       
       
       {{-- modifica e cancella --}}
@@ -48,7 +60,7 @@
         
         <a href="{{ route('user.apartments.edit' , $apartment) }}" class="btn text-white fw-semibold" style="background-color: #fab005; color: black !important" ><i class="fa-solid fa-pen" style="color: black"></i> Modifica</a>
         <button type="button" class="btn text-white fw-semibold mx-1" data-bs-toggle="modal" data-bs-target="#delete-post-{{$apartment->id}}-modal" style="background-color: #cc1136">
-        <i class="fa-solid fa-trash" style="color: #B1D2C6"></i> Cancella
+        <i class="fa-solid fa-trash" style="color: white"></i> Cancella
         </button>
 
         {{-- messaggi --}}
@@ -120,7 +132,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Stai liberando l'appartamento <strong style="color: #A33B3B">"{{$apartment->title}}" </strong> dal suo destino! L'operazione non ha ritorno, come un contratto con il diavolo!...SEI SICURO?!?
+        Stai liberando l'appartamento <strong style="color: #cc1136">"{{$apartment->title}}" </strong> dal suo destino! L'operazione non ha ritorno, come un contratto con il diavolo!...SEI SICURO?!?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
@@ -128,7 +140,7 @@
         <form action="{{route('user.apartments.destroy', $apartment)}}" method="POST">
         @csrf
         @method('DELETE')
-        <button class="btn btn-danger" style="background-color: #a33b3b">Elimina</button>
+        <button class="btn btn-danger" style="background-color: #cc1136">Elimina</button>
 
          </form>
 

@@ -2,17 +2,17 @@
 
 @section('content')
 
-    <div class="main-sponsor d-flex align-items-center">
+    <div class="main-sponsor ">
 
         
-        <main class="container">
+        <main class="container mb-4">
             <a href="{{ route('user.apartments.show', $apartment) }}" class="btn my-4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna all'appartamento</a>
             <div class="semi-trasp-spons">
                 <div class="display-5 fw-bold text-center pb-5">Scegli una sponsorizzazione per il tuo alloggio:
                     <br> <span style="color: greenyellow ">{{ $apartment->title }}</span></div>
-                <div class="row text-center">
+                <div class="row text-center g-3 ">
                     @foreach ($sponsorships as $sponsorship)
-                    <div class="col-4">
+                    <div class="col-12  col-lg-4">
                         <div class="card mb-4 rounded-3 shadow-sm h-100 card-sponsor">
                             <div class="card-header py-3">
                                 <h4 class="my-0 fw-normal text-capitalize"><i class="fa-solid fa-skull"></i> {{ $sponsorship->name }} <i class="fa-solid fa-skull"></i></h4>
