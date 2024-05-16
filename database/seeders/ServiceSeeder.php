@@ -60,6 +60,10 @@ class ServiceSeeder extends Seeder
                 "name" => "Wifi",
                 "icon" => "svg/icons/wifi.svg",
             ],
+            [
+                "name" => "Maggiordomo",
+                "icon" => "svg/icons/maggiordomo.svg",
+            ],
         ];
 
         foreach ($data as $record) {
