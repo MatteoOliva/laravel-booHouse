@@ -4,19 +4,19 @@
 
 <div class="content">
   
-  <div class=" main-index">
+  <div class="main-index">
     
     
     
     <div class="container">
-      <div class="d-md-flex justify-content-md-end">
+      <div class="d-flex justify-content-end">
         <a href="{{route('user.apartments.create')}}" class="btn my-3" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-plus"></i> Aggiungi appartamento</a>
       </div>
       
-      <div class="row g-2">
+      <div class="row g-2 mb-4">
         @foreach ($apartments as $apartment)
         {{-- @if ($apartment->visible) --}}
-        <div class="col-3">
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3">
           <a class="text-decoration-none" href="{{ route('user.apartments.show', $apartment) }}">
             <div class="card card-index h-100" >
 
@@ -27,7 +27,7 @@
 
               <div class="card-body" style="background-color:">
                 <h5 class="card-title" style="color: #fab005"><strong>{{ $apartment->title }}</strong></h5>
-                <div class="d-md-flex justify-content-md-end">
+                <div class="d-flex justify-content-end">
                   
                   
                   <a href="{{ route('user.apartments.edit', $apartment) }}" class="btn text-white fw-semibold mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #fab005; color: black"><i class="fa-solid fa-pen" style="color: black"></i></a>                       
@@ -85,7 +85,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
-                        Stai liberando l'appartamento <strong style="color:  #A33B3B"> "{{$apartment->title}}" </strong> dal suo destino! L'operazione non ha ritorno, come un contratto con il diavolo!...SEI SICURO?!?
+                        Stai liberando l'appartamento <strong style="color:  #cc1136"> "{{$apartment->title}}" </strong> dal suo destino! L'operazione non ha ritorno, come un contratto con il diavolo!...SEI SICURO?!?
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
@@ -93,7 +93,7 @@
                         <form action="{{route('user.apartments.destroy', $apartment)}}" method="POST">
                           @csrf
                           @method('DELETE')
-                          <button class="btn btn-danger" style="background-color: #a33b3b">Elimina</button>
+                          <button class="btn btn-danger" style="background-color: #cc1136">Elimina</button>
                           
          </form>
 
