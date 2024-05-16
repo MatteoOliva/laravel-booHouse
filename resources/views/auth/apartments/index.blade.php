@@ -27,7 +27,7 @@
 
               <div class="card-body" style="background-color:">
                 <h5 class="card-title" style="color: #fab005"><strong>{{ $apartment->title }}</strong></h5>
-                <div class="d-md-flex justify-content-md-end">
+                <div class="d-flex justify-content-end">
                   
                   
                   <a href="{{ route('user.apartments.edit', $apartment) }}" class="btn text-white fw-semibold mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .70rem; background-color: #fab005; color: black"><i class="fa-solid fa-pen" style="color: black"></i></a>                       
