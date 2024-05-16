@@ -17,7 +17,7 @@ class ViewSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        for($i = 0; $i < 100; $i++){
+        for($i = 0; $i < 10; $i++){
             $view = new View;
             $view->apartment_id = random_int(1,13);
             $view->date = $faker->dateTime();
