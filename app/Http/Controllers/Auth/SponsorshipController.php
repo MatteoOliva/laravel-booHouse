@@ -10,6 +10,7 @@ use App\Models\Apartment;
 use App\Models\Sponsorship;
 use Braintree\Gateway;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Http\Controllers\Auth\DateTime;
 
 
@@ -40,6 +41,18 @@ class SponsorshipController extends Controller
     {
         $apartment = Apartment::where('slug', $apartment_slug)->first();
         $apartment_id = $apartment->id;
+        $sponsorshipId = session('selected_sponsorship_id');
+        $sponsorship = Sponsorship::findOrFail($sponsorshipId);
+
+        $startDate = Carbon::now();
+        $endDate = $startDate->copy()->addHours($sponsorship->duration);
+
+        $pivotData = DB::table('apartment_sponsorship')
+        ->where('apartment_id', $apartment->id)
+        ->where('sponsorship_id', $sponsorshipId)
+        ->first();
+
+
         $gateway = new Gateway([
             'environment' => env('BRAINTREE_ENVIRONMENT'),
             'merchantId' => env('BRAINTREE_MERCHANT_ID'),
@@ -49,7 +62,7 @@ class SponsorshipController extends Controller
 
         $clientToken = $gateway->clientToken()->generate();
         
-        return view('auth.apartments.sponsorship.pay', compact('clientToken', 'apartment', 'apartment_id'));
+        return view('auth.apartments.sponsorship.pay', compact('clientToken', 'apartment', 'apartment_id', 'sponsorship', 'pivotData', 'startDate', 'endDate'));
 
     }
 

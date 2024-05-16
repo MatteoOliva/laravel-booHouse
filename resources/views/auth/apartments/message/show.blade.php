@@ -4,12 +4,12 @@
 <div class="container mt-4">
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">Da: {{ $message->email }}</h5>
+            <h5 class="card-title ">Da: <span class="text-warning">{{ $message->email }}</span></h5>
         </div>
         <div class="card-body">
             
             <p class="card-text"><strong class="fs-5">Contenuto:</strong><br> {{ $message->content }}</p>
-            <p class="card-text"><small class="text-muted">Ricevuto il: {{ $message->created_at->format('d m Y - H:i') }}</small></p>
+            <p class="card-text"><small class="text-muted">Ricevuto il: {{ $message->created_at->format('d-m-Y - H:i') }}</small></p>
         </div>
     </div>
 </div>
