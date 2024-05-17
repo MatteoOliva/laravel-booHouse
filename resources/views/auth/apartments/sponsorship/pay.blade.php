@@ -8,7 +8,7 @@
 
 <div class="container">
 
-    <div class="card card-details mt-5">
+    <div class="card drop-pay mt-5">
         <h5 class="card-header text-center bg-warning text-dark">Dettagli Acquisto</h5>
         <div class="card-body">
             <div class="row">
@@ -17,21 +17,21 @@
                 </div>
             </div>
             <div class="row text-center my-3">
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <p>La sponsorizzazione scelta è: <strong class="text-capitalize fs-4 text-warning">{{ $sponsorship->name }}</strong></p>
                 </div>
 
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <p>Durata: <strong class="fs-4 text-warning">{{ $sponsorship->duration }} ore</strong></p>
                 </div>
             </div>
 
             <div class="row text-center my-3">
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <p>Data Inizio:  <strong class="fs-4 text-warning">{{ $startDate }}</strong></p>
                 </div>
 
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <p>Data Fine:  <strong class="fs-4 text-warning">{{ $endDate }}</strong></p>
                 </div>
             </div>
