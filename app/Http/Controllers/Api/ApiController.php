@@ -201,6 +201,12 @@ class ApiController extends Controller
         // INNER JOIN apartment_sponsorship ON apartments.id = apartment_sponsorship.apartment_id 
         // WHERE visible = true; 
 
+        // filtro gli appartamenti 
+        $sponsored_apartments = $sponsored_apartments->groupby('id')->map(function ($group) {
+
+            return $group->sortByDesc('end_date')->first();
+        });
+
         $views_per_apartment = View::select('apartment_id', DB::raw('COUNT(*) as view_count'))
             ->groupBy('apartment_id')
             ->get();
