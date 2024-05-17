@@ -201,7 +201,7 @@ class ApiController extends Controller
         // INNER JOIN apartment_sponsorship ON apartments.id = apartment_sponsorship.apartment_id 
         // WHERE visible = true; 
 
-        // filtro gli appartamenti 
+        // raggruppo gli appartamenti per id e faccio vedere solo le righe con data di fine più grande
         $sponsored_apartments = $sponsored_apartments->groupby('id')->map(function ($group) {
 
             return $group->sortByDesc('end_date')->first();
