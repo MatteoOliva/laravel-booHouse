@@ -2,6 +2,9 @@
 
 @section('content')
 <div class="container mt-4">
+    <div class="d-md-flex justify-content-md-between my-3">
+        <a href="{{route('user.messages.index', $apartment->slug)}}" class="btn my -4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna ai messaggi</a>
+      </div>
     <div class="card">
         <div class="card-header">
             <h5 class="card-title ">Da: <span class="text-warning">{{ $message->email }}</span></h5>

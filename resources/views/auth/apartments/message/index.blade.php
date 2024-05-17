@@ -2,6 +2,11 @@
 
 @section('content')
 <div class="container mt-4">
+    <div class="d-md-flex justify-content-md-between my-3">
+        <a href="{{route('user.apartments.show', $apartment_slug)}}" class="btn my -4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna all'appartamento</a>
+      </div>
+
+        <h1 class="mb-5">Messaggi per {{ $apartment->title }}</h1>
     <table class="table">
         <thead>
             <tr class="">

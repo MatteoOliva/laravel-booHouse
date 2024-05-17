@@ -6,9 +6,13 @@
 
 @section('content')
 
-<div class="container">
+<div class="container mb-3">
 
-    <div class="card drop-pay mt-5">
+    <div class="d-md-flex justify-content-md-between my-3 drop-pay">
+        <a href="{{route('user.sponsorships.index', $apartment->slug)}}" class="btn my -4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna alle sponsorizzazioni</a>
+      </div>
+
+    <div class="card drop-pay">
         <h5 class="card-header text-center bg-warning text-dark">Dettagli Acquisto</h5>
         <div class="card-body">
             <div class="row">
