@@ -22,12 +22,12 @@ class MessageController extends Controller
         $auth_user_id = auth()->id();
 
         if($apartment->user_id !=  $auth_user_id){
-            abort(403);
+            abort(404);
         };
 
         $apartment_id = $apartment->id;
         $messages = Message::where('apartment_id', $apartment->id)->orderBy('created_at', 'DESC')->paginate(12);
-        return view('auth.apartments.message.index', compact('messages','apartment_slug'));
+        return view('auth.apartments.message.index', compact('messages','apartment_slug','apartment'));
     }
 
     /**
@@ -65,10 +65,10 @@ class MessageController extends Controller
         $auth_user_id = auth()->id();
 
         if($apartment->user_id !=  $auth_user_id){
-            abort(403);
+            abort(404);
         };
        
-        return view('auth.apartments.message.show', compact('message'));
+        return view('auth.apartments.message.show', compact('message','apartment'));
     }
 
     /**
