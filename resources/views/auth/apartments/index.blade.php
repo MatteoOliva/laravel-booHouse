@@ -10,7 +10,7 @@
     
     <div class="container">
       <div class="d-flex justify-content-end">
-        <a href="{{route('user.apartments.create')}}" class="btn my-3" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-plus"></i> Aggiungi appartamento</a>
+        <a href="{{route('user.apartments.create')}}" class="btn my-3" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-plus"></i> Aggiungi alloggio</a>
       </div>
       
       <div class="row g-2 mb-4">
@@ -81,7 +81,7 @@
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content bg-dark text-light">
                       <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel"><i class="fa-solid fa-skull"></i><i class="fa-solid fa-skull"></i><i class="fa-solid fa-skull"></i> Eliminazione appartamento! <i class="fa-solid fa-skull"></i><i class="fa-solid fa-skull"></i><i class="fa-solid fa-skull"></i></h1>
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel"></i><i class="fa-solid fa-skull"></i><i class="fa-solid fa-skull"></i> Eliminazione appartamento! <i class="fa-solid fa-skull"></i><i class="fa-solid fa-skull"></i></i></h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">

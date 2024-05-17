@@ -1,13 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-4">
+
+<div class="main-index">
+    <div class="container">
     <div class="d-md-flex justify-content-md-between my-3">
-        <a href="{{route('user.messages.index', $apartment->slug)}}" class="btn my -4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna ai messaggi</a>
+        <a href="{{route('user.messages.index', $apartment->slug)}}" class="btn my -4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna ai messaggi</a>      
       </div>
+<div class=" mt-4 main-conteiner">
+      <h1 class="mb-5">Messaggio per {{ $apartment->title }}</h1>
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title ">Da: <span class="text-warning">{{ $message->email }}</span></h5>
+            <h5 class="card-title ">Da: <span style="color: #fab005">{{ $message->email }}</span></h5>
         </div>
         <div class="card-body">
             
@@ -15,6 +19,8 @@
             <p class="card-text"><small class="text-muted">Ricevuto il: {{ $message->created_at->format('d-m-Y - H:i') }}</small></p>
         </div>
     </div>
+</div>
+</div>
 </div>
 @endsection
 

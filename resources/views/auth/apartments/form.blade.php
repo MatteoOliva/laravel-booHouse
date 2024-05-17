@@ -2,16 +2,22 @@
 
 @section('content')
 
-    <div class="container my-4 ">
+<div class="main-index">
 
-        <div class="d-md-flex justify-content-md-between my-3">
-            <a href="{{route('user.apartments.index')}}" class="btn my -4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna agli appartamenti</a>
-          </div>
+<div class="container">
+    <div class="d-md-flex justify-content-md-between my-3">
+        <a href="{{route('user.apartments.index')}}" class="btn my -4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna agli alloggi</a>
+      </div>
+
+
+
+    <div class=" my-4 main-conteiner-form">
+
 
         @if(!isset($apartment->id))
-            <h1 class="mb-5">Aggiungi un nuovo appartamento</h1>
+            <h1 class="mb-3">Aggiungi un nuovo alloggio</h1>
         @else
-            <h1 class="mb-5">Modifica l'appartamento {{ $apartment->title }}</h1>
+            <h1 class="mb-3">Modifica l'alloggio {{ $apartment->title }}</h1>
         @endif
 
         <form action="@if (!isset($apartment->id)) {{ route('user.apartments.store') }} @else {{ route('user.apartments.update', $apartment) }} @endif" method="POST" enctype="multipart/form-data" id="apartment-form">
@@ -60,7 +66,7 @@
                             @enderror --}}
                         </div>
         
-                        <div class="col-12">
+                        <div class="col-6">
                             <label for="rooms" class="form-label mt-3">N. di camere</label>
                             <input type="number" class="form-control @error('rooms') is-invalid @enderror" id="rooms" name="rooms" min="1" value="{{ old('rooms') ?? $apartment->rooms ?? '' }}" required/>                            
                             <div class="invalid-feedback @error('rooms') d-block @else d-none @enderror" id="rooms-feedback">
@@ -75,7 +81,7 @@
                             @enderror --}}
                         </div>
         
-                        <div class="col-12">
+                        <div class="col-6">
                             <label for="beds" class="form-label mt-3">N. di letti</label>
                             <input required type="number" class="form-control @error('beds') is-invalid @enderror" id="beds" name="beds" value="{{ old('beds') ?? $apartment->beds ?? '' }}"/>
                             <div class="invalid-feedback @error('beds') d-block @else d-none @enderror" id="beds-feedback">
@@ -90,7 +96,7 @@
                             @enderror --}}
                         </div>
         
-                        <div class="col-12">
+                        <div class="col-6">
                             <label for="toilets" class="form-label mt-3">N. di bagni</label>
                             <input type="number" class="form-control @error('toilets') is-invalid @enderror" id="toilets" name="toilets"  value="{{ old('toilets') ?? $apartment->toilets ?? '' }}" required/>
                             <div class="invalid-feedback @error('toilets') d-block @else d-none @enderror" id="toilets-feedback">
@@ -105,7 +111,7 @@
                             @enderror --}}
                         </div>
         
-                        <div class="col-12">
+                        <div class="col-6">
                             <label for="mq" class="form-label mt-3">Metri quadri</label>
                             <input type="number" class="form-control @error('mq') is-invalid @enderror" id="mq" name="mq" min="5" value="{{ old('mq') ?? $apartment->mq ?? '' }}" required/>
                             <div class="invalid-feedback @error('mq') d-block @else d-none @enderror" id="mq-feedback">
@@ -120,16 +126,16 @@
                             @enderror --}}
                         </div>
         
-                        <div class="col-12 ">                
+                        <div class="col-12">                
                             @if(isset($apartment->image))
                                 <div class="form-label mt-3">Immagine</div>
                                 <div class="image-cover">
-                                    <img class="img-fluid mb-3 " src="@if (substr($apartment->image,0,3) == 'img') {{ '/' . $apartment->image }} @else {{ asset('storage/' . $apartment->image) }} @endif" alt="apartment image">
+                                    <img class=" rounded img-edit" src="@if (substr($apartment->image,0,3) == 'img') {{ '/' . $apartment->image }} @else {{ asset('storage/' . $apartment->image) }} @endif" alt="apartment image">
                                     <div class="col-6 d-flex flex-column justify-content-end align-items-start">
                                         <div class="btn btn-danger mb-3 image-trash" id="delete-img-btn"><i class="fa-solid fa-x"></i></div>
                                     </div>
                                 </div>                               
-                                <label for="image" class="form-label">Cambia immagine</label>
+                                <label for="image" class="form-label mt-3">Cambia immagine</label>
                             @else
                                 <label for="image" class="form-label mt-3">Aggiungi Immagine</label>
                             @endif
@@ -186,7 +192,8 @@
         @endif
 
     </div>
-    
+</div>
+</div> 
 
 @endsection
 

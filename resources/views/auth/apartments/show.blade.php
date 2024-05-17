@@ -3,28 +3,33 @@
 @section('content')
 
 
-
-  
-  <div class="container my-4 main-conteiner">
-    
-    {{-- pulsante sponsorizzazione --}}
+<div class="main-index">
+  {{-- pulsante sponsorizzazione e indietro --}}
+  <div class="container">
     <div class="d-flex justify-content-between my-3">
-      <a href="{{route('user.apartments.index')}}" class="btn my -4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna agli appartamenti</a>
+      <a href="{{route('user.apartments.index')}}" class="btn my -4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna agli alloggi</a>
       <a href="{{route('user.sponsorships.index', $apartment->slug)}}" class="btn fw-semibold text-white" style="background-color: #cc1136"><i class="fa-regular fa-handshake"></i> Sponsorizza</a>
-    </div>
+    
+  </div>
+  
+
+  <div class=" my-4 main-conteiner ">
+    
+    
     
     {{-- immagine --}}
     <div class="container-img image-apartment">  
       <img 
       src="{{ $apartment->get_img_absolute_path() }}" 
       class="img-fluid rounded mt-2 text-center" alt="#" style="height: 600px">
+      
+      
+      {{-- appartamento --}}
+      <h1 class="fw-bold title-img">{{ $apartment->title }}</h1>
     </div>
-    
-    
-    {{-- appartamento --}}
-    <h1 class="mt-4 fw-bold">{{ $apartment->title }}</h1>
-    <p>{{ $apartment->description }}</p>
-    <h5 class="fw-bold fs-3">Informazioni Appartamento</h5>
+
+    <p class="mt-3">{{ $apartment->description }}</p>
+    <h5 class="fw-bold fs-3">Informazioni</h5>
     <p> <strong>Indirizzo: </strong>{{ $apartment->address }}</p>
     <div class="row">
       <div class="col-12 col-md-2 col-lg-1">
@@ -65,7 +70,7 @@
 
         {{-- messaggi --}}
         <a  class="btn btn-primary position-relative" href="{{route('user.messages.index', $apartment->slug)}}">
-          Messaggi
+          <i class="fa-solid fa-envelope"></i> Messaggi
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             {{ $messages }}
             <span class="visually-hidden">unread messages</span>
@@ -119,7 +124,7 @@
     </div>
     
 
-    
+  </div>
     @endsection
     
     @section('modal')
@@ -147,6 +152,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 
 @endsection
