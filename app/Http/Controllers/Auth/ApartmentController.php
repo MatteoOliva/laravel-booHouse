@@ -99,7 +99,7 @@ class ApartmentController extends Controller
 
         // protection route
         if (Auth::id() != $apartment->user_id)
-            abort(403);
+            abort(404);
 
         // message
         $messages = Message::where('apartment_id', $apartment->id)->count();
@@ -140,7 +140,7 @@ class ApartmentController extends Controller
 
         // protection route
         if (Auth::id() != $apartment->user_id)
-            abort(403);
+            abort(404);
 
         return view('auth.apartments.form', compact('apartment', 'services', 'related_services_ids'));
     }

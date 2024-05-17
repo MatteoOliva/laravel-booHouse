@@ -6,7 +6,7 @@
 
         
         <main class="container mb-4">
-            <a href="{{ route('user.apartments.show', $apartment) }}" class="btn my-4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna all'appartamento</a>
+            <a href="{{ route('user.apartments.show', $apartment) }}" class="btn my-4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna all'alloggio</a>
             <div class="semi-trasp-spons">
                 <div class="display-5 fw-bold text-center pb-5">Scegli una sponsorizzazione per il tuo alloggio:
                     <br> <span style="color: greenyellow ">{{ $apartment->title }}</span></div>

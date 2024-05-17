@@ -5,38 +5,46 @@
 @endsection
 
 @section('content')
+<div class="main-index">
+    <div class="container">
 
-<div class="container">
+        <div class="d-md-flex justify-content-md-between my-3 drop-pay">
+            <a href="{{route('user.sponsorships.index', $apartment->slug)}}" class="btn my -4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna alle sponsorizzazioni</a>
+          </div>
+    
 
-    <div class="card drop-pay mt-5">
-        <h5 class="card-header text-center bg-warning text-dark">Dettagli Acquisto</h5>
+<div class=" mb-3 ">
+
+
+    <div class="card drop-pay">
+        <h5 class="card-header text-center text-dark" style="background-color: #fab005">Dettagli Acquisto</h5>
         <div class="card-body">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h5 class="card-title">Stai sponsorizzando l'alloggio: <strong class="fs-4 text-warning">{{ $apartment->title }}</strong></h5>
+                    <h5 class="card-title">Stai sponsorizzando l'alloggio: <strong class="fs-4" style="color: #fab005">{{ $apartment->title }}</strong></h5>
                 </div>
             </div>
             <div class="row text-center my-3">
                 <div class="col-12 col-md-6">
-                    <p>La sponsorizzazione scelta è: <strong class="text-capitalize fs-4 text-warning">{{ $sponsorship->name }}</strong></p>
+                    <p>La sponsorizzazione scelta è: <strong class="text-capitalize fs-4" style="color: #fab005">{{ $sponsorship->name }}</strong></p>
                 </div>
 
                 <div class="col-12 col-md-6">
-                    <p>Durata: <strong class="fs-4 text-warning">{{ $sponsorship->duration }} ore</strong></p>
+                    <p>Durata: <strong class="fs-4" style="color: #fab005">{{ $sponsorship->duration }} ore</strong></p>
                 </div>
             </div>
 
             <div class="row text-center my-3">
                 <div class="col-12 col-md-6">
-                    <p>Data Inizio:  <strong class="fs-4 text-warning">{{ $startDate }}</strong></p>
+                    <p>Data Inizio:  <strong class="fs-4" style="color: #fab005">{{ $startDate }}</strong></p>
                 </div>
 
                 <div class="col-12 col-md-6">
-                    <p>Data Fine:  <strong class="fs-4 text-warning">{{ $endDate }}</strong></p>
+                    <p>Data Fine:  <strong class="fs-4" style="color: #fab005">{{ $endDate }}</strong></p>
                 </div>
             </div>
             <div class="row text-center">
-                <div class="col-12">Prezzo:  <strong class="fs-4 text-warning">{{ $sponsorship->price }} €</strong> </div>
+                <div class="col-12">Prezzo:  <strong class="fs-4" style="color: #fab005">{{ $sponsorship->price }} €</strong> </div>
             </div>
           
         </div>
@@ -54,7 +62,8 @@
         </div>
         <input type="hidden" id="nonce" name="payment_method_nonce" />
       </form>
-
+    </div>
+</div>
 </div>
 
 

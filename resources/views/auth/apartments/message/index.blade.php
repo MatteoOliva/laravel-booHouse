@@ -1,8 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-4">
-    <table class="table">
+
+<div class="main-index">
+
+        <div class="container">
+            <div class="d-md-flex justify-content-md-between my-3">
+                <a href="{{route('user.apartments.show', $apartment_slug)}}" class="btn my -4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna all'alloggio</a>
+              </div>
+        
+
+<div class=" my-4 main-conteiner">
+
+        <h1 class="mb-5">Messaggi per {{ $apartment->title }}</h1>
+    <table class="table table-striped">
         <thead>
             <tr class="">
                 <th scope="col">Mittente</th>
@@ -14,7 +25,7 @@
         <tbody>
             @forelse ($messages as $message)
             <tr>
-                <th class="text-warning">{{ $message->email }}</th>
+                <th style="color: #fab005">{{ $message->email }}</th>
                 <td class="cont-col-bg">{{ Str::limit($message->content, 100) }}</td>
                 <td class="cont-col-md">{{ Str::limit($message->content, 50) }}</td>
                 <td>{{ $message->created_at }}</td>
@@ -30,6 +41,8 @@
     
     {{-- Se è stata usata la paginazione --}}
     {{ $messages->links('pagination::bootstrap-5') }}
+</div>
+</div>
 </div>
 @endsection
 
