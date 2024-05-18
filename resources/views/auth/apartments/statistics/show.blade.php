@@ -7,19 +7,22 @@
       <a href="{{route('user.apartments.show', $apartment_slug)}}" class="btn my -4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna all'alloggio</a>
     </div>
  
-  <div class="main-conteiner my-4 card-graph">
+   <div class="main-conteiner my-4 card-graph d-none d-md-block">
     <h1 class="mb-5">Statistiche {{ $apartment->title }}</h1>
     {{-- grafico unico --}}
-    <div class="graph">
-      <canvas id="totalChart" class="d-none d-md-block" style="height:70vh; width:80vw"></canvas>
+    <div class="graph" style="height: 80%; width: 100%">
+      <canvas id="totalChart" class="d-none d-md-block"></canvas>
     </div>
+   </div>
+    
+   <div class="main-conteiner my-4 d-sm-block d-md-none">
+      <h1 class="mb-4 fs-3">Statistiche {{ $apartment->title }}</h1>
+      {{-- grafici divisi --}}
+     <canvas id="messageChart" class="d-sm-block d-md-none"></canvas>
+     <canvas id="viewChart" class="d-sm-block d-md-none my-4"></canvas>
+   </div>
 
-    {{-- grafici divisi --}}
-    <canvas id="messageChart" class="d-sm-block d-md-none"></canvas>
-    <canvas id="viewChart" class="d-sm-block d-md-none my-5"></canvas>
- 
   </div>
- </div>
 </div>
 @endsection
 
@@ -47,13 +50,28 @@
         }]
       },
       options: {
+        plugins: {
+            legend: {
+                display: true,
+                labels: {
+                    color: 'white',
+                    
+                }
+            }
+        },
         scales: {
           y: {
             beginAtZero: true,
             ticks: {
-                stepSize: 1
+                stepSize: 1,
+                color: 'white'
             }
-          }
+          },
+          x: {
+            ticks: {
+                color: 'white'             
+            }
+          },
         }
       }
     });
@@ -69,19 +87,34 @@
           label: 'Visualizzazioni',
           data: views6Months,
           backgroundColor: [
-            'rgba(13, 110, 253, 0.7)'
+            'rgba(250, 176, 5, 0.7)'
     ],
           borderWidth: 1
         }]
       },
       options: {
+        plugins: {
+            legend: {
+                display: true,
+                labels: {
+                    color: 'white',
+                    
+                }
+            }
+        },
         scales: {
           y: {
             beginAtZero: true,
             ticks: {
-                stepSize: 1
+                stepSize: 1,
+                color: 'white'
             }
-          }
+          },
+          x: {
+            ticks: {
+                color: 'white'             
+            }
+          },
           
         }
       }
@@ -113,6 +146,8 @@
         labels: monthsNames,
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 display: true,
