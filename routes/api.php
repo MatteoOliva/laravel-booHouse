@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Api\ApiMessageController;
+use App\Http\Controllers\Api\ApiViewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,7 @@ Route::post('apartments/search/all', [ApiController::class, 'search'])->name('ap
 Route::get('apartments/{slug}', [ApiController::class, 'show'])->name('api.apartments.show'); // riceve slug e mostra appartamento
 Route::get('apartments/sponsored/all', [ApiController::class, 'sponsored_all'])->name('api.apartments.sponsored.all'); // riceve niente e mostra tutti gli appartamenti sponsorizzati
 Route::get('services', [ApiController::class, 'services_all'])->name('api.services.all'); //restituisce tutti i servizi
+Route::get('view/{apartment_id}', [ApiViewController::class, 'store'])->name('api.views.store');
 
 // rotta api per ricevere messaggi dal frontend 
 Route::apiResource("/message", ApiMessageController::class);
