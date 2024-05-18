@@ -36,6 +36,7 @@ class ApiMessageController extends Controller
         $message = new Message();
         $message->apartment_id = $data['apartment_id'];
         $message->email = $data['email'];
+        $message->date = now();
         $message->content = $data['content'];
        
         $message->save();
