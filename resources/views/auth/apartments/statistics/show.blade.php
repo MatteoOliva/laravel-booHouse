@@ -13,15 +13,16 @@
 
 <script>
     const mexGraph = document.getElementById('messageChart');
-    const month = @json($months);
+    const monthsNames = @json($months_names);
+    const messages6Months = @json($messages_6_months);
   
     new Chart(mexGraph, {
       type: 'bar',
       data: {
-        labels: month,
+        labels: monthsNames,
         datasets: [{
           label: '# Messaggi',
-          data: [12, 19, 3, 5, 2, 3],
+          data: messages6Months,
           backgroundColor: [
       'rgba(255, 99, 132, 0.2)'
     ],
@@ -42,10 +43,10 @@
     new Chart(viewGraph, {
       type: 'bar',
       data: {
-        labels: month,
+        labels: monthsNames,
         datasets: [{
           label: '# Visualizzazioni',
-          data: [12, 19, 3, 5, 2, 3],
+          data: messages6Months,
           borderWidth: 1
         }]
       },
