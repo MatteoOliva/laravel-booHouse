@@ -19,12 +19,11 @@ return new class extends Migration
 
             $table->string('email');
             $table->text('content');
+            $table->dateTime('date');
             // $table->dateTime('date');
             // $table->string('name', 100);
             // $table->string('surname', 100);
             $table->timestamps();
-
-
         });
     }
 

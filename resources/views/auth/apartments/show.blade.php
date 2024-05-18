@@ -68,8 +68,10 @@
         <i class="fa-solid fa-trash" style="color: white"></i> Cancella
         </button>
 
+
+        
         {{-- messaggi --}}
-        <a  class="btn btn-primary position-relative" href="{{route('user.messages.index', $apartment->slug)}}">
+        <a  class="btn position-relative" href="{{route('user.messages.index', $apartment->slug)}}" style="background-color: #0b70be">
           <i class="fa-solid fa-envelope"></i> Messaggi
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             {{ $messages }}
@@ -77,9 +79,11 @@
           </span>
         </a>
         
+        
+        
       </div>
-
-
+      
+      
       
       
       {{-- switch --}}
@@ -97,31 +101,32 @@
         role="switch"
         style="background-color: #cc1136"
         value="true"
-
+        
         >
         <label class="form-check-label fw-semibold"  for="flexSwitchCheckChecked" >Visibile</label>
 
       </form>
-
       
-
-
-
-     
 
       {{-- visualizzazioni --}}
       <div class="my-3">
-        <h5 class="fw-bold fs-3 mb-3">Visualizzazioni</h5>
+        <div class="d-flex justify-content-between justify-content-md-start">
+          <h5 class="fw-bold fs-3">Visualizzazioni</h5>
+          {{-- pulsante statistiche --}}
+          <a class="btn ms-3 text-dark" href="{{route('user.statistic.show', $apartment->slug)}}" style="background-color:greenyellow">
+            <i class="fa-solid fa-chart-simple me-2"></i>Statistiche         
+         </a>
+        </div>
         {{-- @forelse ($apartment->views as $view)
-            ({{ $views }})
-        @empty
+          ({{ $views }})
+          @empty
           <p>Ancora nessuna visita</p>     
-            
-        @endforelse --}}
-        <p>Il tuo appartamento ha ricevuto <strong style="color: #cc1136" class="fs-3">{{ $total_views }}</strong> fantasmi <i class="fa-solid fa-ghost fa-fade fs-5"></i></p>
+          
+          @endforelse --}}
+          <p>Il tuo appartamento ha ricevuto <strong style="color: #cc1136" class="fs-3">{{ $total_views }}</strong> fantasmi <i class="fa-solid fa-ghost fa-fade fs-5"></i></p>
+        </div>
+        
       </div>
-
-    </div>
     
 
   </div>

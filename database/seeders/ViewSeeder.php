@@ -17,10 +17,10 @@ class ViewSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        for($i = 0; $i < 10; $i++){
+        for ($i = 0; $i < 200; $i++) {
             $view = new View;
-            $view->apartment_id = random_int(1,13);
-            $view->date = $faker->dateTime();
+            $view->apartment_id = random_int(1, 13);
+            $view->date = $faker->dateTimeBetween('-6 month', now());
             $view->ip_address = $faker->ipv4();
             $view->save();
         }

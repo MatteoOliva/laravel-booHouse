@@ -12,7 +12,7 @@
 
 <div class=" my-4 main-conteiner">
 
-        <h1 class="mb-5">Messaggi per {{ $apartment->title }}</h1>
+        <h1 class="mb-5 text-center">Messaggi per {{ $apartment->title }}</h1>
     <table class="table table-striped">
         <thead>
             <tr class="">
