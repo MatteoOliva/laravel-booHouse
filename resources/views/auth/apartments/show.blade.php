@@ -78,7 +78,7 @@
         </a>
 
         {{-- pulsante statistiche --}}
-        <a class="btn btn-primary position-relative" href="{{route('user.statistic.show')}}">
+        <a class="btn btn-primary position-relative" href="{{route('user.statistic.show', $apartment->slug)}}">
            Statistiche         
         </a>
         

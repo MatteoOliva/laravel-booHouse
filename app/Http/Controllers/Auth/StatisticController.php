@@ -3,14 +3,25 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Apartment;
 use App\Models\Message;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class StatisticController extends Controller
 {
-    public function show()
+    public function show($apartment_slug)
     {
+        // prendo l'appartamento
+        $apartment = Apartment::where('slug', $apartment_slug)->firstOrFail();
+        $apartment_id = $apartment->id;
+
+        // proteggo la rotta
+        $auth_user_id = auth()->id();
+        if ($apartment->user_id !=  $auth_user_id) {
+            abort(404);
+        };
+
         // Imposta la localizzazione italiana
         Carbon::setLocale('it');
         // prendo gli ultimi 6 mesi relativi alla data di oggi

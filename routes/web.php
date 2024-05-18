@@ -53,9 +53,8 @@ Route::middleware('auth')
     Route::get('sponsorship/select/{apartment_slug}/{sponsorship_id}', 'App\Http\Controllers\Auth\SponsorshipController@select')->name('sponsorship.select');
 
     // rotta statistiche
-    Route::get('statistic/show', [StatisticController::class, 'show'])->name('statistic.show');
-    
-});
+    Route::get('statistic/{apartment_slug}', [StatisticController::class, 'show'])->name('statistic.show');
+  });
 
 Route::post('sponsorships/checkout', [SponsorshipController::class, 'checkout'])->middleware('auth')->name('user.sponsorship.checkout');
 Route::get('sponsorships/{apartment_slug}/pay', [SponsorshipController::class, 'goToPayment'])->middleware('auth')->name('user.sponsorship.payment');
