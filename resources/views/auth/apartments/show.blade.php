@@ -68,6 +68,12 @@
         <i class="fa-solid fa-trash" style="color: white"></i> Cancella
         </button>
 
+
+        {{-- pulsante statistiche --}}
+        <a class="btn btn-info position-relative me-1" href="{{route('user.statistic.show', $apartment->slug)}}">
+          <i class="fa-solid fa-chart-simple me-2"></i>Statistiche         
+       </a>
+        
         {{-- messaggi --}}
         <a  class="btn btn-primary position-relative" href="{{route('user.messages.index', $apartment->slug)}}">
           <i class="fa-solid fa-envelope"></i> Messaggi
@@ -77,10 +83,7 @@
           </span>
         </a>
 
-        {{-- pulsante statistiche --}}
-        <a class="btn btn-primary position-relative" href="{{route('user.statistic.show', $apartment->slug)}}">
-           Statistiche         
-        </a>
+        
         
       </div>
 

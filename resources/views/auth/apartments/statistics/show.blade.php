@@ -2,8 +2,12 @@
 
 @section('content')
 <div class="container mt-5">
-  <canvas id="messageChart"></canvas>
-  <canvas id="viewChart" class="my-5"></canvas>
+  {{-- grofico unico --}}
+  <canvas id="totalChart"></canvas>
+
+  {{-- grafici divisi --}}
+  <canvas id="messageChart" class="d-none"></canvas>
+  <canvas id="viewChart" class="my-5 d-none"></canvas>
  
 </div>
 @endsection
@@ -22,10 +26,10 @@
       data: {
         labels: monthsNames,
         datasets: [{
-          label: '# Messaggi',
+          label: 'Messaggi',
           data: messages6Months,
           backgroundColor: [
-      'rgba(255, 99, 132, 0.2)'
+      'rgba(204, 17, 54, 0.5)'
     ],
           borderWidth: 1
         }]
@@ -46,8 +50,11 @@
       data: {
         labels: monthsNames,
         datasets: [{
-          label: '# Visualizzazioni',
+          label: 'Visualizzazioni',
           data: views6Months,
+          backgroundColor: [
+            'rgba(13, 110, 253, 0.5)'
+    ],
           borderWidth: 1
         }]
       },
@@ -59,6 +66,41 @@
         }
       }
     });
+
+
+    // grafico messaggi e visualizzazioni
+    const totalGraph = document.getElementById('totalChart');
+
+    new Chart(totalGraph, {
+      type: 'bar',
+      data: {       
+        datasets: [{
+          label: 'Messaggi',
+          data: messages6Months,
+          backgroundColor: [
+            'rgba(204, 17, 54, 0.5)'
+          ],
+          borderWidth: 1
+        },
+        {
+          label: 'Visualizzazioni',
+          data: views6Months,
+          backgroundColor: [
+            'rgba(13, 110, 253, 0.5)'
+          ],
+          borderWidth: 1
+        }],
+        labels: monthsNames,
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
   </script>
 @endsection
 
