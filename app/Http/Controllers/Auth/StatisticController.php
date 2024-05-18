@@ -99,6 +99,6 @@ class StatisticController extends Controller
             }
         }
 
-        return view('auth.apartments.statistics.show', compact('months_names', 'messages_6_months', 'views_6_months'));
+        return view('auth.apartments.statistics.show', compact('months_names', 'messages_6_months', 'views_6_months','apartment_slug','apartment'));
     }
 }

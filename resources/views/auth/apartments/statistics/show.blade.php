@@ -1,14 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5">
-  {{-- grofico unico --}}
-  <canvas id="totalChart"></canvas>
-
-  {{-- grafici divisi --}}
-  <canvas id="messageChart" class="d-none"></canvas>
-  <canvas id="viewChart" class="my-5 d-none"></canvas>
+<div class="main-index">
+  <div class="container">
+    <div class="d-md-flex justify-content-md-between my-3">
+      <a href="{{route('user.apartments.show', $apartment_slug)}}" class="btn my -4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna all'alloggio</a>
+    </div>
  
+  <div class="main-conteiner my-4 card-graph">
+    <h1 class="mb-5">Statistiche {{ $apartment->title }}</h1>
+    {{-- grafico unico --}}
+    <div class="graph">
+      <canvas id="totalChart" class="d-none d-md-block" style="height:70vh; width:80vw"></canvas>
+    </div>
+
+    {{-- grafici divisi --}}
+    <canvas id="messageChart" class="d-sm-block d-md-none"></canvas>
+    <canvas id="viewChart" class="d-sm-block d-md-none my-5"></canvas>
+ 
+  </div>
+ </div>
 </div>
 @endsection
 
@@ -21,6 +32,7 @@
     const messages6Months = @json($messages_6_months);
     const views6Months = @json($views_6_months);
   
+    // grafico messaggi
     new Chart(mexGraph, {
       type: 'bar',
       data: {
@@ -29,7 +41,7 @@
           label: 'Messaggi',
           data: messages6Months,
           backgroundColor: [
-      'rgba(204, 17, 54, 0.5)'
+      'rgba(204, 17, 54, 0.7)'
     ],
           borderWidth: 1
         }]
@@ -37,12 +49,16 @@
       options: {
         scales: {
           y: {
-            beginAtZero: true
+            beginAtZero: true,
+            ticks: {
+                stepSize: 1
+            }
           }
         }
       }
     });
 
+    // grafico solo visualizzazioni
     const viewGraph = document.getElementById('viewChart');
   
     new Chart(viewGraph, {
@@ -53,7 +69,7 @@
           label: 'Visualizzazioni',
           data: views6Months,
           backgroundColor: [
-            'rgba(13, 110, 253, 0.5)'
+            'rgba(13, 110, 253, 0.7)'
     ],
           borderWidth: 1
         }]
@@ -61,8 +77,12 @@
       options: {
         scales: {
           y: {
-            beginAtZero: true
+            beginAtZero: true,
+            ticks: {
+                stepSize: 1
+            }
           }
+          
         }
       }
     });
@@ -78,7 +98,7 @@
           label: 'Messaggi',
           data: messages6Months,
           backgroundColor: [
-            'rgba(204, 17, 54, 0.5)'
+            'rgba(204, 17, 54, 0.7)'
           ],
           borderWidth: 1
         },
@@ -86,18 +106,46 @@
           label: 'Visualizzazioni',
           data: views6Months,
           backgroundColor: [
-            'rgba(13, 110, 253, 0.5)'
+            'rgba(250, 176, 5, 0.7)'
           ],
           borderWidth: 1
         }],
         labels: monthsNames,
       },
       options: {
+        plugins: {
+            legend: {
+                display: true,
+                labels: {
+                    color: 'white',
+                    font: {
+                      size: 18
+                    }
+                }
+            }
+        },
         scales: {
           y: {
-            beginAtZero: true
-          }
+            beginAtZero: true,
+            ticks: {
+                stepSize: 1,
+                color: 'white',
+                font: {
+                      size: 18
+                    }
+            }
+          },
+          x: {
+            ticks: {
+                color: 'white',
+                font: {
+                      size: 18
+                    }
+            }
+          },
+         
         }
+        
       }
     });
 
