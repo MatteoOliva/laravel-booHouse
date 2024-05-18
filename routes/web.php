@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\ApartmentController;
 use App\Http\Controllers\Auth\MessageController;
 use App\Http\Controllers\Auth\SponsorshipController;
 // use App\Http\Controllers\Auth\BraintreeController;
+use App\Http\Controllers\Auth\StatisticController;
 use App\Models\Apartment;
 use App\Http\Controllers\Guest\DashboardController as GuestDashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
@@ -50,6 +51,9 @@ Route::middleware('auth')
     Route::get('messages/{message}/show', [MessageController::class, 'show'])->name('messages.show');
     Route::get('sponsorships/{slug}', [SponsorshipController::class, 'index'])->name('sponsorships.index');
     Route::get('sponsorship/select/{apartment_slug}/{sponsorship_id}', 'App\Http\Controllers\Auth\SponsorshipController@select')->name('sponsorship.select');
+
+    // rotta statistiche
+    Route::get('statistic/show', [StatisticController::class, 'show'])->name('statistic.show');
     
 });
 

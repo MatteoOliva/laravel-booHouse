@@ -76,6 +76,11 @@
             <span class="visually-hidden">unread messages</span>
           </span>
         </a>
+
+        {{-- pulsante statistiche --}}
+        <a class="btn btn-primary position-relative" href="{{route('user.statistic.show')}}">
+           Statistiche         
+        </a>
         
       </div>
 
