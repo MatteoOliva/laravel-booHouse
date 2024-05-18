@@ -15,6 +15,7 @@
     const mexGraph = document.getElementById('messageChart');
     const monthsNames = @json($months_names);
     const messages6Months = @json($messages_6_months);
+    const views6Months = @json($views_6_months);
   
     new Chart(mexGraph, {
       type: 'bar',
@@ -46,7 +47,7 @@
         labels: monthsNames,
         datasets: [{
           label: '# Visualizzazioni',
-          data: messages6Months,
+          data: views6Months,
           borderWidth: 1
         }]
       },
