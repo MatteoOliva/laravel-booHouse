@@ -6,8 +6,6 @@
   
   <div class="main-index">
     
-    
-    
     <div class="container">
       <div class="d-flex justify-content-end">
         <a href="{{route('user.apartments.create')}}" class="btn my-3" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-plus"></i> Aggiungi alloggio</a>
@@ -18,12 +16,18 @@
         {{-- @if ($apartment->visible) --}}
         <div class="col-12 col-md-6 col-lg-4 col-xl-3">
           <a class="text-decoration-none" href="{{ route('user.apartments.show', $apartment) }}">
-            <div class="card card-index h-100" >
+            <div class="card card-index h-100 @if($apartment->has_active_sponsorship()) sponsored-border @endif" >
 
               <div class="container-main-img">
                 <img src="{{ $apartment->get_img_absolute_path() }}" 
                 class="img-fluid rounded-top" alt="#">
               </div>
+
+              @if($apartment->has_active_sponsorship())
+                <div v-if="apartment.sponsored" class="sponsored-star">
+                  <i class="fa-solid fa-star fa-beat fa-lg"></i>
+                </div>
+              @endif
 
               <div class="card-body" style="background-color:">
                 <h5 class="card-title" style="color: #fab005"><strong>{{ $apartment->title }}</strong></h5>
