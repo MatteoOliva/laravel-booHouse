@@ -22,35 +22,46 @@ class SponsorshipController extends Controller
     {
         // Trova l'appartamento corrispondente all'ID fornito
         $apartment = Apartment::where('slug', $apartment_slug)->firstOrFail();
-        $sponsorships = Sponsorship::all(); 
-    
+        $sponsorships = Sponsorship::all();
+
 
         return view('auth.apartments.sponsorship.index', compact('sponsorships', 'apartment'));
     }
-    
-    public function select($apartmentSlug, $sponsorshipId) {
+
+    public function select($apartmentSlug, $sponsorshipId)
+    {
 
         session(['selected_apartment_slug' => $apartmentSlug]);
         session(['selected_sponsorship_id' => $sponsorshipId]);
-    
-        
-        return redirect()->route('user.sponsorship.payment', $apartmentSlug );
+
+
+        return redirect()->route('user.sponsorship.payment', $apartmentSlug);
     }
-    
-    public function goToPayment($apartment_slug) 
+
+    public function goToPayment($apartment_slug)
     {
         $apartment = Apartment::where('slug', $apartment_slug)->first();
         $apartment_id = $apartment->id;
         $sponsorshipId = session('selected_sponsorship_id');
         $sponsorship = Sponsorship::findOrFail($sponsorshipId);
 
-        $startDate = Carbon::now();
+        // se l'appartamento ha sponsorizzazioni attive
+        if ($apartment->has_active_sponsorship()) {
+            // la sponsorizzazione inizia alla fine dell'ultima sponsorizzazione attiva
+            $startDate = Carbon::parse($apartment->sponsorship_end_date());
+        } else {
+            // la sponsorizzazione inizia oggi
+            $startDate = Carbon::now();
+        }
+        // dd($apartment->sponsorship_end_date());
+
+
         $endDate = $startDate->copy()->addHours($sponsorship->duration);
 
         $pivotData = DB::table('apartment_sponsorship')
-        ->where('apartment_id', $apartment->id)
-        ->where('sponsorship_id', $sponsorshipId)
-        ->first();
+            ->where('apartment_id', $apartment->id)
+            ->where('sponsorship_id', $sponsorshipId)
+            ->first();
 
 
         $gateway = new Gateway([
@@ -61,22 +72,21 @@ class SponsorshipController extends Controller
         ]);
 
         $clientToken = $gateway->clientToken()->generate();
-        
-        return view('auth.apartments.sponsorship.pay', compact('clientToken', 'apartment', 'apartment_id', 'sponsorship', 'pivotData', 'startDate', 'endDate'));
 
+        return view('auth.apartments.sponsorship.pay', compact('clientToken', 'apartment', 'apartment_id', 'sponsorship', 'pivotData', 'startDate', 'endDate'));
     }
 
-    public function checkOut(Request $request) 
+    public function checkOut(Request $request)
     {
         // $nonceFromTheClient = $_POST["payment_method_nonce"];
         $nonceFromTheClient = $request->input('payment_method_nonce');
 
         // Ottieni l'id dell'appartamento e dellasponsorship dalla sessione
-        $apartmentSlug = $request->session()->get('selected_apartment_slug'); 
+        $apartmentSlug = $request->session()->get('selected_apartment_slug');
         $sponsorshipId = $request->session()->get('selected_sponsorship_id');
         $apartment = Apartment::where('slug', $apartmentSlug)->firstOrFail();
         $apartmentId = $apartment->id;
-        
+
 
         // Ottieni l'oggetto Sponsorship corrispondente all'id
         $sponsorship = Sponsorship::find($sponsorshipId);
@@ -97,38 +107,35 @@ class SponsorshipController extends Controller
             'amount' => $amount,
             'paymentMethodNonce' => $nonceFromTheClient,
             'options' => [
-              'submitForSettlement' => True
+                'submitForSettlement' => True
             ]
-          ]);
+        ]);
 
 
         if ($result->success == true) {
             $active_sponsorship = DB::table('apartment_sponsorship')
-            ->where('apartment_id', $apartmentId  )
-            ->orderByDesc('end_date')
-            ->first();
+                ->where('apartment_id', $apartmentId)
+                ->orderByDesc('end_date')
+                ->first();
 
-            if(isset($active_sponsorship) && $active_sponsorship->end_date >= now()) {
-                $date_format_end_date = \Carbon\Carbon::parse( $active_sponsorship->end_date);
+            if (isset($active_sponsorship) && $active_sponsorship->end_date >= now()) {
+                $date_format_end_date = \Carbon\Carbon::parse($active_sponsorship->end_date);
                 // dd($date_format_end_date);
-                $endDate = $date_format_end_date->addHours($sponsorship->duration)->format( 'Y-m-d H:i:s');
+                $endDate = $date_format_end_date->addHours($sponsorship->duration)->format('Y-m-d H:i:s');
             } else {
                 $endDate = now()->addHours($sponsorship->duration);
             }
 
-        // Salvare i dati nel database
-        Sponsorship::find($sponsorshipId)->apartments()->attach($apartmentId, [
-            'payment_date' => now(),
-            'end_date' => $endDate,
-        ]);
-        $apartment = Apartment::where('id',$apartmentId)->first();
+            // Salvare i dati nel database
+            Sponsorship::find($sponsorshipId)->apartments()->attach($apartmentId, [
+                'payment_date' => now(),
+                'end_date' => $endDate,
+            ]);
+            $apartment = Apartment::where('id', $apartmentId)->first();
 
             return redirect()->route('user.apartments.show', $apartment->slug)->with('message-class', 'alert-success')->with('message', 'Pagamento effettuato correttamente.');
         } else {
             return redirect()->route('user.sponsorships.index', $apartmentId)->with('message-class', 'alert-danger')->with('message', 'Pagamento non effettuato.');
         }
     }
-
 }
-
-

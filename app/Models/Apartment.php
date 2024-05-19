@@ -137,6 +137,17 @@ class Apartment extends Model
   {
     return $this->belongsToMany(Sponsorship::class);
   }
+
+  public function has_active_sponsorship()
+  {
+    return $this->sponsorships()->where('end_date', '>=', now())->exists();
+  }
+
+  public function sponsorship_end_date()
+  {
+    return $this->sponsorships()->where('end_date', '>=', now())->max('end_date');
+  }
+
   public function getRouteKeyName()
   {
     return 'slug';
