@@ -6,8 +6,13 @@
 <div class="main-index">
   {{-- pulsante sponsorizzazione e indietro --}}
   <div class="container">
-    <div class="d-flex justify-content-between my-3">
+    <div class="d-flex justify-content-between align-items-center my-3">
       <a href="{{route('user.apartments.index')}}" class="btn my -4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna agli alloggi</a>
+      
+      @if($apartment->has_active_sponsorship())
+        <h5 class="fw-bold fs-3 mt-2">Sponsorizzato fino al {{ $apartment->sponsorship_end_date() }}</h5>
+      @endif
+
       <a href="{{route('user.sponsorships.index', $apartment->slug)}}" class="btn fw-semibold text-white" style="background-color: #cc1136"><i class="fa-regular fa-handshake"></i> Sponsorizza</a>
     
   </div>
