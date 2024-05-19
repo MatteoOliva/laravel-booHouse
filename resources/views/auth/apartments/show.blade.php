@@ -10,12 +10,15 @@
       <a href="{{route('user.apartments.index')}}" class="btn my -4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna agli alloggi</a>
       
       @if($apartment->has_active_sponsorship())
-        <h5 class="fw-bold fs-3 mt-2">Sponsorizzato fino al {{ $apartment->sponsorship_end_date() }}</h5>
+        <p class="d-none d-lg-block fw-bold fs-3 mt-2">Sponsorizzato fino al {{ $apartment->sponsorship_end_date() }}</p>
       @endif
 
       <a href="{{route('user.sponsorships.index', $apartment->slug)}}" class="btn fw-semibold text-white" style="background-color: #cc1136"><i class="fa-regular fa-handshake"></i> Sponsorizza</a>
-    
-  </div>
+    </div>
+
+    @if($apartment->has_active_sponsorship())
+        <h5 class="d-lg-none text-center fw-bold fs-5 mt-2 active-sponsorship">Sponsorizzato fino al {{ $apartment->sponsorship_end_date() }}</h5>
+    @endif
   
 
   <div class=" my-4 main-conteiner ">
