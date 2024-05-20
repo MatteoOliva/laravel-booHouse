@@ -6,8 +6,12 @@
 
 <div class="container">
     <div class="d-md-flex justify-content-md-between my-3">
-        <a href="{{route('user.apartments.index')}}" class="btn my -4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna agli alloggi</a>
-      </div>
+        @if(!isset($apartment->id))
+            <a href="{{route('user.apartments.index')}}" class="btn my -4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna agli alloggi</a>
+        @else
+            <a href="{{route('user.apartments.show', $apartment )}}" class="btn my -4" style="background-color: #fab005; color: #0A0F15" > <i class="fa-solid fa-circle-left me-2" style="color: #0A0F15"></i>Torna all'alloggio</a>
+        @endif
+    </div>
 
 
 
