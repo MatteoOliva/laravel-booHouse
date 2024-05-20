@@ -28,7 +28,7 @@
                 <th style="color: #fab005">{{ $message->email }}</th>
                 <td class="cont-col-bg">{{ Str::limit($message->content, 100) }}</td>
                 <td class="cont-col-md">{{ Str::limit($message->content, 50) }}</td>
-                <td>{{ $message->created_at->format('d-m') }}</td>
+                <td>{{ \Carbon\Carbon::parse($message->date)->format('d-m') }}</td>
                 <td><a href="{{route('user.messages.show', $message)}}"><i class="fa-solid fa-eye text-primary"></i></a></td>
             </tr>
             @empty

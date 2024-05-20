@@ -16,7 +16,7 @@
         <div class="card-body">
             
             <p class="card-text"><strong class="fs-5">Contenuto:</strong><br> {{ $message->content }}</p>
-            <p class="card-text"><small class="text-muted">Ricevuto il: {{ $message->created_at->format('d-m-Y - H:i') }}</small></p>
+            <p class="card-text"><small class="text-muted">Ricevuto il: {{ \Carbon\Carbon::parse($message->date)->format('d-m-Y - H:m')  }}</small></p>
         </div>
     </div>
 </div>
