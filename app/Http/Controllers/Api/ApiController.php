@@ -217,21 +217,26 @@ class ApiController extends Controller
         // GROUP BY apartment_id; 
 
         //ciclo gli appartmenti 
-        foreach ($sponsored_apartments as $apartment) {
-            // var che conterrà il numero di views
-            $views = 0;
-            // controllo per tutte le visualizzazioni per appartamento
-            foreach ($views_per_apartment as $view_row) {
+        // foreach ($sponsored_apartments as $apartment) {
+        //     // var che conterrà il numero di views
+        //     $views = 0;
+        //     // controllo per tutte le visualizzazioni per appartamento
+        //     foreach ($views_per_apartment as $view_row) {
 
-                //se l'id dell appartamento è uguale all id_appartamento legato alla view
-                if ($apartment->id == $view_row->apartment_id) {
-                    //aggiungo il numero di visualizzazioni all'appartamento
-                    $views = $view_row->view_count;
-                }
-            }
-            // se var switch è su true allora aggiungi il val trovato all appartamento, altrimenti aggiungi 0
-            $apartment->views = $views;
-        }
+        //         //se l'id dell appartamento è uguale all id_appartamento legato alla view
+        //         if ($apartment->id == $view_row->apartment_id) {
+        //             //aggiungo il numero di visualizzazioni all'appartamento
+        //             $views = $view_row->view_count;
+        //         }
+        //     }
+        //     // se var switch è su true allora aggiungi il val trovato all appartamento, altrimenti aggiungi 0
+        //     $apartment->views = $views;
+        // }
+
+        // ordino gli appartamenti sponsorizzati mettendo per primi quelli con data di pagamento più recente
+        $sponsored_apartments = $sponsored_apartments->sortByDesc(function ($apartment) {
+            return $apartment->sponsorships()->where('end_date', '>=', now())->max('payment_date');
+        });
 
         // per ogni appartamento
         foreach ($sponsored_apartments as $apartment) {
@@ -422,11 +427,6 @@ class ApiController extends Controller
         // prendo gli id degli appartamenti sponsorizzati
         $sponsored_ids = $sponsored_apartments->pluck('id')->toArray();
         // dd($sponsored_ids);
-
-        // ordino gli appartamenti sponsorizzati mettendo per primi quelli con la data di fine maggiore
-        $sponsored_apartments = $sponsored_apartments->sortByDesc(function ($apartment) {
-            return $apartment->sponsorships()->where('end_date', '>=', now())->max('end_date');
-        });
         // dd($sponsored_apartments);
 
         // uniamo gli appartamenti trovati agli appartamenti sponsorizzati e ordinati, escludendo quelli il cui id è uguale ad uno di quelli sponsorizzati
