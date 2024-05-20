@@ -117,7 +117,9 @@
         
                         <div class="col-6">
                             <label for="mq" class="form-label mt-3">Metri quadri</label>
-                            <input type="number" class="form-control @error('mq') is-invalid @enderror" id="mq" name="mq" min="5" value="{{ old('mq') ?? $apartment->mq ?? '' }}" required/>
+                            <input type="number" class="form-control" 
+                            @error('mq') is-invalid @enderror 
+                            id="mq" name="mq" min="5" value="{{ old('mq') ?? $apartment->mq ?? '' }}" required/>
                             <div class="invalid-feedback @error('mq') d-block @else d-none @enderror" id="mq-feedback">
                                 @error('mq')
                                 {{ $message }}
@@ -368,7 +370,7 @@
             //validazione metri quadri
             const mqInput = document.getElementById('mq');
             const querymq = toiletsInput.value;
-            if (querymq <= 5){
+            if (querymq <= 0){
                 // aggiungi la classe is-invalid all'input
                 mqInput.classList.add('is-invalid');
                 // prendo il div del feedback, gli tolgo il d-none e inserisco il messaggio di errore
