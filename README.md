@@ -1,32 +1,25 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+ # Introduzione
+ BoolBnB è una web app che permette di trovare e gestire l’affitto di appartamenti.
+ I proprietari di appartamenti, registrandosi a BoolBnB, possono inserire le informazioni delle
+ loro proprietà e decidere se sponsorizzarle per avere una posizione evidenziata nelle
+ ricerche e in home page.
+ Gli utenti interessati ad affittare, senza registrazione, possono cercare e visualizzare gli
+ appartamenti. Una volta scelto l’appartamento di interesse, possono inviare un messaggio al
+ proprietario tramite la piattaforma, per chiedere maggiori dettagli.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
-## Init project
-
-Per il frontend:
-
-```
-npm install
-npm run dev
-```
-
-Per il backend:
-
-```
-composer install
-php artisan serve
-```
-
-Poi copia il file `.env.example` in `.env` e configura la connessione al DB
-
-## Create a controller
-
-...
-
-## Create a model
+ ## RequisitiTecnici 
+ * Client-sideValidation
+ * Salvataggio informazioni geografiche
+ * Sistema di Pagamento
+ * Il sito è responsive
+ * La ricerca degli appartamenti nella pagina dedicata e l’applicazione dei filtri avvengono senza il refresh della pagina
+ ## RequisitiFunzionali 
+ * Permettere ai proprietari di appartamento di registrarsi alla piattaforma
+ * Permettere ai proprietari di appartamento registrati di aggiungere un  appartamento alla piattaforma
+ * Permettere ai visitatori di ricercare un appartamento
+ * Permettere ai visitatori divedere i dettagli di un appartamento
+ * Permettere ai visitatori di scrivere al proprietario di un appartamento per chiedere informazioni
+ * Permettere ai proprietari di appartamento registrati di vedere i messaggi ricevuti
+ * Permettere ai proprietari di appartamento registrati di sponsorizzare il proprio appartamento
+ * Permettere ai proprietari di appartamento registrati di vedere statistiche dei propri appartamenti
+ 
